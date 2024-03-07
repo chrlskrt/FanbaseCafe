@@ -48,7 +48,7 @@
 		$count = mysqli_num_rows($result);
 		$row = mysqli_fetch_array($result);
 		
-        
+    // var_dump($row);
 		if($count== 0){
 			echo "<script language='javascript'>
 						alert('username not existing.');
@@ -59,8 +59,9 @@
 				  </script>";
 		}else{
 
-            // $usernameCookie = urlencode(base64_encode(serialize($row[0])));
-            // setcookie('username', $loginCookie, time() + (86400 * 30), "/");
+            // if naa nay concept na log-out log-out or mag add ta
+            // $logInCookie = urlencode(base64_encode(serialize($row)));
+            // setcookie('user', $logInCookie, time() + (86400 * 30), "/");
 
 			header("Location: index.php");
 		}

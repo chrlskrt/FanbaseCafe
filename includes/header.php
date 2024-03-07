@@ -27,16 +27,17 @@
             <a href="index.php">Home</a>
         </section>
         <section>
+            
+            <!-- /* if naa nay concept na log-out pd nani siya on the go yesyes */
             <?php
-                echo ($_SESSION['username']);
-            ?>
-            <?php
-                if(!isset($_SESSION['username'])){
+                if(!isset($_COOKIE['user'])){
                     echo '<a href="register.php" class="btn btn-outline-light">Register</a>
                     <a href="login.php" class="btn btn-outline-light ">Log In</a>';
                 }
-            ?>
+            ?> -->
             
+            <a href="register.php" class="btn btn-outline-light">Register</a>
+            <a href="login.php" class="btn btn-outline-light ">Log In</a>
             <a href="aboutus.php" class="btn btn-outline-light">About Us</a>
             <a href="aboutus.php#contact_us" class="btn btn-outline-light">Contact Us</a>
         </section>
