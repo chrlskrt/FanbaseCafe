@@ -1,0 +1,96 @@
+@import url("https://fonts.googleapis.com/css?family=Satisfy");
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+
+body {
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
+}
+
+.container , .CreateNLog {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+ 
+.img-icon {
+    height: 200px;
+    width: 200px;
+}
+ 
+.card {
+    border-color: transparent;
+}
+ 
+.card-img-top {
+    border-radius: 50%;
+}
+ 
+.title {
+    size: 18px;
+    text-align: center;
+    align-items: center;
+}
+
+hr {
+    border: 1px solid black;
+    width: 75vw;
+    align-self: center;
+}
+
+#welcome_text {
+    font-family: "Josefin Sans", sans-serif;
+    font-weight: 120;
+    text-align: center;
+    font-size: 10em;
+    padding: 5%;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+/*  FOR LOG-IN and SIGN-UP */
+.CreateNLog > div {
+    width: 500px;
+    padding:10px;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    align-items: center;
+}
+  
+.CreateNLog > div > div {
+    text-align: center;
+}
+
+.headingForm {
+    font-family: 'Satisfy', sans-serif;
+    font-weight: bold;
+    text-align: center;
+    font-size: 3em;
+}
+  
+.formsch {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 450px;
+}
+
+.navbar {
+    padding: 10px;
+    width: 100%;
+    background-color: #59f3c7;
+    justify-content: space-between;
+}
