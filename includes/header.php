@@ -10,7 +10,7 @@
 
     <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="jquery-3.7.1.min.js"></script>
+    <!-- <script src="jquery-3.7.1.min.js"></script> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <link href="css/styles.css" rel="stylesheet" />
@@ -27,8 +27,16 @@
             <a href="index.php">Home</a>
         </section>
         <section>
-            <a href="register.php" class="btn btn-outline-light">Register</a>
-            <a href="login.php" class="btn btn-outline-light ">Log In</a>
+            <?php
+                echo ($_SESSION['username']);
+            ?>
+            <?php
+                if(!isset($_SESSION['username'])){
+                    echo '<a href="register.php" class="btn btn-outline-light">Register</a>
+                    <a href="login.php" class="btn btn-outline-light ">Log In</a>';
+                }
+            ?>
+            
             <a href="aboutus.php" class="btn btn-outline-light">About Us</a>
             <a href="aboutus.php#contact_us" class="btn btn-outline-light">Contact Us</a>
         </section>

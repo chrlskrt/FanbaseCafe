@@ -6,7 +6,7 @@
 <section class="CreateNLog">
     <div>
         <p class="headingForm">Log In</p>
-        <form action="" method="post">
+        <form action="login.php" method="post">
             <div class="formsch">
                 <div class="form-floating mb-3">
                     
@@ -37,7 +37,7 @@
 </footer>
 
 <?php	
-	if(isset($_POST['btnLogin'])){
+	if($_SERVER['REQUEST_METHOD']==='POST'){
 		$uname=$_POST['username'];
 		$pwd=$_POST['password'];
 		//check tbluseraccount if username is existing
@@ -48,17 +48,21 @@
 		$count = mysqli_num_rows($result);
 		$row = mysqli_fetch_array($result);
 		
+        
 		if($count== 0){
 			echo "<script language='javascript'>
 						alert('username not existing.');
 				  </script>";
-		}else if($row[3] != $pwd) {
+		}else if($row[4] != $pwd) {
 			echo "<script language='javascript'>
 						alert('Incorrect password');
 				  </script>";
 		}else{
-			$_SESSION['username']=$row[0];
-			header("location: index.php");
+
+            // $usernameCookie = urlencode(base64_encode(serialize($row[0])));
+            // setcookie('username', $loginCookie, time() + (86400 * 30), "/");
+
+			header("Location: index.php");
 		}
 	}
 ?>
