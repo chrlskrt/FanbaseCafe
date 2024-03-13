@@ -5,6 +5,7 @@ body {
     display: flex;
     height: 100vh;
     flex-direction: column;
+    background-color: #e7e7e7;
 }
 
 .container , .CreateNLog {
@@ -14,24 +15,33 @@ body {
     justify-content: center;
 }
 
+.bg-success {
+    background-color: #64ffe5;
+}
+
 .flex-container {
     flex: 1;
     display: flex;
     align-items: center;
     justify-content: space-around;
 }
- 
+
+.main-container {
+    margin-left: 100px;
+    margin-right: 100px;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-container > div {
+    margin-top: 20px;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
 .img-icon {
     height: 200px;
     width: 200px;
-}
- 
-.card {
-    border-color: transparent;
-}
- 
-.card-img-top {
-    border-radius: 50%;
 }
  
 .title {
@@ -52,6 +62,16 @@ hr {
     text-align: center;
     font-size: 10em;
     padding: 5%;
+    background-color: #ffffff;
+    color: black;
+}
+
+.label {
+    font-family: "Josefin Sans", sans-serif;
+    font-weight:bold;
+    font-size: 50px;
+    text-align: center;
+    color: black;
 }
 
 a {
@@ -91,6 +111,66 @@ a {
 .navbar {
     padding: 10px;
     width: 100%;
-    background-color: #59f3c7;
+    background-color: #64ffe5;
     justify-content: space-between;
+}
+
+.img-fluid {
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.card2 {
+    height: 280px;
+    width: 208px;
+    box-shadow: 8px 10px 3px #9fc0c1;
+}
+
+.card2-img {
+    height: 208px;
+    width: 208px;
+    border-radius: 10px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.card2-name {
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+    bottom:20px; 
+    position:relative;
+}
+
+.card2-logo {
+    height: 50px;
+    width: 50px;
+
+    z-index: 1;
+    position: relative;
+    bottom: 30px;    
+    border:solid 5px white;
+    border-radius: 50%;
+}
+
+.cardContent {
+    display: flex;
+    flex-direction: column;
+    
+    align-items: center;
+    background-color: white;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    box-shadow: 8px 10px 5px #9fc0c1;
+}
+
+.fanbases {
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.fanbaseBanner {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
 }

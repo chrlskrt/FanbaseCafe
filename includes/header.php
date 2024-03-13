@@ -22,9 +22,10 @@
     <nav class="navbar">
         <section>
             <a class="navbar-brand" href="#">
-                Fanbase Cafe
+                <div class="label" style="font-size: 20px;"> Fanbase Cafe 
+                    <a href="index.php" class="btn btn-outline-light">Home</a>
+                </div>
             </a>
-            <a href="index.php">Home</a>
         </section>
         <section>
             
