@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-<html>
 <?php 
     require_once("includes/header.php");
 ?>
@@ -83,7 +81,7 @@
 </div>
 
 <footer>
-    <nav class="navbar navbar-success" style="background-color:#64ffe5;">
+    <nav class="navbar">
         <a class="navbar-brand" href="#">
             Charlene Repuesto and Angel Sheinen O. Cambarijan
             <br>
@@ -91,4 +89,3 @@
         </a>
     </nav>
 </footer>
-</html>

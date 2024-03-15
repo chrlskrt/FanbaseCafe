@@ -45,18 +45,20 @@
                     <input type="password" name="cpassword" class="form-control" id="cpassword" placeholder="Confirm Password" required>
                     <label for="cpassword">Confirm Password</label>
                 </div>
-        
             
-                <button id="btnRegister" type="submit" role="button" class="btn btn-outline-warning btn-lg btn-block" value="1">Sign in</button>
+                <button id="btnRegister" type="submit" role="button" class="btn btn-outline-warning btn-lg btn-block" 
+                value="1">Sign in</button>
             </div>
         </form>
 
-        <p>Already have an account? <a href="login.html" style="color:blue">Log In</a></p>
+        <p>Already have an account? <a href="login.php" style="color:blue">Log In</a></p>
     </div>
 </section>
 
+
+
 <footer>
-    <nav class="navbar navbar-success bg-success">
+    <nav class="navbar">
         <a class="navbar-brand" href="#">
             Charlene Repuesto
             <br>

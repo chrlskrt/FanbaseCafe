@@ -64,7 +64,7 @@
 </div>
 
 <footer>
-    <nav class="navbar navbar-success bg-success">
+    <nav class="navbar">
         <a class="navbar-brand" href="#">
             Angel Sheinen O. Cambarijan
             <br>

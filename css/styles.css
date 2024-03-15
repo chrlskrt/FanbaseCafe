@@ -111,7 +111,7 @@ a {
 .navbar {
     padding: 10px;
     width: 100%;
-    background-color: #64ffe5;
+    background-color: #ff5454;
     justify-content: space-between;
 }
 
@@ -143,9 +143,8 @@ a {
 }
 
 .card2-logo {
-    height: 50px;
-    width: 50px;
-
+    height: 60px;
+    width: 60px;
     z-index: 1;
     position: relative;
     bottom: 30px;    
@@ -153,7 +152,7 @@ a {
     border-radius: 50%;
 }
 
-.cardContent {
+.cardContent {  
     display: flex;
     flex-direction: column;
     
