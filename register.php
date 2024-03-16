@@ -5,6 +5,85 @@
 
 <script src="js/register.js"></script>
 
+<!-- MODALS -->
+<div class="modal fade" tabindex="-1" role="dialog" id="userExistsModal">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">OMO!!</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>We've noticed that you already have an account. Kindly try logging in.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <a href="login.php" class="btn btn-outline-success">LOG IN</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" tabindex="-1" role="dialog" id="emailExistsModal">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">OMO!!</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>This email is already taken, try another one.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="usernameExistsModal">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">OMO!!</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>This username is already taken, try another one.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="regSuccessModal">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">YEYY!!</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>REGISTRATION is a SUCCESS. LOG IN now!!</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <a href="login.php" class="btn btn-outline-success">LOG IN</a>
+      </div>
+    </div>
+  </div>
+</div>
 
 <section class="CreateNLog">
     <div>
@@ -92,6 +171,8 @@
             $sql1 ="INSERT into tbluserprofile(firstname,lastname,birthdate) values('".$fname."','".$lname."', '".$bdate."')";
             mysqli_query($connection,$sql1);
         } else {
+            echo "user exist";
+            // validating unique value for"
             $user = mysqli_fetch_array($user_result);
             // getting id from tbluserprofile
             $user_id = $user[0];
@@ -102,10 +183,11 @@
             $tbluseraccount_row = mysqli_num_rows($acc_result);
 
             if ($tbluseraccount_row != 0){
+                echo "user account exist ";
                 // if user already has an account, pop modal
 
-                echo "<script language='javascript>
-                    $('userExistsModal').modal('show');
+                echo "<script>
+                    $('#userExistsModal').modal('show');
                 </script>";
 
                 return;
@@ -120,7 +202,7 @@
         if ($email_row != 0){
             // email already taken
             echo "<script language='javascript'>
-                $('emailExistsModal').modal('show');
+                $('#emailExistsModal').modal('show');
             </script>";
         }
 
@@ -132,7 +214,7 @@
         if ($username_row!= 0){
             // username already taken
             echo "<script language='javascript'>
-                $('usernameExistsModal').modal('show');
+                $('#usernameExistsModal').modal('show');
             </script>";
         }
 
@@ -145,90 +227,9 @@
         $sql ="Insert into tbluseraccount(user_id, email_add,username,password) values('.$sqlUser_ID.', '".$email."','".$uname."','".$pword."')";
         mysqli_query($connection,$sql);
         echo "<script language='javascript'>
-                    $('regSuccessModal').modal('show');
-                    window.location.replace('login.php');
+                    $('#regSuccessModal').modal('show');
                 </script>";
         exit();
 	}
 		
 ?>
-
-<!-- MODALS -->
-<div class="modal fade" tabindex="-1" role="dialog" id="userExistsModal">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">OMO!!</h5>
-        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p>We've noticed that you already have an account. Kindly try logging in.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <a href="login.php" class="btn btn-outline-success">LOG IN</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<div class="modal fade" tabindex="-1" role="dialog" id="emailExistsModal">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">OMO!!</h5>
-        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p>This email is already taken, try another one.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" tabindex="-1" role="dialog" id="usernameExistsModal">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">OMO!!</h5>
-        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p>This username is already taken, try another one.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" tabindex="-1" role="dialog" id="reSuccessModal">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">YEYY!!</h5>
-        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p>REGISTRATION is a SUCCESS. LOG IN now!!</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <a href="login.php" class="btn btn-outline-success">LOG IN</a>
-      </div>
-    </div>
-  </div>
-</div>

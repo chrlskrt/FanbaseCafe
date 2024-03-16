@@ -39,7 +39,7 @@
 <?php	
 	if($_SERVER['REQUEST_METHOD']==='POST'){
 		$uname=$_POST['username'];
-		$pwd=$_POST['password'];
+		$pwd=password_hash($_POST['password'], PASSWORD_BCRYPT);
 		//check tbluseraccount if username is existing
 		$sql ="Select * from tbluseraccount where username='".$uname."'";
 		

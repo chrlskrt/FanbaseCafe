@@ -29,4 +29,6 @@ $(function(){
             $("#btnRegister").removeAttr("disabled");
         }
     })
+
+    $('#regSuccessModal').modal('show');
 });
