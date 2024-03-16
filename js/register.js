@@ -7,7 +7,6 @@ $(function(){
     let pass;
 
     $("#btnRegister").attr("disabled", "disabled");
-    // $(".alert").hide();
     $("#cpassword").parent().hide();
 
     $("#password").on("keyup", function(){
@@ -29,6 +28,4 @@ $(function(){
             $("#btnRegister").removeAttr("disabled");
         }
     })
-
-    // $('#regSuccessModal').modal('show');
 });
