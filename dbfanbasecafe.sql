@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 16, 2024 at 02:47 PM
+-- Generation Time: Mar 16, 2024 at 03:47 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -32,7 +32,7 @@ CREATE TABLE `tbluseraccount` (
   `user_id` int(11) NOT NULL,
   `email_add` text NOT NULL,
   `username` varchar(30) NOT NULL,
-  `password` varchar(38) NOT NULL,
+  `password` varchar(72) NOT NULL,
   `isAdmin` tinyint(1) NOT NULL DEFAULT 0,
   `isMember` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
