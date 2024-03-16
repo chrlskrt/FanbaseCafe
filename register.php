@@ -85,7 +85,6 @@
         // validating unique value for firstname, lastname and birthdate fields
         $sqlTblUserProfileValidation = "SELECT * FROM tbluserprofile WHERE firstname = '$fname' AND lastname = '$lname' AND birthdate = '$bdate'";
         $user_result = mysqli_query($connection, $sqlTblUserProfileValidation);
-        var_dump($result);
         $tbluserprofile_row = mysqli_num_rows($user_result);
         
         if ($tbluserprofile_row == 0){ // user does not exist
