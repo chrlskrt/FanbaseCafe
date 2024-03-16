@@ -7,10 +7,10 @@ $(function(){
     let pass;
 
     $("#btnRegister").attr("disabled", "disabled");
-
+    // $(".alert").hide();
     $("#cpassword").parent().hide();
 
-    $("#password").on("blur", function(){
+    $("#password").on("keyup", function(){
         pass = $("#password").val();
 
         if (pass.length > 0){
