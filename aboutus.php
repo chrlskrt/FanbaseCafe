@@ -4,8 +4,8 @@
 
 <div class="fanbaseBanner">
     <img src="images/mainBanner2.png" style="width:100%;">
-    <div class="centeredBanner-text">
-        <div class="label" style="text-align:start; color:white;"> ABOUT US </div>
+    <div class="centeredBanner-text" style="font-size: 100px; font-weight: bold;">
+        <div class="label" style="color:white; font-size: 90px;">ABOUT US</div>
     </div>
 </div>
  
