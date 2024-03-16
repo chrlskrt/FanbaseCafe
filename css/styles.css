@@ -15,10 +15,6 @@ body {
     justify-content: center;
 }
 
-.bg-success {
-    background-color: #64ffe5;
-}
-
 .flex-container {
     flex: 1;
     display: flex;
@@ -29,6 +25,7 @@ body {
 .main-container {
     margin-left: 100px;
     margin-right: 100px;
+    margin-bottom: 100px;
     display: flex;
     flex-direction: column;
 }
@@ -37,6 +34,15 @@ body {
     margin-top: 20px;
     padding-left: 50px;
     padding-right: 50px;
+}
+
+.main-container-nopaddings {
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    display: flex;
+    flex-direction: column;
 }
 
 .img-icon {
@@ -111,7 +117,7 @@ a {
 .navbar {
     padding: 10px;
     width: 100%;
-    background-color: #ff5454;
+    background-color: #40dbc4;
     justify-content: space-between;
 }
 
@@ -169,7 +175,51 @@ a {
 }
 
 .fanbaseBanner {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
+    position: relative;
+    color: white;
+}
+
+.centeredBanner-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.white-container {
+    background-color: white;
+    box-shadow: 8px 10px 5px #9fc0c1;
+    display: flex; /* Use flexbox layout */
+    align-items: center; /* Align items vertically */
+    justify-content: space-between; /* Add space between image and text */
+}
+
+.white-container > div {
+    margin: 30px;
+}
+
+.tile-image {
+    height: 150px;
+    width: 150px;
+    margin: 30px;
+    margin-right: 10px;
+}
+
+.text {
+    font-size: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-weight: normal;
+}
+
+.socialmedia-logo {
+    height: 40px;
+    width: 40px;
+    margin-right: 10px;
+    align-items: start;
+}
+
+.socialmedia-container {
+    align-items:start; 
+    justify-content:left;
 }

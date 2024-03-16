@@ -40,7 +40,7 @@
             <a href="register.php" class="btn btn-outline-light">Sign In</a>
             <a href="login.php" class="btn btn-outline-light ">Log In</a>
             <a href="aboutus.php" class="btn btn-outline-light">About Us</a>
-            <!-- <a href="aboutus.php#contact_us" class="btn btn-outline-light">Contact Us</a> -->
+            <a href="aboutus.php#contact_us" class="btn btn-outline-light">Contact Us</a>
         </section>
     </nav>
 </header>
