@@ -2,7 +2,6 @@
     include("connect.php");
     include_once("includes/header.php");
 ?>
-
 <!-- MODALS -->
 <div class="modal fade" tabindex="-1" role="dialog" id="errorModal">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -97,37 +96,39 @@
     </nav>
 </footer>
 
-<?php	
-	if($_SERVER['REQUEST_METHOD']==='POST'){
+<?php
+    if($_SERVER['REQUEST_METHOD']==='POST'){
 		$uname = $_POST['username'];
-		$pwd = $_POST['password'];
+		$pass = $_POST['password'];
 		//check tbluseraccount if username is existing
-		$sql ="Select * from tbluseraccount where username='".$uname."'";
+		$sql ="SELECT * from tbluseraccount where username='".$uname."'";
 		
 		$result = mysqli_query($connection,$sql);	
 		
 		$count = mysqli_num_rows($result);
 		$row = mysqli_fetch_array($result);
 		
-        // var_dump($row);
-		if($count == 0) {
+
+        if ($count != 0 && password_verify($pass, $row[4])){
+            // if naa nay concept na log-out log-out or mag add ta
+            // $logInCookie = urlencode(base64_encode(serialize($row)));
+            // setcookie('user', $logInCookie, time() + (86400 * 30), "/");
+			echo "<script language='javascript'>
+                        window.location.replace('index.php');
+                </script>";
+        } else if($count == 0) {
 			echo "<script language = 'javascript'>
 						$(function(){
                             $('#unameErrorModal').modal('show');
                         })
 				  </script>";
-		 } else if (!password_verify($pwd, $row[4])){
+		 } else {
             echo "<script language = 'javascript'>
 						$(function(){
                             $('#username').val('".$uname."');
                             $('#passErrorModal').modal('show');
                         })
 				  </script>";
-		} else {
-            // if naa nay concept na log-out log-out or mag add ta
-            // $logInCookie = urlencode(base64_encode(serialize($row)));
-            // setcookie('user', $logInCookie, time() + (86400 * 30), "/");
-			header("Location: index.php");
-        }
+		}
 	}
 ?>

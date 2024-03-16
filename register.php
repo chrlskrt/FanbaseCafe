@@ -152,14 +152,14 @@
 	if($_SERVER['REQUEST_METHOD'] === 'POST'){		
 		//retrieve data from form and save the value to a variable
 		//for tbluserprofile
-		$fname=$_POST['firstname'];		
-		$lname=$_POST['lastname'];
-		$bdate=$_POST['birthdate'];
+		$fname = $_POST['firstname'];		
+		$lname = $_POST['lastname'];
+		$bdate = $_POST['birthdate'];
 		
 		//for tbluseraccount
-		$email=$_POST['email'];		
-		$uname=$_POST['username'];
-		$pword=password_hash($_POST['password'], PASSWORD_BCRYPT);
+		$email = $_POST['email'];		
+		$uname = $_POST['username'];
+		$pword = password_hash($_POST['password'], PASSWORD_BCRYPT);
 
         // validating unique value for firstname, lastname and birthdate fields
         $sqlTblUserProfileValidation = "SELECT * FROM tbluserprofile WHERE firstname = '$fname' AND lastname = '$lname' AND birthdate = '$bdate'";
@@ -177,7 +177,7 @@
             // getting id from tbluserprofile
             $user_id = $user[0];
             $sqlUser_ID = $user_id;
-            
+
             // validate if user already has an account
             $sqlTblUserAccountValidation = "SELECT * FROM tbluseraccount WHERE user_id = '$user_id'";
             $acc_result = mysqli_query($connection, $sqlTblUserAccountValidation);
