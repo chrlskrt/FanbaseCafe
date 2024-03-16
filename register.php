@@ -10,34 +10,27 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">OMO!!</h5>
-        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <h5 class="modal-title"> Whoops </h5>
       </div>
       <div class="modal-body">
-        <p>We've noticed that you already have an account. Kindly try logging in.</p>
+        <p>We have noticed that you already own an account. Kindly try logging in.</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <a href="login.php" class="btn btn-outline-success">LOG IN</a>
+        <a href="login.php" class="btn btn-outline-success">Log In</a>
       </div>
     </div>
   </div>
 </div>
 
-
 <div class="modal fade" tabindex="-1" role="dialog" id="emailExistsModal">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">OMO!!</h5>
-        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <h5 class="modal-title">Whoops</h5>
       </div>
       <div class="modal-body">
-        <p>This email is already taken, try another one.</p>
+        <p>This email is already taken, please try another one.</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -50,13 +43,10 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">OMO!!</h5>
-        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <h5 class="modal-title">Whoops</h5>
       </div>
       <div class="modal-body">
-        <p>This username is already taken, try another one.</p>
+        <p>This username is already taken, please try another one.</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -69,17 +59,14 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">YEYY!!</h5>
-        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <h5 class="modal-title">Success!</h5>
       </div>
       <div class="modal-body">
-        <p>REGISTRATION is a SUCCESS. LOG IN now!!</p>
+        <p>Resgistration is a success, try logging in </p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <a href="login.php" class="btn btn-outline-success">LOG IN</a>
+        <a href="login.php" class="btn btn-outline-success">Log In </a>
       </div>
     </div>
   </div>

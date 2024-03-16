@@ -223,3 +223,7 @@ a {
     align-items:start; 
     justify-content:left;
 }
+
+.modal-footer > var {
+    border-top: none;
+}

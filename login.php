@@ -7,17 +7,14 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">OMO!!</h5>
-        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <h5 class="modal-title">Whoops</h5>
       </div>
       <div class="modal-body">
-        <p>[username] and [password] does not match anything in our records. Try again or sign up.</p>
+        <p>Username and password does not match anything in our records. Try again or sign up.</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <a href="register.php" class="btn btn-outline-success">SIGN UP</a>
+        <a href="register.php" class="btn btn-outline-success">Sign Up</a>
       </div>
     </div>
   </div>
@@ -27,17 +24,14 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">OMO!!</h5>
-        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <h5 class="modal-title">Whoops</h5>
       </div>
       <div class="modal-body">
-        <p>[username] does not exists in our records. Try again or sign up.</p>
+        <p> Username does not exists in our records. Try again or sign up.</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <a href="register.php" class="btn btn-outline-success">SIGN UP</a>
+        <a href="register.php" class="btn btn-outline-success">Sign Up</a>
       </div>
     </div>
   </div>
@@ -47,17 +41,14 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">OMO!!</h5>
-        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <h5 class="modal-title">Whoops</h5>
       </div>
       <div class="modal-body">
-        <p>Incorrect [password]. Try again or sign up.</p>
+        <p>Incorrect password.</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <a href="register.php" class="btn btn-outline-success">SIGN UP</a>
+        <!-- <a href="register.php" class="btn btn-outline-success">SIGN UP</a> -->
       </div>
     </div>
   </div>

@@ -72,7 +72,7 @@
     <hr>
 </div>
 
-<div class="main-container" style="margin: 0px 40px 0px 40px;">
+<div class="main-container" style="margin: 0px 40px 40px 40px;">
     <div class="flex-container" style="text-align:center; align-items:flex-start"> 
         <div> 
             <div class="main-container-nopaddings">
