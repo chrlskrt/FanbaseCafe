@@ -22,7 +22,7 @@
 
             </div>
         </form>
-        <p>Don't have an account? <a href="register.php" style="color:blue">Register</a></p>
+        <p>Don't have an account? <a href="register.php" style="color:blue">Sign Up</a></p>
     </div>
 </section>
 
