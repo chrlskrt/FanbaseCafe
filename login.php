@@ -3,6 +3,27 @@
     include_once("includes/header.php");
 ?>
 
+<!-- MODALS -->
+<div class="modal fade" tabindex="-1" role="dialog" id="errorModal">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">OMO!!</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>[username] and [password] does not match anything in our records. Try again or sign up.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <a href="register.php" class="btn btn-outline-success">SIGN UP</a>
+      </div>
+    </div>
+  </div>
+</div>
+
 <section class="CreateNLog">
     <div>
         <p class="label">Log In</p>
@@ -38,10 +59,8 @@
 
 <?php	
 	if($_SERVER['REQUEST_METHOD']==='POST'){
-		$uname=$_POST['username'];
-		$pwd = password_hash($_POST['password'], PASSWORD_BCRYPT);
-
-        echo ('pass: '.$pwd);
+		$uname = $_POST['username'];
+		$pwd = $_POST['password'];
 		//check tbluseraccount if username is existing
 		$sql ="Select * from tbluseraccount where username='".$uname."'";
 		
@@ -50,22 +69,19 @@
 		$count = mysqli_num_rows($result);
 		$row = mysqli_fetch_array($result);
 		
-    // var_dump($row);
-		if($count== 0){
-			echo "<script language='javascript'>
-						alert('username not existing.');
-				  </script>";
-		}else if($row[4] != $pwd) {
-			echo "<script language='javascript'>
-						alert('Incorrect password');
-				  </script>";
-		}else{
-
+        // var_dump($row);
+		if($count == 0 && password_verify($pwd, $row[4])) {
             // if naa nay concept na log-out log-out or mag add ta
             // $logInCookie = urlencode(base64_encode(serialize($row)));
             // setcookie('user', $logInCookie, time() + (86400 * 30), "/");
-
 			header("Location: index.php");
+			
+		}else{
+            echo "<script language = 'javascript'>
+						$(function(){
+                            $('#errorModal').modal('show');
+                        })
+				  </script>";
 		}
 	}
 ?>
