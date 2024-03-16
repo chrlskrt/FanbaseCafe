@@ -170,24 +170,26 @@
             //save data to tbluserprofile			
             $sql1 ="INSERT into tbluserprofile(firstname,lastname,birthdate) values('".$fname."','".$lname."', '".$bdate."')";
             mysqli_query($connection,$sql1);
+            $sqlUser_ID = $connection->insert_id;
         } else {
-            echo "user exist";
             // validating unique value for"
             $user = mysqli_fetch_array($user_result);
             // getting id from tbluserprofile
             $user_id = $user[0];
-
+            $sqlUser_ID = $user_id;
+            
             // validate if user already has an account
             $sqlTblUserAccountValidation = "SELECT * FROM tbluseraccount WHERE user_id = '$user_id'";
             $acc_result = mysqli_query($connection, $sqlTblUserAccountValidation);
             $tbluseraccount_row = mysqli_num_rows($acc_result);
 
             if ($tbluseraccount_row != 0){
-                echo "user account exist ";
                 // if user already has an account, pop modal
 
-                echo "<script>
-                    $('#userExistsModal').modal('show');
+                echo "<script defer >
+                        $(function(){
+                            $('#userExistsModal').modal('show');
+                        })
                 </script>";
 
                 return;
@@ -201,9 +203,16 @@
 
         if ($email_row != 0){
             // email already taken
-            echo "<script language='javascript'>
-                $('#emailExistsModal').modal('show');
+            echo "<script defer >
+                    $(function(){
+                        $('#firstname').val('".$fname."');
+                        $('#lastname').val('".$lname."');
+                        $('#birthdate').val('".$bdate."');
+                        $('#emailExistsModal').modal('show');
+                    })
             </script>";
+            
+            return;
         }
 
         // validate username in tbluseraccount
@@ -214,22 +223,24 @@
         if ($username_row!= 0){
             // username already taken
             echo "<script language='javascript'>
-                $('#usernameExistsModal').modal('show');
+                $(function(){
+                    $('#firstname').val('".$fname."');
+                    $('#lastname').val('".$lname."');
+                    $('#birthdate').val('".$bdate."');
+                    $('#email').val('".$email."');
+                    $('#usernameExistsModal').modal('show');
+                })
             </script>";
-        }
-
-        if ($tbluserprofile_row == 0){
-            $sqlUser_ID = $connection -> insert_id;
-        } else {
-            $sqlUser_ID = $user_id;
+            return;
         }
 
         $sql ="Insert into tbluseraccount(user_id, email_add,username,password) values('.$sqlUser_ID.', '".$email."','".$uname."','".$pword."')";
         mysqli_query($connection,$sql);
         echo "<script language='javascript'>
-                    $('#regSuccessModal').modal('show');
-                </script>";
+            $(function(){
+                $('#regSuccessModal').modal('show');
+            })
+        </script>";
         exit();
-	}
-		
+	}	
 ?>

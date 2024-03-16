@@ -30,5 +30,5 @@ $(function(){
         }
     })
 
-    $('#regSuccessModal').modal('show');
+    // $('#regSuccessModal').modal('show');
 });
