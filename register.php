@@ -84,29 +84,27 @@
 
         // validating unique value for firstname, lastname and birthdate fields
         $sqlTblUserProfileValidation = "SELECT * FROM tbluserprofile WHERE firstname = '$fname' AND lastname = '$lname' AND birthdate = '$bdate'";
-        $result = mysqli_query($connection, $sqlTblUserProfileValidation);
+        $user_result = mysqli_query($connection, $sqlTblUserProfileValidation);
         var_dump($result);
-        $tbluserprofile_row = mysqli_num_rows($result);
+        $tbluserprofile_row = mysqli_num_rows($user_result);
         
-        
-
         if ($tbluserprofile_row == 0){ // user does not exist
             //save data to tbluserprofile			
             $sql1 ="INSERT into tbluserprofile(firstname,lastname,birthdate) values('".$fname."','".$lname."', '".$bdate."')";
             mysqli_query($connection,$sql1);
         } else {
-            $user = mysqli_fetch_array($result);
+            $user = mysqli_fetch_array($user_result);
             // getting id from tbluserprofile
             $user_id = $user[0];
 
             // validate if user already has an account
             $sqlTblUserAccountValidation = "SELECT * FROM tbluseraccount WHERE user_id = '$user_id'";
-            $result = mysqli_query($connection, $sqlTblUserAccountValidation);
-            $tbluseraccount_row = mysqli_num_rows($result);
+            $acc_result = mysqli_query($connection, $sqlTblUserAccountValidation);
+            $tbluseraccount_row = mysqli_num_rows($acc_result);
 
             if ($tbluseraccount_row != 0){
                 // if user already has an account, pop modal
-                
+
                 echo "<script language='javascript>
                     $('userExistsModal').modal('show');
                 </script>";
@@ -116,27 +114,42 @@
         }
 
         // validate email in tbluseraccount
-		
-		// // getting user_id from newly created user profile
-        // $sqlUser_ID = $connection -> insert_id;
-		// //Check tbluseraccount if username is already existing. Save info if false. Prompt msg if true.
-		// $sql2 ="SELECT * from tbluseraccount where username='".$uname."'";
-		// $result = mysqli_query($connection,$sql2);
-		// $row = mysqli_num_rows($result);
-		// if($row == 0){
-		// 	$sql ="Insert into tbluseraccount(user_id, email_add,username,password) values('.$sqlUser_ID.', '".$email."','".$uname."','".$pword."')";
-		// 	mysqli_query($connection,$sql);
-		// 	echo "<script language='javascript'>
-		// 				alert('New record saved.');
-        //                 window.location.replace('login.php');
-		// 		  </script>";
-        // // header("location: login.php");
-        //     exit();
-		// }else{
-		// 	echo "<script language='javascript'>
-		// 				alert('Username already existing');
-		// 		  </script>";
-		// }
+		$sqlUserEmailValidation = "SELECT email_add FROM tbluseraccount WHERE email_add = '$email'";
+        $email_result = mysqli_query($connection, $sqlUserEmailValidation);
+        $email_row = mysqli_num_rows($email_result);
+
+        if ($email_row != 0){
+            // email already taken
+            echo "<script language='javascript'>
+                $('emailExistsModal').modal('show');
+            </script>";
+        }
+
+        // validate username in tbluseraccount
+        $sqlUsernameValidation = "SELECT username FROM tbluseraccount WHERE username = '$uname'";
+        $username_result = mysqli_query($connection, $sqlUsernameValidation);
+        $username_row = mysqli_num_rows($username_result);
+
+        if ($username_row!= 0){
+            // username already taken
+            echo "<script language='javascript'>
+                $('usernameExistsModal').modal('show');
+            </script>";
+        }
+
+        if ($tbluserprofile_row == 0){
+            $sqlUser_ID = $connection -> insert_id;
+        } else {
+            $sqlUser_ID = $user_id;
+        }
+
+        $sql ="Insert into tbluseraccount(user_id, email_add,username,password) values('.$sqlUser_ID.', '".$email."','".$uname."','".$pword."')";
+        mysqli_query($connection,$sql);
+        echo "<script language='javascript'>
+                    $('regSuccessModal').modal('show');
+                    window.location.replace('login.php');
+                </script>";
+        exit();
 	}
 		
 ?>
@@ -153,6 +166,65 @@
       </div>
       <div class="modal-body">
         <p>We've noticed that you already have an account. Kindly try logging in.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <a href="login.php" class="btn btn-outline-success">LOG IN</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" tabindex="-1" role="dialog" id="emailExistsModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">OMO!!</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>This email is already taken, try another one.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="usernameExistsModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">OMO!!</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>This username is already taken, try another one.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="reSuccessModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">YEYY!!</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>REGISTRATION is a SUCCESS. LOG IN now!!</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
