@@ -8,9 +8,9 @@
 
 <div class="fanbaseBanner">
     <img src="images/mainBanner1.png" style="width:100%;">
-    <div class="centeredBanner-text" style="font-size: 50px; font-weight: bold;">
+    <div class="centeredBanner-text">
         <!-- <div class="label" style="color:white; text-align:left;">Transforming Fan Experiences</div> -->
-        <div class="label" style="color:white; text-align:left;font-size: 60px;">Transforming Fan Experiences</div>
+        <div class="label" style="color:white; text-align:left;font-size: 6vw;">Transforming Fan Experiences</div>
         <h5>Connecting people across fandoms</h5>
     </div>
 </div>
