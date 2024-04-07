@@ -233,7 +233,6 @@ a {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    border-top: 2px black solid;
-    border-bottom: 2px black solid;
     height: fit-content;
+    padding:10px;
 }

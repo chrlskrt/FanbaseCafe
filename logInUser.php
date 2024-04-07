@@ -13,14 +13,13 @@
 		$user_count = mysqli_num_rows($result);
 		$user = mysqli_fetch_array($result);
 
-
-    if ($user_count == 1 && password_verify($pass, $user[4])){
-      	handleLogIn($user); // api.php ang mo set sa cookie / session 
-      	header("Location: index.php");
-    } else if ($user_count == 0){
-      	header("Location: login.php?login_error_1");
-    } else {
-      	header("Location: login.php?login_error_2=".$uname."");
-    }
-  }
+		if ($user_count == 1 && password_verify($pass, $user[4])){
+			handleLogIn($user); // api.php ang mo set sa cookie / session 
+			header("Location: index.php");
+		} else if ($user_count == 0){
+			header("Location: login.php?login_error_1");
+		} else {
+			header("Location: login.php?login_error_2=".$uname."");
+		}
+	}
 ?>

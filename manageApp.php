@@ -22,51 +22,141 @@
     ';
 ?>
 
-<div class="manageAppDiv" id="createFanbaseDiv">
-    <a class="btn label" style="font-size: 5w; text-align:left">+ Create Fanbase</a>
-    
-    <div style="display: flex; justify-content: center;" id="createFanbaseForm">
-        <form action="createFanbase.php" method="post">
-            <div class="formsch">
-                <div class="form-floating mb-3">
-                    
-                    <input type="text" class="form-control" name="username" id="username" placeholder="Enter username..." required>
-                    <label for="username">Username</label>
+<div class="manageAppDiv" style="margin-bottom:10px; border-top: 2px black solid; border-bottom: 2px black solid;">
+    <div class="manageAppDiv">
+        <a class="btn label" id="createFanbaseDiv" style="font-size: 5w; text-align:left">+ Create Fanbase</a>
+        
+        <div style="display: flex; justify-content: center;" id="createFanbaseForm">
+            <form action="createFanbase.php" method="post">
+                <div class="formsch">
+                    <div class="form-floating mb-3"> 
+                        <input type="text" class="form-control" name="fanbase_name" id="fanbase_name" placeholder="Enter fanbase name..." required>
+                        <label for="fanbase_name">Fanbase Name</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" name="fanbase_artist" id="fanbase_artist" placeholder="Enter artist..." required>
+                        <label for="fanbase_artist">Artist</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control" name="fanbase_description" id="fanbase_description" placeholder="Enter fanbase description..." required></textarea>
+                        <label for="fanbase_description">Fanbase Description</label>
+                    </div>
+                    <button id="btnCreateFanbase" value="1" type="submit" role="button" class="btn btn-outline-dark btn-lg btn-block">Create Fanbase</button>
                 </div>
-                <div class="form-floating mb-3">
-                    
-                    <input type="password" class="form-control" name="password" id="password" placeholder="Enter password..." required>
-                    <label for="password">Password</label>
-                </div>
-                <button id="btnLogIn" value="1" type="submit" role="button" class="btn btn-outline-dark btn-lg btn-block">Log In</button>
+            </form>
+        </div>
+    </div>
 
-            </div>
-        </form>
+    <div class="manageAppDiv" style="border-bottom: 2px black solid; border-top: 2px black solid;">
+        <div class="btn label" id="manageFanbasesDiv" style="font-size: 5w; text-align:left">+ Manage Fanbases</div>
+        
+        <div style="display: flex; justify-content: center;" id="manageFanbasesTable">
+            <?php
+                echo displayFanbasesTable();
+            ?>
+        </div>
+    </div>
+
+    <div class="manageAppDiv">
+        <a class="btn label" id="manageUsersDiv" style="font-size: 5w; text-align:left">+ Manage Users</a>
+        
+        <div style="display: flex; justify-content: center;" id="manageUsersTable">
+            <?php
+                echo displayUsersTable();
+            ?>
+        </div>
     </div>
 </div>
 
-<div class="manageAppDiv" id="manageFanbasesDiv">
-    <div class="btn label" style="font-size: 5w; text-align:left">+ Manage Fanbases</div>
-    
-    <div style="display: flex; justify-content: center;" id="manageFanbasesTable">
-        <?php
-            echo displayFanbasesTable();
-        ?>
+<footer>
+    <nav class="navbar">
+        <a class="navbar-brand" href="#">
+            Charlene Repuesto
+            <br>
+            BSCS 2
+        </a>
+    </nav>
+</footer>
+
+<!-- MODALS -->
+<div class="modal fade" tabindex="-1" role="dialog" id="fArtistErrorModal">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"> Whoops </h5>
+      </div>
+      <div class="modal-body">
+        <p>There's an existing fanbase for the artist, <b><?php echo $_SESSION['createFanbase_data']['fanbase_artist'] ?></b>, already.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
     </div>
+  </div>
 </div>
 
-<div class="manageAppDiv" id="manageUsersDiv">
-    <a class="btn label" style="font-size: 5w; text-align:left">+ Manage Users</a>
-    
-    <div style="display: flex; justify-content: center;" id="manageUsersTable">
-        <?php
-            echo displayUsersTable();
-        ?>
+<div class="modal fade" tabindex="-1" role="dialog" id="fNameErrorModal">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"> Whoops </h5>
+      </div>
+      <div class="modal-body">
+        <p>There's an existing fanbase with that name already.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
     </div>
+  </div>
 </div>
 
+<div class="modal fade" tabindex="-1" role="dialog" id="createFanbaseSuccessModal">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"> Success! </h5>
+      </div>
+      <div class="modal-body">
+        <p>The fanbase, <b><?php echo $_SESSION['createFanbase_data']['fanbase_name'] ?></b>, for the artist, <b><?php echo $_SESSION['createFanbase_data']['fanbase_artist'] ?></b>, is created successfully!! Congratulations!</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <?php
+    if (isset($_GET['artistFanbase_exists'])){
+        echo "<script language = 'javascript'>
+            $(function(){
+                $('#createFanbaseForm').show();
+                // $('#fanbase_name').val('".$_SESSION['createFanbase_data']['fanbase_name']."');
+                // $('#fanbase_description').val('".$_SESSION['createFanbase_data']['fanbase_description']."');
+                $('#fArtistErrorModal').modal('show');
+            })
+        </script>";
+    }
+
+    if (isset($_GET['fanbaseName_exists'])){
+        echo "<script language = 'javascript'>
+                    $(function(){
+                        $('#createFanbaseForm').show();
+                        $('#fanbase_artist').val('".$_SESSION['createFanbase_data']['fanbase_artist']."');
+                        $('#fanbase_description').val('".$_SESSION['createFanbase_data']['fanbase_description']."');
+                        $('#fNameErrorModal').modal('show');
+                    })
+                </script>";
+    }
+
+    if (isset($_GET['fanbaseCreate_success'])){
+        echo "<script language = 'javascript'>
+                    $(function(){
+                        $('#createFanbaseSuccessModal').modal('show');
+                    })
+                </script>";
+    }
     function displayFanbasesTable(){
 
     }
