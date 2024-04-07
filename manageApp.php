@@ -16,15 +16,15 @@
 
     echo '
         <div class="flex-container" style="flex:none; padding: 30px">
-            <div class="label" style="font-size: 5vw;"> NUMBER OF USERS <br>'." $usercount ".' </div>
-            <div class="label" style="font-size: 5vw;"> NUMBER OF FANBASES <br>'." $fanbasecount ".' </div>
+            <div class="label" style="font-size: 4.5vw;"> NUMBER OF USERS <br>'." $usercount ".' </div>
+            <div class="label" style="font-size: 4.5vw;"> NUMBER OF FANBASES <br>'." $fanbasecount ".' </div>
         </div>
     ';
 ?>
 
 <div class="manageAppDiv" style="margin-bottom:10px; border-top: 2px black solid; border-bottom: 2px black solid;">
     <div class="manageAppDiv">
-        <a class="btn label" id="createFanbaseDiv" style="font-size: 5w; text-align:left">+ Create Fanbase</a>
+        <a class="btn label" id="createFanbaseDiv" style="font-size: 2.5vw; text-align:left">+ Create Fanbase</a>
         
         <div style="display: flex; justify-content: center;" id="createFanbaseForm">
             <form action="createFanbase.php" method="post">
@@ -48,7 +48,7 @@
     </div>
 
     <div class="manageAppDiv" style="border-bottom: 2px black solid; border-top: 2px black solid;">
-        <div class="btn label" id="manageFanbasesDiv" style="font-size: 5w; text-align:left">+ Manage Fanbases</div>
+        <div class="btn label" id="manageFanbasesDiv" style="font-size: 2.5vw; text-align:left">+ Manage Fanbases</div>
         
         <div style="display: flex; justify-content: center;" id="manageFanbasesTable">
             <?php
@@ -58,7 +58,7 @@
     </div>
 
     <div class="manageAppDiv">
-        <div class="btn label" id="manageUsersDiv" style="font-size: 5w; text-align:left">+ Manage Users</div>
+        <div class="btn label" id="manageUsersDiv" style="font-size: 2.5vw; text-align:left">+ Manage Users</div>
         
         <div style="display: flex; justify-content: center;" id="manageUsersTable">
             <?php
