@@ -40,6 +40,9 @@
             
             <?php
                 if($current_user){
+                    if ($current_user['isAdmin'] == 1){
+                        echo '<a href="logOutUser.php" class="btn btn-outline-light">Manage Fanbases</a>';
+                    }
                     echo '<a href="logOutUser.php" class="btn btn-outline-light">Log Out</a>';
                 }
             ?>
