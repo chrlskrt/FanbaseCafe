@@ -25,7 +25,7 @@ $(function(){
     })
 
     $("#manageUsersDiv").on("click", function(){
-        $("#manageUsersTable").toggle();
+        // $("#manageUsersTable").toggle();
         if ($("#manageUsersTable").is(":visible")) {
             $("#manageUsersTable").slideUp();
         } else {

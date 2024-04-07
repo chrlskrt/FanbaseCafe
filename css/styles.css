@@ -229,10 +229,18 @@ a {
     border-top: none;
 }
 
+
+/* manageApp.php */
+
 .manageAppDiv {
     display: flex;
     flex-direction: column;
     gap: 10px;
     height: fit-content;
     padding:10px;
+}
+
+.manageAppTable {
+    border: 2px black solid; 
+    --bs-table-bg: #e7e7e7;
 }

@@ -58,7 +58,7 @@
     </div>
 
     <div class="manageAppDiv">
-        <a class="btn label" id="manageUsersDiv" style="font-size: 5w; text-align:left">+ Manage Users</a>
+        <div class="btn label" id="manageUsersDiv" style="font-size: 5w; text-align:left">+ Manage Users</div>
         
         <div style="display: flex; justify-content: center;" id="manageUsersTable">
             <?php
@@ -158,10 +158,124 @@
                 </script>";
     }
     function displayFanbasesTable(){
+        global $connection;
 
+        $sqlfanbase = "SELECT * FROM tblfanbase";
+        $resultfanbase = mysqli_query($connection, $sqlfanbase);
+        
+        $fanbaseArray = array();
+        if ($resultfanbase){
+            while ($row = $resultfanbase->fetch_assoc()) {
+                $fanbaseArray[] = $row;
+            } 
+
+            $resultfanbase->free();
+        }
+
+        // print_r($fanbaseArray);
+
+        $tableStr = "<div class='table-responsive-lg'><table class='table table-bordered table-hover manageAppTable'>
+                        <thead>
+                            <tr>
+                                <th scope='col'>ID</th>
+                                <th scope='col'>Artist</th>
+                                <th scope='col'>Fanbase Name</th>
+                                <th scope='col'>Date Created</th>
+                                <th scope='col'>Fanbase Description</th>
+                                <th scope='col'>        </th>
+                            </tr>
+                        </thead>
+                        <tbody>";
+
+        foreach($fanbaseArray as $fanbase){
+            $tableStr .= '
+                <tr>
+                    <th scope="row">'.$fanbase['fanbase_id'].'</td>
+                    <td>'.$fanbase['fanbase_artist'].'</td>
+                    <td>'.$fanbase['fanbase_name'].'</td>
+                    <td>'.$fanbase['date_created'].'</td>
+                    <td>'.$fanbase['fanbase_description'].'</td>
+                    <td><a href="manageFanbase.php?fanbase_id='.$fanbase['fanbase_id'].'" class="btn btn-outline-success">Edit</a></td>
+                </tr>
+            ';
+        }
+
+        $tableStr .= '</tbody></table></div>';
+
+        return $tableStr;
     }
 
     function displayUsersTable(){
+        global $connection;
 
+        $sqlUserAccs = "SELECT * FROM tbluseraccount";
+        $resultUsers = mysqli_query($connection, $sqlUserAccs);
+        
+        $userArray = array();
+        if ($resultUsers){
+            while ($row = $resultUsers->fetch_assoc()) {
+                $userArray[] = $row;
+            } 
+
+            $resultUsers->free();
+        }
+
+        // print_r($userArray);
+
+        $newUserArray = array();
+
+        foreach($userArray as $user){
+            $sqlUser = "SELECT * FROM tbluserprofile WHERE user_id ='".$user['user_id']."'";
+            $resultUser = mysqli_query($connection, $sqlUser);
+            $rowUser = mysqli_fetch_array($resultUser);
+
+            $user['user_id'] = $rowUser;
+            // var_dump($user['user_id']['user_id']);
+
+            // print_r($user);
+            $newUserArray[] = $user;
+ 
+       }
+
+        $tableStr = "<div class='table-responsive-lg'><table class='table table-bordered table-hover manageAppTable'>
+                        <thead>
+                            <tr>
+                                <th scope='col'>User_ID</th>
+                                <th scope='col'>Account_ID</th>
+                                <th scope='col'>Username</th>
+                                <th scope='col'>Name</th>
+                                <th scope='col'>Birthdate</th>
+                                <th scope='col'>Email</th>
+                                <th scope='col'>        </th>
+                            </tr>
+                        </thead>
+                        <tbody>";
+
+        global $current_user;
+        foreach($newUserArray as $user){
+            $tableStr .= '
+                <tr>
+                    <th scope="row">'.$user['user_id']['user_id'].'</td>
+                    <td>'.$user['account_id'].'</td>
+                    <td>'.$user['username'].'</td>
+                    <td>'.$user['user_id']['firstname'].' '.$user['user_id']['lastname'].'</td>
+                    <td>'.$user['user_id']['birthdate'].'</td>
+                    <td>'.$user['email_add'].'</td>
+                    <td>'.
+                        (($user['account_id'] != $current_user['account_id']) ?
+                            '<form action="manageAppUser.php" method="post"><div class="flex-container" style="gap: 5px;">'.
+                                    (($user['isSysAdmin'] == 0) ? 
+                                    '<button class="btn btn-outline-success" type="submit" name="promoteUser" value="'.$user['user_id']['user_id'].'">Promote to <b>SYSTEM ADMIN</b></button>' 
+                                : '<button class="btn btn-outline-success" type="submit" name="demoteUser" value="'.$user['user_id']['user_id'].'">Demote to <b>NORMAL USER</b></button>')
+                            .'<button class="btn btn-danger" type="submit" name="deleteUserAcc" value="'.$user['account_id'].'">Delete User Account</button>
+                            </div></form>' 
+                        : '').'</td>
+                </tr>
+            ';
+        }
+
+        $tableStr .= '</tbody></table></div>';
+
+        return $tableStr;
     }
 ?>
