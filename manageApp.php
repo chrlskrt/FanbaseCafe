@@ -160,20 +160,26 @@
     function displayFanbasesTable(){
         global $connection;
 
+        // getting ALL data from tblfanbase
         $sqlfanbase = "SELECT * FROM tblfanbase";
         $resultfanbase = mysqli_query($connection, $sqlfanbase);
         
+        // creating an empty array
         $fanbaseArray = array();
+
         if ($resultfanbase){
+            /* query is a success
+            /* looping thru every row of record sa tblfanbase */
             while ($row = $resultfanbase->fetch_assoc()) {
+                /* $row = 1 fanbase entry
+                /* iadd siya sa fanbase array */
                 $fanbaseArray[] = $row;
             } 
 
-            $resultfanbase->free();
+            $resultfanbase->free(); // freeing result set
         }
 
-        // print_r($fanbaseArray);
-
+        // creating the html table, gistore ra siya as string na iprint later on
         $tableStr = "<div class='table-responsive-lg'><table class='table table-bordered table-hover manageAppTable'>
                         <thead>
                             <tr>
@@ -187,6 +193,7 @@
                         </thead>
                         <tbody>";
 
+        // looping thru every fanbase entry
         foreach($fanbaseArray as $fanbase){
             $tableStr .= '
                 <tr>
@@ -208,11 +215,14 @@
     function displayUsersTable(){
         global $connection;
 
+        // getting ALL data from tbluseraccount
         $sqlUserAccs = "SELECT * FROM tbluseraccount";
         $resultUsers = mysqli_query($connection, $sqlUserAccs);
         
+        // creating an empty array that will hold the data from $resulyUsers
         $userArray = array();
         if ($resultUsers){
+            // looping thru every user account entry sa table, then add sa array
             while ($row = $resultUsers->fetch_assoc()) {
                 $userArray[] = $row;
             } 
@@ -220,23 +230,22 @@
             $resultUsers->free();
         }
 
-        // print_r($userArray);
-
+        // creating a new empty array, para ma store pud apil si user profile
         $newUserArray = array();
 
+        // looping thru each account
         foreach($userArray as $user){
+            // getting the user's profile from tblprofile
             $sqlUser = "SELECT * FROM tbluserprofile WHERE user_id ='".$user['user_id']."'";
             $resultUser = mysqli_query($connection, $sqlUser);
             $rowUser = mysqli_fetch_array($resultUser);
 
-            $user['user_id'] = $rowUser;
-            // var_dump($user['user_id']['user_id']);
-
-            // print_r($user);
-            $newUserArray[] = $user;
- 
+            $user['user_id'] = $rowUser; // gi store ang user profile entry sa user_id sa user account
+            
+            $newUserArray[] = $user; // add to the new array
        }
 
+       // creating the table
         $tableStr = "<div class='table-responsive-lg'><table class='table table-bordered table-hover manageAppTable'>
                         <thead>
                             <tr>
@@ -252,6 +261,8 @@
                         <tbody>";
 
         global $current_user;
+
+        // looping thru every user entry
         foreach($newUserArray as $user){
             $tableStr .= '
                 <tr>
@@ -262,8 +273,11 @@
                     <td>'.$user['user_id']['birthdate'].'</td>
                     <td>'.$user['email_add'].'</td>
                     <td>'.
+                        // if ang current na user entry is ang current_user logged in, dili siya ka demote sa iyang self ug ka delete sa iyang account
                         (($user['account_id'] != $current_user['account_id']) ?
                             '<form action="manageAppUser.php" method="post"><div class="flex-container" style="gap: 5px;">'.
+                                    // if the current user entry is a system_admin, ang option niya is demote to normal user
+                                    // if the current user entry is not a system_admin, ang option is promote to system admin
                                     (($user['isSysAdmin'] == 0) ? 
                                     '<button class="btn btn-outline-success" type="submit" name="promoteUser" value="'.$user['user_id']['user_id'].'">Promote to <b>SYSTEM ADMIN</b></button>' 
                                 : '<button class="btn btn-outline-success" type="submit" name="demoteUser" value="'.$user['user_id']['user_id'].'">Demote to <b>NORMAL USER</b></button>')
