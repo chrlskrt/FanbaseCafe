@@ -78,6 +78,7 @@ hr {
     font-size: 50px;
     text-align: center;
     color: black;
+    margin-bottom: 0;
 }
 
 a {
@@ -226,4 +227,13 @@ a {
 
 .modal-footer > var {
     border-top: none;
+}
+
+.manageAppDiv {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-top: 2px black solid;
+    border-bottom: 2px black solid;
+    height: fit-content;
 }
