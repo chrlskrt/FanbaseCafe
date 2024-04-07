@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 04, 2024 at 03:47 AM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 8.1.12
+-- Generation Time: Apr 07, 2024 at 09:59 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `dbrepuestof1`
+-- Database: `dbfanbasecafe`
 --
 
 -- --------------------------------------------------------
@@ -58,15 +58,15 @@ CREATE TABLE `tbluseraccount` (
   `username` varchar(30) NOT NULL,
   `password` varchar(72) NOT NULL,
   `isMember` tinyint(1) NOT NULL DEFAULT 1,
-  `isAdmin` tinyint(1) NOT NULL DEFAULT 0
+  `isSysAdmin` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tbluseraccount`
 --
 
-INSERT INTO `tbluseraccount` (`account_id`, `user_id`, `email_add`, `username`, `password`, `isMember`, `isAdmin`) VALUES
-(1, 1, 'admin101@gmail.com', 'admin101', '$2y$10$nW5XICRG2CZ1Zm70mRtVbOlhZSqg0DJZNEXE9fOiqVu3Qp5aLI6q2', 1, 0);
+INSERT INTO `tbluseraccount` (`account_id`, `user_id`, `email_add`, `username`, `password`, `isMember`, `isSysAdmin`) VALUES
+(1, 1, 'admin101@gmail.com', 'admin101', '$2y$10$nW5XICRG2CZ1Zm70mRtVbOlhZSqg0DJZNEXE9fOiqVu3Qp5aLI6q2', 1, 1);
 
 -- --------------------------------------------------------
 
