@@ -24,19 +24,25 @@
             </a>
         </section>
         <section>
-            
-            <!-- /* if naa nay concept na log-out pd nani siya on the go yesyes */
+            <!-- /* if naa nay concept na log-out pd nani siya on the go yesyes */ -->
             <?php
-                if(!isset($_COOKIE['user'])){
+                include_once("api.php");
+                if($current_user == null){
                     echo '<a href="register.php" class="btn btn-outline-light">Register</a>
-                    <a href="login.php" class="btn btn-outline-light ">Log In</a>';
-                }
-            ?> -->
+                    <a href="login.php" class="btn btn-outline-light">Log In</a>';
+                } 
+            ?>
             
-            <a href="register.php" class="btn btn-outline-light">Sign Up</a>
-            <a href="login.php" class="btn btn-outline-light ">Log In</a>
+            <!-- <a href="register.php" class="btn btn-outline-light">Sign Up</a>
+            <a href="login.php" class="btn btn-outline-light ">Log In</a> -->
             <a href="aboutus.php" class="btn btn-outline-light">About Us</a>
             <a href="aboutus.php#contact_us" class="btn btn-outline-light">Contact Us</a>
+            
+            <?php
+                if($current_user){
+                    echo '<a href="logOutUser.php" class="btn btn-outline-light">Log Out</a>';
+                }
+            ?>
         </section>
     </nav>
 </header>

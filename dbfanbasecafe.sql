@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 16, 2024 at 03:47 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Generation Time: Apr 04, 2024 at 03:47 AM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.1.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,8 +18,32 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `dbfanbasecafe`
+-- Database: `dbrepuestof1`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tblfanbase`
+--
+
+CREATE TABLE `tblfanbase` (
+  `fanbase_id` int(11) NOT NULL,
+  `fanbase_name` varchar(30) NOT NULL,
+  `fanbase_artist` varchar(30) NOT NULL,
+  `date_created` date NOT NULL,
+  `fanbase_description` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tblfanbase`
+--
+
+INSERT INTO `tblfanbase` (`fanbase_id`, `fanbase_name`, `fanbase_artist`, `date_created`, `fanbase_description`) VALUES
+(1, 'CARAT', 'SEVENTEEN', '2015-02-14', 'A safe place for CARATS!!'),
+(2, 'BLINK', 'BLACKPINK', '2016-04-06', 'A safe place for BLINKs'),
+(3, 'MOA', 'Tomorrow X Together', '2024-04-04', 'A safe place for MOAs'),
+(4, 'ARMY', 'BTS', '2024-04-03', 'A safe place for ARMYs');
 
 -- --------------------------------------------------------
 
@@ -33,9 +57,16 @@ CREATE TABLE `tbluseraccount` (
   `email_add` text NOT NULL,
   `username` varchar(30) NOT NULL,
   `password` varchar(72) NOT NULL,
-  `isAdmin` tinyint(1) NOT NULL DEFAULT 0,
-  `isMember` tinyint(1) NOT NULL DEFAULT 1
+  `isMember` tinyint(1) NOT NULL DEFAULT 1,
+  `isAdmin` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbluseraccount`
+--
+
+INSERT INTO `tbluseraccount` (`account_id`, `user_id`, `email_add`, `username`, `password`, `isMember`, `isAdmin`) VALUES
+(1, 1, 'admin101@gmail.com', 'admin101', '$2y$10$nW5XICRG2CZ1Zm70mRtVbOlhZSqg0DJZNEXE9fOiqVu3Qp5aLI6q2', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -51,8 +82,21 @@ CREATE TABLE `tbluserprofile` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- Dumping data for table `tbluserprofile`
+--
+
+INSERT INTO `tbluserprofile` (`user_id`, `firstname`, `lastname`, `birthdate`) VALUES
+(1, 'ADMIN101', 'ADMIN101', '2000-01-01');
+
+--
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `tblfanbase`
+--
+ALTER TABLE `tblfanbase`
+  ADD PRIMARY KEY (`fanbase_id`);
 
 --
 -- Indexes for table `tbluseraccount`
@@ -72,16 +116,22 @@ ALTER TABLE `tbluserprofile`
 --
 
 --
+-- AUTO_INCREMENT for table `tblfanbase`
+--
+ALTER TABLE `tblfanbase`
+  MODIFY `fanbase_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `tbluseraccount`
 --
 ALTER TABLE `tbluseraccount`
-  MODIFY `account_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `account_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tbluserprofile`
 --
 ALTER TABLE `tbluserprofile`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables

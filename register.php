@@ -1,6 +1,5 @@
 <?php 
-    include("connect.php");
-    require_once("includes/header.php");
+  include_once("includes/header.php");
 ?>
 
 <script src="js/register.js"></script>
@@ -148,86 +147,86 @@
 		$uname = $_POST['username'];
 		$pword = password_hash($_POST['password'], PASSWORD_BCRYPT);
 
-        // validating unique value for firstname, lastname and birthdate fields
-        $sqlTblUserProfileValidation = "SELECT * FROM tbluserprofile WHERE firstname = '$fname' AND lastname = '$lname' AND birthdate = '$bdate'";
-        $user_result = mysqli_query($connection, $sqlTblUserProfileValidation);
-        $tbluserprofile_row = mysqli_num_rows($user_result);
-        
-        if ($tbluserprofile_row == 0){ // user does not exist
-            //save data to tbluserprofile			
-            $sql1 ="INSERT into tbluserprofile(firstname,lastname,birthdate) values('".$fname."','".$lname."', '".$bdate."')";
-            mysqli_query($connection,$sql1);
-            $sqlUser_ID = $connection->insert_id;
-        } else {
-            // validating unique value for"
-            $user = mysqli_fetch_array($user_result);
-            // getting id from tbluserprofile
-            $user_id = $user[0];
-            $sqlUser_ID = $user_id;
+    // validating unique value for firstname, lastname and birthdate fields
+    $sqlTblUserProfileValidation = "SELECT * FROM tbluserprofile WHERE firstname = '$fname' AND lastname = '$lname' AND birthdate = '$bdate'";
+    $user_result = mysqli_query($connection, $sqlTblUserProfileValidation);
+    $tbluserprofile_row = mysqli_num_rows($user_result);
+    
+    if ($tbluserprofile_row == 0){ // user does not exist
+      //save data to tbluserprofile			
+      $sql1 ="INSERT into tbluserprofile(firstname,lastname,birthdate) values('".$fname."','".$lname."', '".$bdate."')";
+      mysqli_query($connection,$sql1);
+      $sqlUser_ID = $connection->insert_id;
+    } else {
+      // validating unique value for"
+      $user = mysqli_fetch_array($user_result);
+      // getting id from tbluserprofile
+      $user_id = $user[0];
+      $sqlUser_ID = $user_id;
 
-            // validate if user already has an account
-            $sqlTblUserAccountValidation = "SELECT * FROM tbluseraccount WHERE user_id = '$user_id'";
-            $acc_result = mysqli_query($connection, $sqlTblUserAccountValidation);
-            $tbluseraccount_row = mysqli_num_rows($acc_result);
+      // validate if user already has an account
+      $sqlTblUserAccountValidation = "SELECT * FROM tbluseraccount WHERE user_id = '$user_id'";
+      $acc_result = mysqli_query($connection, $sqlTblUserAccountValidation);
+      $tbluseraccount_row = mysqli_num_rows($acc_result);
 
-            if ($tbluseraccount_row != 0){
-                // if user already has an account, pop modal
+      if ($tbluseraccount_row != 0){
+        // if user already has an account, pop modal
 
-                echo "<script defer >
-                        $(function(){
-                            $('#userExistsModal').modal('show');
-                        })
-                </script>";
+        echo "<script defer >
+                $(function(){
+                    $('#userExistsModal').modal('show');
+                })
+        </script>";
 
-                return;
-            }
-        }
+        return;
+      }
+    }
 
         // validate email in tbluseraccount
 		$sqlUserEmailValidation = "SELECT email_add FROM tbluseraccount WHERE email_add = '$email'";
-        $email_result = mysqli_query($connection, $sqlUserEmailValidation);
-        $email_row = mysqli_num_rows($email_result);
+    $email_result = mysqli_query($connection, $sqlUserEmailValidation);
+    $email_row = mysqli_num_rows($email_result);
 
-        if ($email_row != 0){
-            // email already taken
-            echo "<script defer >
-                    $(function(){
-                        $('#firstname').val('".$fname."');
-                        $('#lastname').val('".$lname."');
-                        $('#birthdate').val('".$bdate."');
-                        $('#emailExistsModal').modal('show');
-                    })
-            </script>";
-            
-            return;
-        }
+    if ($email_row != 0){
+      // email already taken
+      echo "<script defer >
+              $(function(){
+                  $('#firstname').val('".$fname."');
+                  $('#lastname').val('".$lname."');
+                  $('#birthdate').val('".$bdate."');
+                  $('#emailExistsModal').modal('show');
+              })
+      </script>";
+      
+      return;
+    }
 
-        // validate username in tbluseraccount
-        $sqlUsernameValidation = "SELECT username FROM tbluseraccount WHERE username = '$uname'";
-        $username_result = mysqli_query($connection, $sqlUsernameValidation);
-        $username_row = mysqli_num_rows($username_result);
+    // validate username in tbluseraccount
+    $sqlUsernameValidation = "SELECT username FROM tbluseraccount WHERE username = '$uname'";
+    $username_result = mysqli_query($connection, $sqlUsernameValidation);
+    $username_row = mysqli_num_rows($username_result);
 
-        if ($username_row!= 0){
-            // username already taken
-            echo "<script language='javascript'>
-                $(function(){
-                    $('#firstname').val('".$fname."');
-                    $('#lastname').val('".$lname."');
-                    $('#birthdate').val('".$bdate."');
-                    $('#email').val('".$email."');
-                    $('#usernameExistsModal').modal('show');
-                })
-            </script>";
-            return;
-        }
+    if ($username_row!= 0){
+      // username already taken
+      echo "<script language='javascript'>
+          $(function(){
+              $('#firstname').val('".$fname."');
+              $('#lastname').val('".$lname."');
+              $('#birthdate').val('".$bdate."');
+              $('#email').val('".$email."');
+              $('#usernameExistsModal').modal('show');
+          })
+      </script>";
+      return;
+    }
 
-        $sql ="Insert into tbluseraccount(user_id, email_add,username,password) values('.$sqlUser_ID.', '".$email."','".$uname."','".$pword."')";
-        mysqli_query($connection,$sql);
-        echo "<script language='javascript'>
-            $(function(){
-                $('#regSuccessModal').modal('show');
-            })
+    $sql ="INSERT into tbluseraccount(user_id, email_add,username,password) values ('.$sqlUser_ID.', '".$email."','".$uname."','".$pword."')";
+    mysqli_query($connection,$sql);
+    echo "<script language='javascript'>
+          $(function(){
+              $('#regSuccessModal').modal('show');
+          })
         </script>";
-        exit();
+    exit();
 	}	
 ?>

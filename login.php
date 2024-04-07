@@ -1,5 +1,4 @@
 <?php
-    include("connect.php");
     include_once("includes/header.php");
 ?>
 <!-- MODALS -->
@@ -48,7 +47,6 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <!-- <a href="register.php" class="btn btn-outline-success">SIGN UP</a> -->
       </div>
     </div>
   </div>
@@ -57,7 +55,7 @@
 <section class="CreateNLog">
     <div>
         <p class="label">Log In</p>
-        <form action="login.php" method="post">
+        <form action="logInUser.php" method="post">
             <div class="formsch">
                 <div class="form-floating mb-3">
                     
@@ -88,38 +86,20 @@
 </footer>
 
 <?php
-    if($_SERVER['REQUEST_METHOD']==='POST'){
-		$uname = $_POST['username'];
-		$pass = $_POST['password'];
-		//check tbluseraccount if username is existing
-		$sql ="SELECT * from tbluseraccount where username='".$uname."'";
-		
-		$result = mysqli_query($connection,$sql);	
-		
-		$count = mysqli_num_rows($result);
-		$row = mysqli_fetch_array($result);
-		
+  if (isset($_GET['login_error_1'])){
+    echo "<script language = 'javascript'>
+          $(function(){
+            $('#unameErrorModal').modal('show');
+          })
+      </script>";
+  }
 
-        if ($count != 0 && password_verify($pass, $row[4])){
-            // if naa nay concept na log-out log-out or mag add ta
-            // $logInCookie = urlencode(base64_encode(serialize($row)));
-            // setcookie('user', $logInCookie, time() + (86400 * 30), "/");
-			echo "<script language='javascript'>
-                        window.location.replace('index.php');
-                </script>";
-        } else if($count == 0) {
-			echo "<script language = 'javascript'>
+  if (isset($_GET['login_error_2'])){
+    echo "<script language = 'javascript'>
 						$(function(){
-                            $('#unameErrorModal').modal('show');
-                        })
-				  </script>";
-		 } else {
-            echo "<script language = 'javascript'>
-						$(function(){
-                            $('#username').val('".$uname."');
-                            $('#passErrorModal').modal('show');
-                        })
-				  </script>";
-		}
-	}
+							$('#username').val('".$_GET['login_error_2']."');
+							$('#passErrorModal').modal('show');
+						})
+				</script>";
+  }
 ?>

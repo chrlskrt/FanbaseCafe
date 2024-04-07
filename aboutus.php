@@ -1,4 +1,5 @@
 <?php
+    include("connect.php");
     require_once("includes/header.php");
 ?>
 
@@ -9,6 +10,25 @@
     </div>
 </div>
  
+<?php
+$sqluser = "SELECT user_id FROM tbluseraccount";
+$sqlfanbase = "SELECT fanbase_id FROM tblfanbase";
+ 
+$resultuser = $connection->query($sqluser);
+$resultfanbase = $connection->query($sqlfanbase);
+ 
+$usercount = mysqli_num_rows($resultuser);
+$fanbasecount = mysqli_num_rows($resultfanbase);
+ 
+echo '
+<div class="flex-container" style=" padding: 30px">
+    <div class="label" style="font-size: 40px;"> NUMBER OF USERS: '." $usercount ".' </div>
+    <div class="label" style="font-size: 40px;"> NUMBER OF FANBASES: '." $fanbasecount ".' </div>
+</div>
+';
+ 
+?>
+
 <div id="about_us" class="flex-container" style="flex-direction: column; padding: 40px">
     <!-- <div class="label"> ABOUT US </div> -->
     <hr>
