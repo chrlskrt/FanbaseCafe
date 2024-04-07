@@ -32,7 +32,7 @@
 
         // unset($_SESSION['createFanbase_data']);
 
-        $sqlCreate ="INSERT into tblfanbase(fanbase_name,fanbase_artist, date_created, fanbase_description) values ('.$fname.', '".$artist."','".$date."','".$desc."')";
+        $sqlCreate ="INSERT into tblfanbase(fanbase_name,fanbase_artist, date_created, fanbase_description) values ('".$fname."', '".$artist."','".$date."','".$desc."')";
         mysqli_query($connection,$sqlCreate);
 
 		header('Location: manageApp.php?fanbaseCreate_success');
