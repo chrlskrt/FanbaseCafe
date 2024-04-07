@@ -21,6 +21,5 @@
 
         /* using session */
         $_SESSION["user"] = json_encode($user, true);
-	}
-
+    }
 ?>
