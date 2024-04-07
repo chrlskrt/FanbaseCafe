@@ -22,21 +22,28 @@
 
   <div class="flex-container fanbases" style="justify-content:start;">
 
+  <form action="fanbase.php" method="GET">
     <div class="card2">
       <img src="images/grptxt1.jpg" class="card2-img">
       <div class="cardContent">
         <img src="images/grptxtLogo.png" class="card2-logo"> 
          <p class="card2-name">TOMORROW X TOGETHER </p>
+         <button type="submit" role ="button" value="3" name="fanbase_ID"> View Fanbase </button>
       </div>
     </div> 
+  </form>
     
+  <form action="fanbase.php" method="GET">
     <div class="card2">
       <img src="images/grpsvt.jpg" class="card2-img">
       <div class="cardContent">
         <img src="images/grpsvtLogo.jpg" class="card2-logo"> 
          <p class="card2-name">SEVENTEEN</p>
+         <button type="submit" role ="button" value="1" name="fanbase_ID"> View Fanbase </button>
       </div>
     </div>
+</form>
+
     <div class="card2">
       <img src="images/grpbts.jpg" class="card2-img">
       <div class="cardContent">
