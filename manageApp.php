@@ -269,7 +269,7 @@
                     <td>'.$fanbase['fanbase_name'].'</td>
                     <td>'.$fanbase['date_created'].'</td>
                     <td>'.$fanbase['fanbase_description'].'</td>
-                    <td><a href="manageFanbase.php?fanbase_id='.$fanbase['fanbase_id'].'" class="btn btn-outline-success">Edit</a></td>
+                    <td><a href="manageFanbase.php?fanbase='.$fanbase['fanbase_name'].'" class="btn btn-outline-success">Edit</a></td>
                 </tr>
             ';
         }
