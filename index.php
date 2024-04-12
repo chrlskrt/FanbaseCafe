@@ -35,7 +35,7 @@
     
   <form action="fanbase.php" method="GET">
     <div class="card2">
-      <img src="images/grpsvt.jpg" class="card2-img">
+      <img src="images/grpcarat.jpg" class="card2-img">
       <div class="cardContent">
         <img src="images/grpsvtLogo.jpg" class="card2-logo"> 
          <p class="card2-name">SEVENTEEN</p>
