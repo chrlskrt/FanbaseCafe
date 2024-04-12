@@ -31,7 +31,7 @@
             <img src="images/grp<?php echo "$fanbaseName" ?>.jpg">
             <?php echo "$fanbaseArtist" ?> 
             <div class="text" style="padding: 0px;">
-                <a href="manageFanbase.php"><button>Manage Fanbase</button></a>
+                <a href="manageFanbase.php?fanbase=<?php echo ($fanbaseName) ?>" class="btn btn-outline-dark">Manage Fanbase</a>
             </div>
         </div>
 

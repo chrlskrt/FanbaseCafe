@@ -231,8 +231,7 @@ a {
 
 
 /* manageApp.php */
-
-.manageAppDiv {
+.manageAppDiv , .manageFanbaseDiv {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -243,4 +242,22 @@ a {
 .manageAppTable {
     border: 2px black solid; 
     --bs-table-bg: #e7e7e7;
+}
+
+.manageFanbaseDiv > .label {
+    display: flex;
+    font-size: 3vw;
+    align-items: center;
+    justify-content: center;
+    border: none;
+}
+
+.manageFanbaseDiv > div {
+    display: flex;
+    flex-direction: column;
+    gap:5px;
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+    align-items: center;
+    justify-content: center;
 }

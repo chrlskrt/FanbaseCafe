@@ -30,5 +30,12 @@
     if (isset($_POST['deleteUserAcc'])){
         // echo ("DELETING USER ID: " . $_POST['deleteUserAcc']);
         $account_id = $_POST['deleteUserAcc'];
+        $sqlDeleteUserAcc = "DELETE FROM tbluseraccount WHERE account_id={$account_id}";
+        $resultDeleteUserAcc = mysqli_query($connection, $sqlDeleteUserAcc);
+
+        if ($resultDeleteUserAcc){
+            header('Location: manageApp.php?deleteUserAcc');
+            exit();
+        }
     }
 ?>
