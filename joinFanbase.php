@@ -1,9 +1,23 @@
 <?php
+    include("includes/api.php");
+
+    $fanbaseID = $_POST["fanbaseID"];
     $accID = $_POST["fanbaseMember"];
-    $fanbaseID = $_POST["fanbaseName"];
 
     echo "$accID <br>";
     echo "$fanbaseID";
+    
+    $sqlCreate = "INSERT INTO tbluseraccount_fanbase (account_id, fanbase_id, date_joined)
+    VALUES ('$accID', '$fanbaseID', NOW())";
+    $resultCreate = mysqli_query($connection, $sqlCreate);
 
-    $query = INSERT INTO tbluseraccount_fanbase (account_id, fanbase_id, date_joined,)
+    //
+
+    $sqlCreate = "INSERT INTO tblfanbase_member (acc_fanbase_id)
+    VALUES ('$connection->insert_id')";
+    $resultCreate = mysqli_query($connection, $sqlCreate);
 ?>
+
+<div>
+    you have now joined the fanbase!
+</div>

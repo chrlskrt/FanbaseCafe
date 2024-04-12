@@ -43,6 +43,11 @@
             <input type="hidden" value="<?php echo $fanbaseID ?>" name="fanbaseID">
             <button type="submit" role="button" value="<?php echo ($current_user['account_id']) ?>" name="fanbaseMember"> Join now! </button>
         </form>
+
+        <form action="leaveFanbase.php" method="POST">
+            <input type="hidden" value="<?php echo $fanbaseID ?>" name="fanbaseID">
+            <button type="submit" role="button" value="<?php echo ($current_user['account_id']) ?>" name="leaveFanbaseMember"> Leave fanbase? </button>
+        </form>
     </div>
 
     <div class="flex-container" atyle="justify-content:space-between;">
