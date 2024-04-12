@@ -30,6 +30,9 @@
         <div class="label" style="font-size: 40px;"> 
             <img src="images/grp<?php echo "$fanbaseName" ?>.jpg">
             <?php echo "$fanbaseArtist" ?> 
+            <div class="text" style="padding: 0px;">
+                <a href="manageFanbase.php"><button>Manage Fanbase</button></a>
+            </div>
         </div>
 
         <hr>
