@@ -127,6 +127,54 @@
   </div>
 </div>
 
+<div class="modal fade" tabindex="-1" role="dialog" id="promoteUserModal">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"> Success! </h5>
+      </div>
+      <div class="modal-body">
+        <p>User, <b><?php echo $_SESSION['manageAppUser_data']['username'] ?></b>, is successfully promoted to <b>Sys_Admin</b>!</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="demoteUserModal">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"> Success! </h5>
+      </div>
+      <div class="modal-body">
+        <p>User, <b><?php echo $_SESSION['manageAppUser_data']['username'] ?></b>, is successfully demoted to an <b>ordinary user</b>!</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="deleteUserAccountModal">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"> Success!</h5>
+      </div>
+      <div class="modal-body">
+        <p>Account, <b><?php echo $_SESSION['manageAppUser_data']['username'] ?></b>, is successfully deleted from the system!</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <?php
     if (isset($_GET['artistFanbase_exists'])){
         echo "<script language = 'javascript'>
@@ -157,6 +205,25 @@
                     })
                 </script>";
     }
+
+    if (isset($_GET['promoteUser'])){
+        echo "<script language = 'javascript'>
+                    $(function(){
+                        $('#manageUsersTable').show();
+                        $('#promoteUserModal').modal('show');
+                    })
+                </script>";
+    }
+
+    if (isset($_GET['demoteUser'])){
+        echo "<script language = 'javascript'>
+                    $(function(){
+                        $('#manageUsersTable').show();
+                        $('#demoteUserModal').modal('show');
+                    })
+                </script>";
+    }
+
     function displayFanbasesTable(){
         global $connection;
 
@@ -279,9 +346,10 @@
                                     // if the current user entry is a system_admin, ang option niya is demote to normal user
                                     // if the current user entry is not a system_admin, ang option is promote to system admin
                                     (($user['isSysAdmin'] == 0) ? 
-                                    '<button class="btn btn-outline-success" type="submit" name="promoteUser" value="'.$user['user_id']['user_id'].'">Promote to <b>SYSTEM ADMIN</b></button>' 
-                                : '<button class="btn btn-outline-success" type="submit" name="demoteUser" value="'.$user['user_id']['user_id'].'">Demote to <b>NORMAL USER</b></button>')
-                            .'<button class="btn btn-danger" type="submit" name="deleteUserAcc" value="'.$user['account_id'].'">Delete User Account</button>
+                                    '<button class="btn btn-outline-success" type="submit" name="promoteUser" value="'.$user['account_id'].'">Promote to <b>SYSTEM ADMIN</b></button>' 
+                                : '<button class="btn btn-outline-success" type="submit" name="demoteUser" value="'.$user['account_id'].'">Demote to <b>NORMAL USER</b></button>')
+                            .'<input type="hidden" name="username" value="'.$user['username'].'">
+                            <button class="btn btn-danger" type="submit" name="deleteUserAcc" value="'.$user['account_id'].'">Delete User Account</button>
                             </div></form>' 
                         : '').'</td>
                 </tr>

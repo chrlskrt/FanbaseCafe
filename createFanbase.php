@@ -36,5 +36,6 @@
         mysqli_query($connection,$sqlCreate);
 
 		header('Location: manageApp.php?fanbaseCreate_success');
+        exit();
 	}
 ?>
