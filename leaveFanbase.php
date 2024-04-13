@@ -13,6 +13,9 @@
     $stmt->execute();
 
     $stmt->close();
+
+    header("Location: fanbase.php?fanbase_ID={$fanbaseID}");
+    exit();
 ?>
 
-<div> left fanbase successfully </div>
+<!-- <div> left fanbase successfully </div> -->

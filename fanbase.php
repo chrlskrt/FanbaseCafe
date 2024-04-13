@@ -26,14 +26,14 @@
             $joinStr .= '
             <form action="joinFanbase.php" method="POST">
                 <input type="hidden" value="'.$fanbaseID.'" name="fanbaseID">
-                <button type="submit" role="button" value="'.($current_user["account_id"]).'" name="fanbaseMember"> Join now! </button>
+                <button type="submit" id="btnJoinFanbase" role="button" value="'.($current_user["account_id"]).'" name="fanbaseMember"> Join now! </button>
             </form>
         ';
         } else {
             $joinStr .= '
             <form action="leaveFanbase.php" method="POST">
                 <input type="hidden" value="'.$fanbaseID.'" name="fanbaseID">
-                <button type="submit" role="button" value="'.($current_user["account_id"]).'" name="leaveFanbaseMember"> Leave fanbase? </button>
+                <button type="submit" id="btnLeaveFanbase" role="button" value="'.($current_user["account_id"]).'" name="leaveFanbaseMember"> Leave fanbase? </button>
             </form>
             ';
         }
@@ -57,7 +57,13 @@
         <div class="label" style="font-size: 40px; padding: 30px;"> 
             <?php echo "$fanbaseArtist" ?> 
             <div class="text" style="padding: 0px;">
-                <a href="manageFanbase.php?fanbase=<?php echo ($fanbaseName) ?>" class="btn btn-outline-dark">Manage Fanbase</a>
+                <?php
+                    if ($current_user){
+                        echo '<a href="manageFanbase.php?fanbase='.$fanbaseName.'" class="btn btn-outline-dark">Manage Fanbase</a>';
+                    } else {
+                        echo '<button class="btn btn-outline-dark" disabled>Manage Fanbase</button>';
+                    }
+                ?>
             </div>
         </div>
 
@@ -69,11 +75,15 @@
                 Total Member count:" ?> 
         </div>
 
-        <?php echo displayButton(); ?>
+        <?php 
+            if ($current_user){
+                echo displayButton();
+            }
+        ?>
     </div>
 
+<section id="mainFanbaseContent">
     <hr>
-
     <div class="manageAppDiv">
         <div class="container" style="justify-content: space-around">
             <button type="button" class="btn btn-outline-dark" id="btnCreateEvent">Create Event</button>
@@ -127,6 +137,7 @@
             ?>
         </div>
     </div>
+</section>
 
 <footer>
     <nav class="navbar">
