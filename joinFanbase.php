@@ -4,8 +4,8 @@
     $fanbaseID = $_POST["fanbaseID"];
     $accID = $_POST["fanbaseMember"];
 
-    echo "$accID <br>";
-    echo "$fanbaseID";
+    echo "accid: $accID <br>";
+    echo "fanbaseid: $fanbaseID";
     
     $sqlCreate = "INSERT INTO tbluseraccount_fanbase (account_id, fanbase_id, date_joined)
     VALUES ('$accID', '$fanbaseID', NOW())";
@@ -16,6 +16,7 @@
     $sqlCreate = "INSERT INTO tblfanbase_member (acc_fanbase_id)
     VALUES ('$connection->insert_id')";
     $resultCreate = mysqli_query($connection, $sqlCreate);
+
 ?>
 
 <div>

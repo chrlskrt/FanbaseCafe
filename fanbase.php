@@ -15,6 +15,32 @@
     $stmt -> close();
     // echo "fanbase name : $fanbaseName <br> fanbase artist : $fanbaseArtist <br> fanbase description : $fanbaseDescription";
     
+    function displayButton(){
+        global $connection, $fanbaseID, $current_user;
+
+        $sqlfanbase = "SELECT * FROM tbluseraccount_fanbase WHERE fanbase_id = {$fanbaseID} AND account_id = {$current_user['account_id']}";
+        $sqlResult = mysqli_query($connection, $sqlfanbase);
+
+        $joinStr = NULL;
+        if(mysqli_num_rows($sqlResult) == 0) {
+            $joinStr .= '
+            <form action="joinFanbase.php" method="POST">
+                <input type="hidden" value="'.$fanbaseID.'" name="fanbaseID">
+                <button type="submit" role="button" value="'.($current_user["account_id"]).'" name="fanbaseMember"> Join now! </button>
+            </form>
+        ';
+        } else {
+            $joinStr .= '
+            <form action="leaveFanbase.php" method="POST">
+                <input type="hidden" value="'.$fanbaseID.'" name="fanbaseID">
+                <button type="submit" role="button" value="'.($current_user["account_id"]).'" name="leaveFanbaseMember"> Leave fanbase? </button>
+            </form>
+            ';
+        }
+
+        return $joinStr;
+    }
+
 ?>
 
 <script src="js/fanbase.js"></script>
@@ -42,15 +68,8 @@
             echo "$fanbaseDesc <br>
                 Total Member count:" ?> 
         </div>
-        <form action="joinFanbase.php" method="POST">
-            <input type="hidden" value="<?php echo $fanbaseID ?>" name="fanbaseID">
-            <button type="submit" role="button" value="<?php echo ($current_user['account_id']) ?>" name="fanbaseMember"> Join now! </button>
-        </form>
 
-        <form action="leaveFanbase.php" method="POST">
-            <input type="hidden" value="<?php echo $fanbaseID ?>" name="fanbaseID">
-            <button type="submit" role="button" value="<?php echo ($current_user['account_id']) ?>" name="leaveFanbaseMember"> Leave fanbase? </button>
-        </form>
+        <?php echo displayButton(); ?>
     </div>
 
     <hr>
