@@ -26,8 +26,8 @@
     </div>
 
     <div class="flex-container" style="flex-direction: column; padding: 40px;"> 
-        <div class="label" style="font-size: 40px;"> 
-            <img src="images/grp<?php echo "$fanbaseName" ?>.jpg">
+        <img src="images/grp<?php echo "$fanbaseName" ?>.jpg" style="height: 800px; width:800px;">
+        <div class="label" style="font-size: 40px; padding: 30px;"> 
             <?php echo "$fanbaseArtist" ?> 
             <div class="text" style="padding: 0px;">
                 <a href="manageFanbase.php?fanbase=<?php echo ($fanbaseName) ?>" class="btn btn-outline-dark">Manage Fanbase</a>
@@ -108,14 +108,19 @@
         </div>
     </div>
 
-    <div class="flex-container" atyle="justify-content:space-between;">
-        
-        <div>POSTS</div>
-        <div>
-            <div>GROUP INFO</div>
-            <div>MEMBERS COUNT</div>
-            <div>EVENTS</div>
+    <div class="main-container" style="margin-bottom: 20px;">
+    <div class="flex-container">
+        <div class="white-container">
+            <div class="main-container-nopaddings">
+                <b> SVT FANMEET EVENT </b>
+                <hr>
+                <div class="text"> Cebu fan meet and greet 
+                    <div class="text" style="color:#808080"> Date: April 15, 2024 Time: 1:00 PM Location: Cebu </div>
+                    Seventeen members visit the Philippines for a fanmeet event!
+                </div>
+            </div>
         </div>
+    </div>
     </div>
 
 <?php
@@ -123,3 +128,13 @@
         return "events ni dapit";
     }
 ?>
+
+<footer>
+    <nav class="navbar">
+        <a class="navbar-brand" href="#">
+            Charlene Repuesto and Angel Sheinen O. Cambarijan
+            <br>
+            BSCS 2
+        </a>
+    </nav>
+</footer>
