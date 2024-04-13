@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 12, 2024 at 07:03 AM
+-- Generation Time: Apr 13, 2024 at 05:14 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -35,7 +35,8 @@ CREATE TABLE `tblevent` (
   `event_type` varchar(30) NOT NULL,
   `event_date` date NOT NULL,
   `event_time` time(6) NOT NULL,
-  `event_location` varchar(100) NOT NULL
+  `event_location` varchar(100) NOT NULL,
+  `event_description` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
