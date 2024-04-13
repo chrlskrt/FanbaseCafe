@@ -12,6 +12,7 @@
 
     mysqli_stmt_fetch($stmt);
 
+    $stmt -> close();
     // echo "fanbase name : $fanbaseName <br> fanbase artist : $fanbaseArtist <br> fanbase description : $fanbaseDescription";
     
 ?>
@@ -61,7 +62,7 @@
         </div>
 
         <div class="flex-container" id="createEventDiv" style="flex-direction:column; align-items: center;">
-            <a class="btn label" id="createFanbaseDiv" style="font-size: 1.5vw;">[ Create Event ]</a>
+            <a class="btn label" id="createFanbaseDiv" style="font-size: 20px;">[ Create Event ]</a>
             <form action="createEvent.php" method="post">
                 <div class="formsch">
                     <div class="form-floating mb-3"> 
@@ -99,35 +100,14 @@
     <hr>
 
     <div class="manageAppDiv" id="displayEvents">
-        <div class="label" style="font-size: 1vw; justify-content:flex-start">Events</div>
+        <div class="label" style="font-size: 20px; justify-content:flex-start">Events</div>
         
-        <div style="display: flex; justify-content: center;">
+        <div style="display: flex; flex-direction:column; gap: 10px; justify-content: center;">
             <?php
                 echo displayEvents();
             ?>
         </div>
     </div>
-
-    <div class="main-container" style="margin-bottom: 20px;">
-    <div class="flex-container">
-        <div class="white-container">
-            <div class="main-container-nopaddings">
-                <b> SVT FANMEET EVENT </b>
-                <hr>
-                <div class="text"> Cebu fan meet and greet 
-                    <div class="text" style="color:#808080"> Date: April 15, 2024 Time: 1:00 PM Location: Cebu </div>
-                    Seventeen members visit the Philippines for a fanmeet event!
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
-
-<?php
-    function displayEvents(){
-        return "events ni dapit";
-    }
-?>
 
 <footer>
     <nav class="navbar">
@@ -138,3 +118,51 @@
         </a>
     </nav>
 </footer>
+
+
+<?php
+    function displayEvents(){
+        global $connection, $fanbaseID;
+
+        // getting ALL events for this fanbase from tblevent
+        $sqlevents = "SELECT * FROM tblevent WHERE fanbase_id = {$fanbaseID}";
+        $resultevents = mysqli_query($connection, $sqlevents);
+        
+        // creating an empty array
+        $fanbaseEventsArr = array();
+
+        if ($resultevents){
+            /* query is a success
+            /* looping thru every row of record sa tblfanbase */
+            while ($row = $resultevents->fetch_assoc()) {
+                /* $row = 1 fanbase entry
+                /* iadd siya sa fanbase array */
+                $row['event_date'] = date_format(date_create($row['event_date']), "F d, Y");
+                $row['event_time'] = date_format(date_create($row['event_time']), "g:i A");
+                $fanbaseEventsArr[] = $row;
+            } 
+
+            $resultevents->free(); // freeing result set
+        }
+
+        $eventsStr = '';
+        foreach ($fanbaseEventsArr as $fanbaseEvent) {
+            $eventsStr .= '
+                <div class="flex-container">
+                    <div class="white-container">
+                        <div class="main-container-nopaddings">
+                            <b>'.$fanbaseEvent['event_name'].'</b>
+                            <hr>
+                            <div class="text"> A '.$fanbaseEvent['event_type'].' Event 
+                                <div class="text" style="color:#808080"> Date: '.$fanbaseEvent['event_date'].' Time: '.$fanbaseEvent['event_time'].' Location: '.$fanbaseEvent['event_location'].' </div>
+                                '.$fanbaseEvent['event_description'].'
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            ';
+        }
+
+        return $eventsStr;
+    }
+?>
