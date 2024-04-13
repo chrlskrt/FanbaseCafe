@@ -17,10 +17,14 @@
     $sqlECount = mysqli_num_rows($sqlERes);
 
     if ($sqlECount == 0){
-        $sqlAddEvent = "INSERT INTO tblevent (account_id, fanbase_id, event_name, event_type, event_date, event_time, event_location, event_description)
-                        VALUES ('{$account_id}', '{$fanbase_id}', '{$event_name}', '{$event_type}', '{$event_date}', '{$event_time}', '{$event_location}', '{$event_description}')";
-        
-        mysqli_query($connection, $sqlAddEvent);
+        $stmtAddEvent = $connection->prepare("INSERT INTO tblevent (account_id, fanbase_id, event_name, event_type, event_date, event_time, event_location, event_description) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmtAddEvent->bind_param("iissssss", $account_id, $fanbase_id, $event_name, $event_type, $event_date, $event_time, $event_location, $event_description);
+        // $sqlAddEvent = "INSERT INTO tblevent (account_id, fanbase_id, event_name, event_type, event_date, event_time, event_location, event_description)
+        //                 VALUES ('{$account_id}', '{$fanbase_id}', '{$event_name}', '{$event_type}', '{$event_date}', '{$event_time}', '{$event_location}', {$event_description})";
+        // mysqli_query($connection, $sqlAddEvent);
+
+        $stmtAddEvent->execute();
+        $stmtAddEvent->close();
     }
 
     header("Location: fanbase.php?fanbase_ID={$fanbase_id}");
