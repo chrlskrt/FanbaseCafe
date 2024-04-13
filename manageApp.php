@@ -351,7 +351,7 @@
                     <td>'.
                         // if ang current na user entry is ang current_user logged in, dili siya ka demote sa iyang self ug ka delete sa iyang account
                         (($user['account_id'] != $current_user['account_id']) ?
-                            '<form action="manageAppUser.php" method="post"><div class="flex-container" style="gap: 5px;">'.
+                            '<form action="manageAppUser.php" method="post" style="margin-bottom:0"><div class="flex-container" style="gap: 5px;">'.
                                     // if the current user entry is a system_admin, ang option niya is demote to normal user
                                     // if the current user entry is not a system_admin, ang option is promote to system admin
                                     (($user['isSysAdmin'] == 0) ? 

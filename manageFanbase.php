@@ -41,7 +41,7 @@
     </div>
 
     <div class="manageFanbaseDiv">
-        <div class="btn label" id="manageUsersDiv" style="font-size: 3vw; text-align:left">+ Manage Fanbase MEMBERS</div>
+        <div class="btn label" id="manageMembersDiv" style="font-size: 3vw; text-align:left; font-weight:unset">+ Manage Fanbase MEMBERS</div>
         <?php
             echo displayMembersTable();
         ?>
@@ -94,7 +94,7 @@
         }
 
         // creating the Members table
-        $MembersTableStr = "<div style='display: flex; justify-content: center; border: none'>
+        $MembersTableStr = "<div style='display: flex; justify-content: center; border: none; font-size:2vw'>
                             MEMBERS
                     <div class='table-responsive-lg'><table class='table table-bordered table-hover manageAppTable'>
                         <thead>
@@ -109,7 +109,7 @@
                         <tbody>";
 
         // creating the Admins table
-        $AdminsTableStr = "<div style='display: flex; justify-content: center; border:none'>
+        $AdminsTableStr = "<div style='display: flex; justify-content: center; border:none; font-size:2vw'>
                             ADMINS
                     <div class='table-responsive-lg'><table class='table table-bordered table-hover manageAppTable'>
                         <thead>
