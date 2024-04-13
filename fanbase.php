@@ -82,7 +82,7 @@
         ?>
     </div>
 
-<section id="mainFanbaseContent">
+<section id="mainFanbaseContent" style="display:flex; flex-direction:column;">
     <hr>
     <div class="manageAppDiv">
         <div class="container" style="justify-content: space-around">
@@ -178,7 +178,7 @@
         $eventsStr = '';
         foreach ($fanbaseEventsArr as $fanbaseEvent) {
             $eventsStr .= '
-                <div class="flex-container">
+                <div class="flex-container" style="margin-bottom:5px;">
                     <div class="white-container">
                         <div class="main-container-nopaddings">
                             <b>'.$fanbaseEvent['event_name'].'</b>

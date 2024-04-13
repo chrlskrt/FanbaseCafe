@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 13, 2024 at 05:14 AM
+-- Generation Time: Apr 13, 2024 at 11:13 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -38,6 +38,17 @@ CREATE TABLE `tblevent` (
   `event_location` varchar(100) NOT NULL,
   `event_description` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tblevent`
+--
+
+INSERT INTO `tblevent` (`event_id`, `account_id`, `fanbase_id`, `event_name`, `event_type`, `event_date`, `event_time`, `event_location`, `event_description`) VALUES
+(1, 1, 1, 'SVT CEBU MEET & GREET', 'Meet & Greet', '2024-05-15', '15:00:00.000000', 'SM Seaside, SRP', 'K-POP Boy Group SEVENTEEN will hold an offsite MEET & GREET with CARATs in CEBU to celebrate the success of their latest album.'),
+(2, 1, 2, 'BLINK CUP-SLEEVEE EXTRAVAGANZA!', 'Cupsleeve', '2024-06-05', '10:00:00.000000', 'SM Seaside, SRP', 'Design your own BLACKPINK cup sleeve & win merch!  #BLINKCupSleeveEvent'),
+(3, 1, 3, 'TXT \"Dream Chapter: MOA Playground\"', 'DREAM', '2024-08-14', '10:00:00.000000', 'ANJO World, CEBU', 'Live music, games, fansign & exclusive merch! Don\'t miss the MOA party with TXT! #TXTMoaPlayground'),
+(4, 1, 4, 'BTS Muster: Light the Night (CEBU)', 'Concert', '2024-04-25', '18:00:00.000000', 'Ayala Malls, Lahug', 'This event is primarily a concert, focusing on a live performance by BTS where fans can sing along, dance, and celebrate their love for the group. The additional elements like special surprises and ARMY-focused activities enhance the concert experience but don\'t overshadow the core focus on live music.'),
+(5, 1, 5, 'iKONIC Night: Dive into the KINGDOM', 'Fan Festival', '2024-05-30', '16:00:00.000000', 'Cebu Institute of Technology-University', 'iKONICS, relive KINGDOM & celebrate iKON!\r\n\r\nEnjoy video screening, games, exclusive content & merch. Mingle with fellow fans & create lasting memories!  #iKONICNight');
 
 -- --------------------------------------------------------
 
@@ -88,6 +99,19 @@ CREATE TABLE `tblfanbase_member` (
   `acc_fanbase_id` int(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `tblfanbase_member`
+--
+
+INSERT INTO `tblfanbase_member` (`fanbase_member_id`, `acc_fanbase_id`) VALUES
+(1, 1),
+(2, 2),
+(3, 3),
+(4, 4),
+(5, 5),
+(6, 6),
+(7, 7);
+
 -- --------------------------------------------------------
 
 --
@@ -137,8 +161,9 @@ CREATE TABLE `tbluseraccount` (
 --
 
 INSERT INTO `tbluseraccount` (`account_id`, `user_id`, `email_add`, `username`, `password`, `isMember`, `isSysAdmin`) VALUES
-(1, 1, 'admin101@gmail.com', 'admin101', '$2y$10$nW5XICRG2CZ1Zm70mRtVbOlhZSqg0DJZNEXE9fOiqVu3Qp5aLI6q2', 1, 1),
-(2, 2, 'repuestoc@gmail.com', 'chrls', '$2y$10$eC90Nbicrt25nE2eu4DiZOb723KZrrEei5GRNAUA8p9XaraEIjPL6', 1, 0);
+(1, 1, 'admin101@gmail.com', 'admin101', '$2y$10$TM8wTyla68b9H3JKS/wIxu95lh4RyGCuSKqdrR8Klml9sU57fMCMC', 1, 1),
+(2, 2, 'pop@gmail.com', 'pop', '$2y$10$QUL4DkkPR3yVaTYNEkJewuR.L16XCPIvaYJzQ2JkL8MEkcBkVVln2', 1, 0),
+(3, 3, 'ice@gmail.com', 'ice', '$2y$10$wlu4WdFyy0KRdbhLgX55ZuP6wocbpM0h3Mfc4qEuMIQmL4tADleFm', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -154,6 +179,19 @@ CREATE TABLE `tbluseraccount_fanbase` (
   `isMember` int(1) NOT NULL DEFAULT 1,
   `isAdmin` int(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbluseraccount_fanbase`
+--
+
+INSERT INTO `tbluseraccount_fanbase` (`acc_fanbase_id`, `account_id`, `fanbase_id`, `date_joined`, `isMember`, `isAdmin`) VALUES
+(1, 1, 1, '2024-04-13', 1, 0),
+(2, 1, 2, '2024-04-13', 1, 0),
+(3, 1, 3, '2024-04-13', 1, 0),
+(4, 1, 4, '2024-04-13', 1, 0),
+(5, 1, 5, '2024-04-13', 1, 0),
+(6, 2, 1, '2024-04-13', 1, 0),
+(7, 2, 3, '2024-04-13', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -173,8 +211,9 @@ CREATE TABLE `tbluserprofile` (
 --
 
 INSERT INTO `tbluserprofile` (`user_id`, `firstname`, `lastname`, `birthdate`) VALUES
-(1, 'ADMIN101', 'ADMIN101', '2000-01-01'),
-(2, 'charlene', 'repuesto', '2004-09-19');
+(1, 'admin101', 'admin101', '2001-01-01'),
+(2, 'pop', 'pop', '2001-01-02'),
+(3, 'ice', 'ice', '2001-01-02');
 
 --
 -- Indexes for dumped tables
@@ -254,7 +293,7 @@ ALTER TABLE `tbluserprofile`
 -- AUTO_INCREMENT for table `tblevent`
 --
 ALTER TABLE `tblevent`
-  MODIFY `event_id` int(6) NOT NULL AUTO_INCREMENT;
+  MODIFY `event_id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tblfanbase`
@@ -272,7 +311,7 @@ ALTER TABLE `tblfanbase_admin`
 -- AUTO_INCREMENT for table `tblfanbase_member`
 --
 ALTER TABLE `tblfanbase_member`
-  MODIFY `fanbase_member_id` int(6) NOT NULL AUTO_INCREMENT;
+  MODIFY `fanbase_member_id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `tblpost`
@@ -290,19 +329,19 @@ ALTER TABLE `tblreply`
 -- AUTO_INCREMENT for table `tbluseraccount`
 --
 ALTER TABLE `tbluseraccount`
-  MODIFY `account_id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `account_id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tbluseraccount_fanbase`
 --
 ALTER TABLE `tbluseraccount_fanbase`
-  MODIFY `acc_fanbase_id` int(6) NOT NULL AUTO_INCREMENT;
+  MODIFY `acc_fanbase_id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `tbluserprofile`
 --
 ALTER TABLE `tbluserprofile`
-  MODIFY `user_id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `user_id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
