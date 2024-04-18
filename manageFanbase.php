@@ -33,10 +33,13 @@
                     <textarea class="form-control" name="fanbase_description" id="fanbase_description" required><?php echo ($fanbase['fanbase_description']) ?></textarea>
                 </div>
                 <div style="display:flex; justify-content:space-between">
-                    <button type="button" class="btn btn-outline-danger" id="cancelEdit">Cancel Edit</button>
-                    <button id="btnUpdateFanbaseDetails" value="1" type="submit" role="button" class="btn btn-success">Update Fanbase Details</button>
+                    <button type="button" class="btn btn-warning" id="cancelEdit">Cancel Edit</button>
+                    <button id="btnUpdateFanbaseDetails" value="<?php echo $fanbaseName ?>" name="fanbase" type="submit" role="button" class="btn btn-success">Update Details</button>
                 </div>
             </div>
+        </form>
+        <form action="deleteFanbase.php" method="POST">
+            <button id="btnDeleteFanbase" value="<?php echo $fanbaseName ?>" name="fanbase" type="submit" role="button" class="btn btn-outline-danger">Delete Fanbase</button>
         </form>
     </div>
 

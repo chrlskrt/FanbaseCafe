@@ -13,34 +13,6 @@
     mysqli_stmt_fetch($stmt);
 
     $stmt -> close();
-    // echo "fanbase name : $fanbaseName <br> fanbase artist : $fanbaseArtist <br> fanbase description : $fanbaseDescription";
-    
-    function displayButton(){
-        global $connection, $fanbaseID, $current_user;
-
-        $sqlfanbase = "SELECT * FROM tbluseraccount_fanbase WHERE fanbase_id = {$fanbaseID} AND account_id = {$current_user['account_id']}";
-        $sqlResult = mysqli_query($connection, $sqlfanbase);
-
-        $joinStr = NULL;
-        if(mysqli_num_rows($sqlResult) == 0) {
-            $joinStr .= '
-            <form action="joinFanbase.php" method="POST">
-                <input type="hidden" value="'.$fanbaseID.'" name="fanbaseID">
-                <button type="submit" id="btnJoinFanbase" role="button" value="'.($current_user["account_id"]).'" name="fanbaseMember"> Join now! </button>
-            </form>
-        ';
-        } else {
-            $joinStr .= '
-            <form action="leaveFanbase.php" method="POST">
-                <input type="hidden" value="'.$fanbaseID.'" name="fanbaseID">
-                <button type="submit" id="btnLeaveFanbase" role="button" value="'.($current_user["account_id"]).'" name="leaveFanbaseMember"> Leave fanbase? </button>
-            </form>
-            ';
-        }
-
-        return $joinStr;
-    }
-
 ?>
 
 <script src="js/fanbase.js"></script>
@@ -128,10 +100,10 @@
 
     <hr>
 
-    <div class="manageAppDiv" id="displayEvents">
+    <div class="manageAppDiv" id="displayEvents" style="align-items: center;">
         <div class="label" style="font-size: 20px; justify-content:flex-start">Events</div>
         
-        <div style="display: flex; flex-direction:column; gap: 10px; justify-content: center;">
+        <div style="display: flex; flex-direction:column; gap: 10px; justify-content: center; align-items: center; width: 75vw;">
             <?php
                 echo displayEvents();
             ?>
@@ -151,9 +123,39 @@
 
 
 <?php
-    function displayEvents(){
-        global $connection, $fanbaseID;
+    // echo "fanbase name : $fanbaseName <br> fanbase artist : $fanbaseArtist <br> fanbase description : $fanbaseDescription";
+    function displayButton(){
+        global $connection, $fanbaseID, $current_user;
 
+        $sqlfanbase = "SELECT * FROM tbluseraccount_fanbase WHERE fanbase_id = {$fanbaseID} AND account_id = {$current_user['account_id']}";
+        $sqlResult = mysqli_query($connection, $sqlfanbase);
+
+        $joinStr = NULL;
+        if(mysqli_num_rows($sqlResult) == 0) {
+            $joinStr .= '
+            <form action="joinFanbase.php" method="POST">
+                <input type="hidden" value="'.$fanbaseID.'" name="fanbaseID">
+                <button type="submit" id="btnJoinFanbase" role="button" value="'.($current_user["account_id"]).'" name="fanbaseMember"> Join now! </button>
+            </form>
+        ';
+        } else {
+            $joinStr .= '
+            <form action="leaveFanbase.php" method="POST">
+                <input type="hidden" value="'.$fanbaseID.'" name="fanbaseID">
+                <button type="submit" id="btnLeaveFanbase" role="button" value="'.($current_user["account_id"]).'" name="leaveFanbaseMember"> Leave fanbase? </button>
+            </form>
+            ';
+        }
+
+        return $joinStr;
+    }
+    function displayEvents(){
+        global $connection, $fanbaseID, $current_user;
+
+        $sqlCurrFanbaseMember = "SELECT * FROM tbluseraccount_fanbase WHERE fanbase_id = {$fanbaseID} AND account_id = {$current_user['account_id']}";
+        $resMem = mysqli_fetch_array(mysqli_query($connection, $sqlCurrFanbaseMember));
+        $isFanbaseAdmin = $resMem['isAdmin'];
+        
         // getting ALL events for this fanbase from tblevent
         $sqlevents = "SELECT * FROM tblevent WHERE fanbase_id = {$fanbaseID}";
         $resultevents = mysqli_query($connection, $sqlevents);
@@ -169,6 +171,11 @@
                 /* iadd siya sa fanbase array */
                 $row['event_date'] = date_format(date_create($row['event_date']), "F d, Y");
                 $row['event_time'] = date_format(date_create($row['event_time']), "g:i A");
+
+                $mysqlUser = "SELECT * from tbluseraccount WHERE account_id = {$row['account_id']}";
+                $res = mysqli_query($connection, $mysqlUser);
+                $row['account_id'] = mysqli_fetch_array($res);
+
                 $fanbaseEventsArr[] = $row;
             } 
 
@@ -178,13 +185,22 @@
         $eventsStr = '';
         foreach ($fanbaseEventsArr as $fanbaseEvent) {
             $eventsStr .= '
-                <div class="flex-container" style="margin-bottom:5px;">
+                <div class="flex-container dd" style="margin-bottom:5px;">
                     <div class="white-container">
                         <div class="main-container-nopaddings">
-                            <b>'.$fanbaseEvent['event_name'].'</b>
+                            <div class="flex-container" style="justify-content: space between">
+                                <b>'.$fanbaseEvent['event_name'].'</b>'.
+                                (($isFanbaseAdmin == 1 || $current_user['account_id'] == $fanbaseEvent['account_id']['account_id']) ? 
+                                    '<form action="deleteEvent.php" method="POST">
+                                        <input type="hidden" name="fanbase_id" value="'.$fanbaseEvent['fanbase_id'].'">
+                                        <button class="btn btn-outline-dark" name="deleteEvent" value="'.$fanbaseEvent['event_id'].'" role="button" type="submit">Delete Event</button> 
+                                    </form>'
+                                : '')
+                            .'</div>
                             <hr>
                             <div class="text"> A '.$fanbaseEvent['event_type'].' Event 
-                                <div class="text" style="color:#808080"> Date: '.$fanbaseEvent['event_date'].' Time: '.$fanbaseEvent['event_time'].' Location: '.$fanbaseEvent['event_location'].' </div>
+                                <div class="text" style="color:#808080; padding: 0px"> Organizer: '.$fanbaseEvent['account_id']['username'].' </div>
+                                <div class="text" style="color:#808080; padding-top: 0px"> Date: '.$fanbaseEvent['event_date'].' Time: '.$fanbaseEvent['event_time'].' Location: '.$fanbaseEvent['event_location'].' </div>
                                 '.$fanbaseEvent['event_description'].'
                             </div>
                         </div>

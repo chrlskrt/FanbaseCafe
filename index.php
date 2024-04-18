@@ -48,16 +48,13 @@
         foreach($fanbaseArray as $fanbase) {
           $fanbaseCard .= '
           
-        <form action="fanbase.php" method="GET">
-        <div class="card2">
-          <img src="images/grp'.$fanbase['fanbase_name'].'.jpg" class="card2-img">
+          <a href="fanbase.php?fanbase_ID='.$fanbase['fanbase_id'].'" class="card2">
+            <img src="images/grp'.$fanbase['fanbase_name'].'.jpg" class="card2-img">
             <div class="cardContent">
               <img src="images/grp'.$fanbase['fanbase_name'].'Logo.jpg" class="card2-logo"> 
               <p class="card2-name">'.$fanbase['fanbase_artist'].' </p>
-              <button type="submit" role ="button" value="'.$fanbase['fanbase_id'].'" name="fanbase_ID"> View Fanbase </button>
             </div>
-        </div> 
-        </form>
+          </a>
 
           ';
         }
