@@ -1,8 +1,7 @@
 <?php 
     include("includes/header.php");
-    $fanbaseID = $_GET["fanbase_ID"];
-    // echo "test fanabse id: {$fanbaseID}<br>";
 
+    $fanbaseID = $_GET["fanbase_ID"];
     $query = "SELECT fanbase_name, fanbase_artist, fanbase_description FROM tblfanbase WHERE fanbase_id = ?";
     $stmt = mysqli_prepare($connection, $query);
     mysqli_stmt_bind_param($stmt, "i", $fanbaseID);
@@ -17,42 +16,42 @@
 
 <script src="js/fanbase.js"></script>
 
-    <div class="white-container" style="align-items:flex-start; justify-content:space-evenly;">
-        <div class="main-container-nopaddings"> 
-            <h4 style="font-weight: bold;"> <a href="https://weverse.io/txt/feed"> VIEW LATEST ANNOUNCEMENT (DI PA FINAL) >> </a> </h4>
-            <!-- TODO: Href links to latest added event ??? -->
-        </div>
+<div class="white-container" style="align-items:flex-start; justify-content:space-evenly;">
+    <div class="main-container-nopaddings"> 
+        <h4 style="font-weight: bold;"> <a href="https://weverse.io/txt/feed"> VIEW LATEST ANNOUNCEMENT (DI PA FINAL) >> </a> </h4>
+        <!-- TODO: Href links to latest added event ??? -->
     </div>
+</div>
 
-    <div class="flex-container" style="flex-direction: column; padding: 40px;"> 
-        <img src="images/grp<?php echo "$fanbaseName" ?>.jpg" style="height: 800px; width:800px;">
-        <div class="label" style="font-size: 40px; padding: 30px;"> 
-            <?php echo "$fanbaseArtist" ?> 
-            <div class="text" style="padding: 0px;">
-                <?php
-                    if ($current_user){
-                        echo '<a href="manageFanbase.php?fanbase='.$fanbaseName.'" class="btn btn-outline-dark">Manage Fanbase</a>';
-                    } else {
-                        echo '<button class="btn btn-outline-dark" disabled>Manage Fanbase</button>';
-                    }
-                ?>
-            </div>
-        </div>
-
-        <hr>
-        
-        <div class="text" style="font-weight:bold;">
+<div class="flex-container" style="flex-direction: column; padding: 40px;"> 
+    <img src="images/grp<?php echo "$fanbaseName" ?>.jpg" style="height: 800px; width:800px;">
+    <div class="label" style="font-size: 40px; padding: 30px;"> 
+        <?php echo "$fanbaseArtist" ?> 
+        <div class="text" style="padding: 0px;">
             <?php
-            echo "$fanbaseDesc <br>
-                Total Member count:" ?> 
+                if ($current_user){
+                    echo '<a href="manageFanbase.php?fanbase='.$fanbaseName.'" class="btn btn-outline-dark">Manage Fanbase</a>';
+                } else {
+                    echo '<button class="btn btn-outline-dark" disabled>Manage Fanbase</button>';
+                }
+            ?>
         </div>
-
-        <?php 
-            if ($current_user){
-                echo displayButton();
-            }
-        ?>
     </div>
+
+    <hr>
+    
+    <div class="text" style="font-weight:bold;">
+        <?php
+        echo "$fanbaseDesc <br>
+            Total Member count:" ?> 
+    </div>
+
+    <?php 
+        if ($current_user){
+            echo displayButton();
+        }
+    ?>
+</div>
 
 <section id="mainFanbaseContent" style="display:flex; flex-direction:column;">
     <hr>
@@ -105,7 +104,7 @@
         
         <div style="display: flex; flex-direction:column; gap: 10px; justify-content: center; align-items: center; width: 75vw;">
             <?php
-                echo displayEvents();
+                echo getEvents($fanbaseID);
             ?>
         </div>
     </div>
@@ -148,67 +147,5 @@
         }
 
         return $joinStr;
-    }
-    function displayEvents(){
-        global $connection, $fanbaseID, $current_user;
-
-        $sqlCurrFanbaseMember = "SELECT * FROM tbluseraccount_fanbase WHERE fanbase_id = {$fanbaseID} AND account_id = {$current_user['account_id']}";
-        $resMem = mysqli_fetch_array(mysqli_query($connection, $sqlCurrFanbaseMember));
-        $isFanbaseAdmin = $resMem['isAdmin'];
-        
-        // getting ALL events for this fanbase from tblevent
-        $sqlevents = "SELECT * FROM tblevent WHERE fanbase_id = {$fanbaseID}";
-        $resultevents = mysqli_query($connection, $sqlevents);
-        
-        // creating an empty array
-        $fanbaseEventsArr = array();
-
-        if ($resultevents){
-            /* query is a success
-            /* looping thru every row of record sa tblfanbase */
-            while ($row = $resultevents->fetch_assoc()) {
-                /* $row = 1 fanbase entry
-                /* iadd siya sa fanbase array */
-                $row['event_date'] = date_format(date_create($row['event_date']), "F d, Y");
-                $row['event_time'] = date_format(date_create($row['event_time']), "g:i A");
-
-                $mysqlUser = "SELECT * from tbluseraccount WHERE account_id = {$row['account_id']}";
-                $res = mysqli_query($connection, $mysqlUser);
-                $row['account_id'] = mysqli_fetch_array($res);
-
-                $fanbaseEventsArr[] = $row;
-            } 
-
-            $resultevents->free(); // freeing result set
-        }
-
-        $eventsStr = '';
-        foreach ($fanbaseEventsArr as $fanbaseEvent) {
-            $eventsStr .= '
-                <div class="flex-container dd" style="margin-bottom:5px;">
-                    <div class="white-container">
-                        <div class="main-container-nopaddings">
-                            <div class="flex-container" style="justify-content: space between">
-                                <b>'.$fanbaseEvent['event_name'].'</b>'.
-                                (($isFanbaseAdmin == 1 || $current_user['account_id'] == $fanbaseEvent['account_id']['account_id']) ? 
-                                    '<form action="deleteEvent.php" method="POST">
-                                        <input type="hidden" name="fanbase_id" value="'.$fanbaseEvent['fanbase_id'].'">
-                                        <button class="btn btn-outline-dark" name="deleteEvent" value="'.$fanbaseEvent['event_id'].'" role="button" type="submit">Delete Event</button> 
-                                    </form>'
-                                : '')
-                            .'</div>
-                            <hr>
-                            <div class="text"> A '.$fanbaseEvent['event_type'].' Event 
-                                <div class="text" style="color:#808080; padding: 0px"> Organizer: '.$fanbaseEvent['account_id']['username'].' </div>
-                                <div class="text" style="color:#808080; padding-top: 0px"> Date: '.$fanbaseEvent['event_date'].' Time: '.$fanbaseEvent['event_time'].' Location: '.$fanbaseEvent['event_location'].' </div>
-                                '.$fanbaseEvent['event_description'].'
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            ';
-        }
-
-        return $eventsStr;
     }
 ?>

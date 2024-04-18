@@ -14,7 +14,9 @@
 		$user = mysqli_fetch_array($result);
 
 		if ($user_count == 1 && password_verify($pass, $user[4])){
-			handleLogIn($user); // api.php ang mo set sa cookie / session 
+			// handleLogIn($user); // api.php ang mo set sa cookie / session 
+			/* using session */
+			$_SESSION["user"] = json_encode($user, true);
 			header("Location: index.php");
 		} else if ($user_count == 0){
 			header("Location: login.php?login_error_1");

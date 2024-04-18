@@ -8,9 +8,9 @@
         $desc = $_POST['fanbase_description'];
 		$date = date('Y-m-d');
 
+        // storing current form submission into session for later use
         $_SESSION['createFanbase_data'] = $_POST;
-        // var_dump($date);
-        
+       
         // check if the artist has a fanbase already
         $sqlF = 'SELECT fanbase_id FROM tblfanbase WHERE fanbase_artist = "'.$artist.'"';
         $sqlFRes = mysqli_query($connection, $sqlF);
@@ -21,6 +21,7 @@
             exit();
         } 
         
+        // checking if the fanbase name is already taken
         $sqlFName = 'SELECT fanbase_id FROM tblfanbase WHERE fanbase_name = "'.$fname.'"';
         $sqlFNRes = mysqli_query($connection, $sqlFName);
         $sqlFNCount = mysqli_num_rows($sqlFNRes);
@@ -30,8 +31,7 @@
             exit();
         }
 
-        // unset($_SESSION['createFanbase_data']);
-
+        // creating the fanbase | inserting new fanbase record into tblFanbase
         $sqlCreate ="INSERT into tblfanbase(fanbase_name,fanbase_artist, date_created, fanbase_description) values ('".$fname."', '".$artist."','".$date."','".$desc."')";
         mysqli_query($connection,$sqlCreate);
 
