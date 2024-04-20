@@ -24,7 +24,7 @@
 </div>
 
 <div class="flex-container" style="flex-direction: column; padding: 40px;"> 
-    <img src="images/grp<?php echo "$fanbaseName" ?>.jpg" style="height: 800px; width:800px;">
+    <img src="images/grpPhoto/grp<?php echo "$fanbaseName" ?>.jpg" style="height: 800px; width:800px;">
     <div class="label" style="font-size: 40px; padding: 30px;"> 
         <?php echo "$fanbaseArtist" ?> 
         <div class="text" style="padding: 0px;">

@@ -43,7 +43,7 @@
                     if ($current_user['isSysAdmin'] == 1){
                         echo '<a href="manageApp.php" class="btn btn-outline-light">Manage App</a> ';
                     }
-                    
+                    echo '<a href="profile.php" class="btn btn-outline-light">Profile</a> ';
                     echo '<a href="logOutUser.php" class="btn btn-outline-light">Log Out</a>';
                 }
             ?>
