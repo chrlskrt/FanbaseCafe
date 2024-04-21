@@ -13,6 +13,7 @@ function getEvents($fanbaseID){
     $sqlevents = "SELECT * FROM tblevent WHERE fanbase_id = {$fanbaseID}";
     $resultevents = mysqli_query($connection, $sqlevents);
     
+    // var_dump(mysqli_fetch_array($resultevents));
     // creating an empty array
     $fanbaseEventsArr = array();
 
@@ -46,7 +47,7 @@ function getEvents($fanbaseID){
             <div class="flex-container dd" style="margin-bottom:5px;">
                 <div class="white-container">
                     <div class="main-container-nopaddings">
-                        <div class="flex-container" style="justify-content: space between">
+                        <div class="flex-container" style="justify-content: space-between">
                             <b>'.$fanbaseEvent['event_name'].'</b>'.
                             /* if the current_user is an admin of the fanbase
                             /* or the ORGANIZER of the event, they can delete event */

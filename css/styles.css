@@ -261,3 +261,15 @@ a {
     align-items: center;
     justify-content: center;
 }
+
+.post {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 30px;
+    gap:5px;
+
+    background-color: #40dbc4;
+    border-radius: 5px;
+}

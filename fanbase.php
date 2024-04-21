@@ -62,7 +62,7 @@
         </div>
 
         <div class="flex-container" id="createEventDiv" style="flex-direction:column; align-items: center;">
-            <a class="btn label" id="createFanbaseDiv" style="font-size: 20px;">[ Create Event ]</a>
+            <a class="btn label" style="font-size: 20px;">[ Create Event ]</a>
             <form action="createEvent.php" method="post">
                 <div class="formsch">
                     <div class="form-floating mb-3"> 
@@ -95,6 +95,20 @@
                 </div>
             </form>
         </div>
+
+        <div class="flex-container" id="createPostDiv" style="flex-direction:column; align-items: center;">
+            <a class="btn label" style="font-size: 20px;">[ Create Post ]</a>
+            <form action="createPost.php" method="post">
+                <div class="formsch">
+                    <div class="mb-3"> 
+                        <textarea class="form-control" name="post_text" id="post_text" placeholder="Write something..." required></textarea>
+                        <label for="post_text"></label>
+                    </div>
+                    <input type="hidden" name="fanbase_id" value="<?php echo ($fanbaseID) ?>">
+                    <button id="btnCreatePostSubmit" value="1" type="submit" role="button" class="btn btn-outline-dark btn-lg">Post</button>
+                </div>
+            </form>
+        </div>
     </div>
 
     <hr>
@@ -105,6 +119,16 @@
         <div style="display: flex; flex-direction:column; gap: 10px; justify-content: center; align-items: center; width: 75vw;">
             <?php
                 echo getEvents($fanbaseID);
+            ?>
+        </div>
+    </div>
+
+    <div class="manageAppDiv" id="displayPosts" style="align-items: center;">
+        <div class="label" style="font-size: 20px; justify-content:flex-start">Posts</div>
+        
+        <div style="display: flex; flex-direction:column; gap: 10px; justify-content: center; width: 80vw;">
+            <?php
+                echo getPosts($fanbaseID);
             ?>
         </div>
     </div>
@@ -134,14 +158,14 @@
             $joinStr .= '
             <form action="joinFanbase.php" method="POST">
                 <input type="hidden" value="'.$fanbaseID.'" name="fanbaseID">
-                <button type="submit" id="btnJoinFanbase" role="button" value="'.($current_user["account_id"]).'" name="fanbaseMember"> Join now! </button>
+                <button type="submit" id="btnJoinFanbase" role="button" value="'.($current_user["account_id"]).'" name="fanbaseMember" class="btn btn-outline-dark"> Join now! </button>
             </form>
         ';
         } else {
             $joinStr .= '
             <form action="leaveFanbase.php" method="POST">
                 <input type="hidden" value="'.$fanbaseID.'" name="fanbaseID">
-                <button type="submit" id="btnLeaveFanbase" role="button" value="'.($current_user["account_id"]).'" name="leaveFanbaseMember"> Leave fanbase? </button>
+                <button type="submit" id="btnLeaveFanbase" role="button" value="'.($current_user["account_id"]).'" name="leaveFanbaseMember" class="btn btn-outline-dark"> Leave fanbase? </button>
             </form>
             ';
         }
