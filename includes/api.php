@@ -19,6 +19,7 @@
         $current_user = json_decode($_SESSION["user"], true);
     }
 
+    date_default_timezone_set("Asia/Manila");
 
     // function handleLogIn($user){
     //     // /* using cookie */

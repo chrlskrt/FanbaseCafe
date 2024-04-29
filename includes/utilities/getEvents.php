@@ -52,10 +52,13 @@ function getEvents($fanbaseID){
                             /* if the current_user is an admin of the fanbase
                             /* or the ORGANIZER of the event, they can delete event */
                             (($isFanbaseAdmin == 1 || $current_user['account_id'] == $fanbaseEvent['account_id']['account_id']) ? 
-                                '<form action="deleteEvent.php" method="POST">
-                                    <input type="hidden" name="fanbase_id" value="'.$fanbaseEvent['fanbase_id'].'">
-                                    <button class="btn btn-outline-dark" name="deleteEvent" value="'.$fanbaseEvent['event_id'].'" role="button" type="submit">Delete Event</button> 
-                                </form>'
+                                '<div class="flex-container">
+                                    <form action="deleteEvent.php" method="POST">
+                                        <input type="hidden" name="fanbase_id" value="'.$fanbaseEvent['fanbase_id'].'">
+                                        <button class="btn btn-outline-dark" name="deleteEvent" value="'.$fanbaseEvent['event_id'].'" role="button" type="submit">Delete Event</button> 
+                                    </form>
+                                    <button class="updateEventBtn btn btn-outline-dark" role="button">Edit</button>
+                                </div>'
                             : '')
                         .'</div>
                         <hr>
