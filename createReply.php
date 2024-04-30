@@ -3,18 +3,17 @@
 
     if ($_SERVER["REQUEST_METHOD"] == "POST"){
          // getting inputs of form submission
+        $post_id = $_POST["post_id"];
         $account_id = $current_user['account_id'];
         $fanbase_id = $_POST["fanbase_id"];
-        $post_created = date("Y-m-d H:i");
-        // $post_created = date("Y-m-d");
-        $post_text = $_POST['post_text'];
+        $reply_created = date("Y-m-d H:i");
+        $reply_text = $_POST['reply_text'];
         
-        $stmtAddPost = $connection->prepare("INSERT INTO tblpost (account_id, fanbase_id, post_created, post_text) VALUES (?, ?, ?, ?)");
-        $stmtAddPost->bind_param("iiss", $account_id, $fanbase_id, $post_created, $post_text);
+        $stmtAddPost = $connection->prepare("INSERT INTO tblreply (post_id, account_id, reply_created, reply_text) VALUES (?, ?, ?, ?)");
+        $stmtAddPost->bind_param("iiss", $post_id, $account_id, $reply_created, $reply_text);
         $stmtAddPost->execute();
         $stmtAddPost->close();
         
-        $post_id = $connection->insert_id;
         header("Location: fanbase.php?fanbase_ID={$fanbase_id}#post{$post_id}");
         exit();
     }
