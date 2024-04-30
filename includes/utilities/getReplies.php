@@ -21,12 +21,12 @@
         } else {
             return "";
         }
-        
+
         $replies = "";
 
         foreach ($replyArr as $reply){
-            $replies.= '<div style="display: flex; flex-direction: column; border: 1px black solid; padding:10px; ">
-                            <div style="display: flex; width: 100%; justify-content: space-between; gap:10px;">
+            $replies.= '<div style="display: flex; flex-direction: column; padding:10px; ">
+                            <div style="display: flex; width: 100%; justify-content: space-between;">
                                 <div style="display:flex; gap:10px">
                                     <div style="display: flex; align-items: center">
                                         <img src="https://ui-avatars.com/api/?rounded=true&name=' . $reply['account_id']['username'] . '" alt="" style="height: 35; width:35">

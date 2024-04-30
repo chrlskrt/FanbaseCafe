@@ -67,8 +67,8 @@
                         </div>
                     </div>
 
-                    <div class="Replies" style="display:flex; flex-direction:column;margin-top: 15px; gap:15px; width:100%">
-                        <form action="createReply.php" method="post" style="margin:0; ">
+                    <div class="Replies" style="display:flex; flex-direction:column;width:100%; border-top: 1px gray solid">
+                        <form action="createReply.php" method="post" style="margin: 5 0 0 0; ">
                             <div class="mb-3 from-group" style="display:flex; gap:10px"> 
                                 <textarea class="form-control" name="reply_text" placeholder="Write something..." required></textarea>
                                 <input type="hidden" name="fanbase_id" value="'.$post['fanbase_id'].'">
@@ -76,7 +76,7 @@
                             </div>
                         </form>
 
-                        <div class="ReplyDiv" style="display:flex; flex-direction:column-reverse;gap:10px">'.
+                        <div class="ReplyDiv" style="display:flex; flex-direction:column-reverse;">'.
                             getReplies($post['post_id'], $post['fanbase_id'])
                         .'</div>
                     </div>
