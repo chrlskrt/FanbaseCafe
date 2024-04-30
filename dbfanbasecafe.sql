@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 29, 2024 at 02:22 PM
+-- Generation Time: Apr 30, 2024 at 04:44 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -73,7 +73,7 @@ INSERT INTO `tblfanbase` (`fanbase_id`, `fanbase_name`, `fanbase_artist`, `date_
 (2, 'BLINK', 'BLACKPINK', '2016-04-06', 'A safe place for BLINKs'),
 (3, 'MOA', 'Tomorrow X Together', '2024-04-04', 'A safe place for MOAs'),
 (4, 'ARMY', 'BTS', '2024-04-03', 'A safe place for ARMYs'),
-(5, 'iKONIC', 'iKON', '2024-04-07', 'A safe space for iKONICs');
+(5, 'iKONIC', 'iKON', '2024-04-07', 'A safe space for iKONICsss');
 
 -- --------------------------------------------------------
 
@@ -110,7 +110,8 @@ INSERT INTO `tblfanbase_member` (`fanbase_member_id`, `acc_fanbase_id`) VALUES
 (4, 4),
 (5, 5),
 (6, 6),
-(7, 7);
+(7, 7),
+(8, 8);
 
 -- --------------------------------------------------------
 
@@ -135,8 +136,8 @@ CREATE TABLE `tblpost` (
 CREATE TABLE `tblreply` (
   `reply_id` int(6) NOT NULL,
   `post_id` int(6) NOT NULL,
-  `fanbase_id` int(6) NOT NULL,
   `account_id` int(6) NOT NULL,
+  `reply_created` datetime NOT NULL,
   `reply_text` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -162,7 +163,7 @@ CREATE TABLE `tbluseraccount` (
 
 INSERT INTO `tbluseraccount` (`account_id`, `user_id`, `email_add`, `username`, `password`, `isMember`, `isSysAdmin`) VALUES
 (1, 1, 'admin101@gmail.com', 'admin101', '$2y$10$TM8wTyla68b9H3JKS/wIxu95lh4RyGCuSKqdrR8Klml9sU57fMCMC', 1, 1),
-(2, 2, 'pop@gmail.com', 'pop', '$2y$10$QUL4DkkPR3yVaTYNEkJewuR.L16XCPIvaYJzQ2JkL8MEkcBkVVln2', 1, 0),
+(2, 2, 'pop@gmail.com', 'pop', '$2y$10$QUL4DkkPR3yVaTYNEkJewuR.L16XCPIvaYJzQ2JkL8MEkcBkVVln2', 1, 1),
 (3, 3, 'ice@gmail.com', 'ice', '$2y$10$wlu4WdFyy0KRdbhLgX55ZuP6wocbpM0h3Mfc4qEuMIQmL4tADleFm', 1, 0);
 
 -- --------------------------------------------------------
@@ -191,7 +192,8 @@ INSERT INTO `tbluseraccount_fanbase` (`acc_fanbase_id`, `account_id`, `fanbase_i
 (4, 1, 4, '2024-04-13', 1, 0),
 (5, 1, 5, '2024-04-13', 1, 0),
 (6, 2, 1, '2024-04-13', 1, 0),
-(7, 2, 3, '2024-04-13', 1, 0);
+(7, 2, 3, '2024-04-13', 1, 0),
+(8, 2, 2, '2024-04-29', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -261,7 +263,6 @@ ALTER TABLE `tblpost`
 ALTER TABLE `tblreply`
   ADD PRIMARY KEY (`reply_id`),
   ADD KEY `post_id` (`post_id`),
-  ADD KEY `fanbase_id` (`fanbase_id`),
   ADD KEY `account_id` (`account_id`);
 
 --
@@ -311,7 +312,7 @@ ALTER TABLE `tblfanbase_admin`
 -- AUTO_INCREMENT for table `tblfanbase_member`
 --
 ALTER TABLE `tblfanbase_member`
-  MODIFY `fanbase_member_id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `fanbase_member_id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `tblpost`
@@ -335,7 +336,7 @@ ALTER TABLE `tbluseraccount`
 -- AUTO_INCREMENT for table `tbluseraccount_fanbase`
 --
 ALTER TABLE `tbluseraccount_fanbase`
-  MODIFY `acc_fanbase_id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `acc_fanbase_id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `tbluserprofile`
@@ -378,7 +379,6 @@ ALTER TABLE `tblpost`
 --
 ALTER TABLE `tblreply`
   ADD CONSTRAINT `tblreply_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `tblpost` (`post_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `tblreply_ibfk_2` FOREIGN KEY (`fanbase_id`) REFERENCES `tblfanbase` (`fanbase_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `tblreply_ibfk_3` FOREIGN KEY (`account_id`) REFERENCES `tbluseraccount` (`account_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
