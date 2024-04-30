@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 30, 2024 at 04:44 PM
+-- Generation Time: Apr 30, 2024 at 05:06 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -49,6 +49,18 @@ INSERT INTO `tblevent` (`event_id`, `account_id`, `fanbase_id`, `event_name`, `e
 (3, 1, 3, 'TXT \"Dream Chapter: MOA Playground\"', 'DREAM', '2024-08-14', '10:00:00.000000', 'ANJO World, CEBU', 'Live music, games, fansign & exclusive merch! Don\'t miss the MOA party with TXT! #TXTMoaPlayground'),
 (4, 1, 4, 'BTS Muster: Light the Night (CEBU)', 'Concert', '2024-04-25', '18:00:00.000000', 'Ayala Malls, Lahug', 'This event is primarily a concert, focusing on a live performance by BTS where fans can sing along, dance, and celebrate their love for the group. The additional elements like special surprises and ARMY-focused activities enhance the concert experience but don\'t overshadow the core focus on live music.'),
 (5, 1, 5, 'iKONIC Night: Dive into the KINGDOM', 'Fan Festival', '2024-05-30', '16:00:00.000000', 'Cebu Institute of Technology-University', 'iKONICS, relive KINGDOM & celebrate iKON!\r\n\r\nEnjoy video screening, games, exclusive content & merch. Mingle with fellow fans & create lasting memories!  #iKONICNight');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tblevent_participant`
+--
+
+CREATE TABLE `tblevent_participant` (
+  `event_participant_id` int(6) NOT NULL,
+  `event_id` int(11) NOT NULL,
+  `account_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -230,6 +242,14 @@ ALTER TABLE `tblevent`
   ADD KEY `fanbase_id` (`fanbase_id`);
 
 --
+-- Indexes for table `tblevent_participant`
+--
+ALTER TABLE `tblevent_participant`
+  ADD PRIMARY KEY (`event_participant_id`),
+  ADD KEY `event_id` (`event_id`),
+  ADD KEY `account_id` (`account_id`);
+
+--
 -- Indexes for table `tblfanbase`
 --
 ALTER TABLE `tblfanbase`
@@ -297,6 +317,12 @@ ALTER TABLE `tblevent`
   MODIFY `event_id` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+-- AUTO_INCREMENT for table `tblevent_participant`
+--
+ALTER TABLE `tblevent_participant`
+  MODIFY `event_participant_id` int(6) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `tblfanbase`
 --
 ALTER TABLE `tblfanbase`
@@ -354,6 +380,13 @@ ALTER TABLE `tbluserprofile`
 ALTER TABLE `tblevent`
   ADD CONSTRAINT `tblevent_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `tbluseraccount` (`account_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `tblevent_ibfk_2` FOREIGN KEY (`fanbase_id`) REFERENCES `tblfanbase` (`fanbase_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `tblevent_participant`
+--
+ALTER TABLE `tblevent_participant`
+  ADD CONSTRAINT `tblevent_participant_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `tblevent` (`event_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `tblevent_participant_ibfk_2` FOREIGN KEY (`account_id`) REFERENCES `tbluseraccount` (`account_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `tblfanbase_admin`
