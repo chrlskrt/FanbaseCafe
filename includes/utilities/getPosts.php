@@ -42,7 +42,7 @@
                             <div style="display: flex; align-items: center">
                                 <img src="https://ui-avatars.com/api/?rounded=true&name=' . $post['account_id']['username'] . '" alt="" style="height: 50; width:50">
                             </div>
-                            <div style="dosplay:flex; flex-direction:column; justify-content:center">
+                            <div style="display:flex; flex-direction:column; justify-content:center">
                                 <h4 style="margin-bottom:3px;">' . $post['account_id']['username'] . '</h4>
                                 <p style="font-size: 12; color: gray; margin:0">' . $post['post_created'] . '</p>
                             </div>

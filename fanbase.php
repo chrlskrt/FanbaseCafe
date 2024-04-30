@@ -173,3 +173,24 @@
         return $joinStr;
     }
 ?>
+
+<!-- MODALS -->
+<div class="modal fade" tabindex="-1" role="dialog" id="addReplyModal">
+  <div class="modal-dialog modal-dialog-centered modal-lg" style="gap:10px;" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"> Success!</h5>
+      </div>
+      <div class="modal-body">
+        <p>Account, , is successfully deleted from the system!</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+    <div style="display:flex; align-self:flex-start">
+        <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">X</button>
+    </div>
+  </div>
+</div>
