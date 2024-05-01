@@ -175,6 +175,8 @@
 ?>
 
 <!-- MODALS -->
+
+<!-- edit event modal -->
 <div class="modal fade" tabindex="-1" role="dialog" id="editEventModal">
   <div class="modal-dialog modal-dialog-centered modal-lg" style="gap:10px;" role="document">
     <div class="modal-content">
@@ -224,6 +226,46 @@
 
     <div style="display:flex; align-self:flex-start">
         <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">X</button>
+    </div>
+  </div>
+</div>
+
+
+<?php
+    if (isset($_GET['post'])){
+        echo '<script type="module" >
+                import { viewModal } from "./js/misc.js"
+                $(function(){
+                    $(window).scrollTop($("#post'.$_GET['post'].'").offset().top);
+                    viewModal('.$_GET["post"].');
+                });
+            </script>';
+    }
+?>
+
+<!-- view post modal  -->
+<div class="modal fade" tabindex="-1" role="dialog" id="viewPostModal">
+  <div class="modal-dialog modal-dialog-centered modal-lg" style="gap:10px;" role="document">
+    <div class="modal-content" style="height:92vh;">
+        <div class="modal-header">
+            <div id="postBody" style="width:100%; margin-left:15px"></div>
+        </div>
+        <div class="modal-body" id="postReplies" style="flex:1; overflow-y:auto"></div>
+        <form action="createReply.php" method="post" style="margin:0">
+            <div class="modal-footer" id="postCreateReply">
+                    <div class="formsch" style="width:100%">
+                        <div class="mb-3 from-group" style="display:flex; gap:10px"> 
+                            <textarea class="form-control" id="createReplyInput" name="reply_text" placeholder="Write something..." required></textarea>
+                            <input type="hidden" name="fanbase_id" id="createReply_fanbaseID">
+                            <button name="post_id"  type="submit" role="button" class="btn btn-outline-dark" id="createReply_postID">Reply</button>
+                        </div>
+                    </div>
+            </div>
+        </form>
+    </div>
+
+    <div style="display:flex; align-self:flex-start">
+        <button id="viewPostExitBtn" type="button" class="btn btn-outline-light" data-bs-dismiss="modal">X</button>
     </div>
   </div>
 </div>

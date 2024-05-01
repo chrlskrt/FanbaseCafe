@@ -14,7 +14,7 @@
         $stmtAddPost->execute();
         $stmtAddPost->close();
         
-        header("Location: fanbase.php?fanbase_ID={$fanbase_id}#post{$post_id}");
+        header("Location: fanbase.php?fanbase_ID={$fanbase_id}&post={$post_id}");
         exit();
     }
 ?>

@@ -1,9 +1,15 @@
 $(function(){
+    // let hash = window.location.hash;
+    // if (hash){
+    //     post_id = hash.split("#post")[1];
+
+    //     $(window).scrollTop($(hash).offset().top);
+    //     viewPostModal(post_id);
+    // }
+
     $("#createEventDiv").hide();
     $("#createPostDiv").hide();
-
-    // $(".Replies").hide();
-    // $("#btnCreateEventSubmit").attr("disabled", "disabled");
+    $(".replyDiv").hide();
     
     $("#btnCreateEvent").on("click", function(){
         $("#createEventDiv").toggle();
@@ -13,24 +19,12 @@ $(function(){
         $("#createPostDiv").toggle();
     })
 
-    // $("#event_time").on("blur", function(){
-    //     $input_time = $("#event_time").val();
-        
-    // })
-
     if ($("#btnLeaveFanbase").length){
         $("#mainFanbaseContent").show();
     } else {
         $("#mainFanbaseContent").hide();
     }
 
-    // $(".btnReply").on("click", (e)=>{
-    //     $elem = $(e.target).parent().parent().children(3);
-
-    //     console.log($elem);
-    //         $elem.show();
-    //             // $(e.target > ".ReplyDiv").toggle();
-    // })
     $('textarea').on("input", function(){
         this.style.height = 'auto';
 
@@ -69,4 +63,38 @@ $(function(){
 
         $("#editEventModal").modal("show");
     });
+
+    $(".btnReply").on("click", (e)=>{
+        elem_id = $(e.target).attr("value");
+
+        viewPostModal(elem_id); 
+    })
+
+    async function viewPostModal(postID){
+        $.ajax({
+            url: "includes/utilities/getIndivPost.php",
+            method: "POST",
+            data: {
+                post_id: postID
+            },
+            dataType: 'JSON',
+            success: function(data){
+                // console.log(data);
+                post = data;
+                
+                postzz = `#post${postID}`
+                $("#postBody").html($(postzz).children(":first-child").html());
+                $("#postReplies").html($(postzz).children(":last-child").html());
+                $("#createReply_fanbaseID").val(post.fanbase_id);
+                $("#createReply_postID").val(post.post_id);
+                // $("#postCreateReply").html(postCreateReplyContent);
+            }
+        })
+
+        $("#viewPostModal").modal("show");
+    }
+
+    $("#viewPostExitBtn").on("click", function(){
+        $("#createReplyInput").val("");
+    })
 })

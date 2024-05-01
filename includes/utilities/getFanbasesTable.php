@@ -55,3 +55,7 @@ function getFanbasesTable(){
 
     return $tableStr;
 }
+
+function getAppReports(){
+    return "";
+}
