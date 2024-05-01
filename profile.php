@@ -20,9 +20,10 @@
 
 <script src="js/profile.js"></script>
 
-<div class="main-container" style="padding-top:100px; flex-direction:row;">
+<!-- main1 -->
+<div class="main-container" id="displayProfile" style="padding-top:100px; flex-direction:row;">
 
-    <div class="white-container" id="displayProfile" style="flex-direction: column; justify-content: space-evenly;">
+    <div class="white-container" style="flex-direction: column; justify-content: space-evenly;">
         <img src="images/account.png" class="card2-logo" style="height:120px; width: 120px;">
         <div class="flex-container">
             
@@ -51,25 +52,45 @@
 
     <img src="images/profileBG.png" style="margin:auto;overflow:hidden;box-shadow: 8px 10px 5px #9fc0c1;">
 
+<!-- main1 -->
 </div>
 
-<div class="main-container" style="padding-top:100px; flex-direction:row;">
+<div class="main-container"  id="editProfile" style="padding-top:100px; flex-direction:row;">
 
-<div class="white-container" id="displayProfile" style="flex-direction: column; justify-content: space-evenly;">
-    
-    <div id="editProfile">
+    <div class="white-container" style="flex-direction: column; justify-content: space-evenly;">
         <img src="images/account.png" class="card2-logo" style="height:120px; width: 120px;">
+            <div class="text" style="color:gray">
+                <?php echo $current_user['account_id'] ?> 
+            </div>
+    
+    <div> 
+        <?php
+            $stmtUpdateFanbase = "SELECT firstname, lastname, birthdate FROM tbluserprofile WHERE user_id = {$current_user['user_id']}";
+            
+            $result = mysqli_query($connection,$stmtUpdateFanbase);
+            $profileArray = mysqli_fetch_array($result);
+
+            $old_firstname = $profileArray['firstname'];
+            $old_lastname = $profileArray['lastname'];
+            $old_birthdate = $profileArray['birthdate'];
+        ?>
+
+        <!-- TODO: UPDATE PROFILE DETAILS -->
         <div class="manageFanbaseDiv" >
-            <form action="updateFanbaseDetails.php" method="post">
+            <form action="updateProfileDetails.php" method="post">
                 <div class="formsch">
                     <div class="form-group" > 
-                        <div class="label" style="font-weight:unset; font-size: 3vw;"> First Name:</div>
-                        <textarea class="form-control" id="date_created" name="date_created" value="<?php echo ($fanbase['date_created']) ?>" required> </textarea>
+                        <div class="label" style="text-align:center"> <?php echo $current_user['username'] ?> </div>
+                        <div class="text"> First Name:</div>
+                        <input class="form-control" style="height:50px;" id="new_fname" name="new_fname" value="<?php echo $old_firstname?>"> </input>
+                        <div class="text">Last Name: </div>
+                        <input class="form-control" name="new_lname" id="new_lname" value="<?php echo $old_lastname?>"> </input>
+                        <div class="text"> Birthday: </div>
+                        <input type="date" class="form-control" name="new_bday" id="new_bday" value="<?php echo $old_birthdate?>"> </input>
                     </div>
-                    <div class="form-group" style="margin-top:2vw;">
-                        <div class="label" style="font-weight:unset; font-size: 3vw;">Last Name: </div>
-                        <textarea class="form-control" name="fanbase_description" id="fanbase_description" required><?php echo ($fanbase['fanbase_description']) ?></textarea>
-                    </div>
+                    
+                    <br>
+
                     <div style="display:flex; justify-content:space-between">
                         <button id="cancelEditProf" type="button" class="btn btn-outline-danger" >Cancel Edit</button>
                         <button id="btnUpdateProf" value="1" type="submit" role="button" class="btn btn-success">Update Profile </button>
@@ -77,10 +98,12 @@
                 </div>
             </form>
         </div>
-<!-- <img src="images/profileBG.png" style="margin:auto;overflow:hidden;box-shadow: 8px 10px 5px #9fc0c1;"> -->
     </div>
-
-
+    
+    </div>
+    
+    <img src="images/profileBG.png" style="margin:auto;overflow:hidden;box-shadow: 8px 10px 5px #9fc0c1;">
+<!-- main -->
 </div>
 
 <footer>
