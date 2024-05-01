@@ -68,7 +68,7 @@ function getEvents($fanbaseID){
                                     <button class="btn btn-outline-dark" name="deleteEvent" value="'.$fanbaseEvent['event_id'].'" role="button" type="submit">Delete Event</button> 
                                 </form>
                                 
-                                <button class="updateEventBtn btn btn-outline-dark" role="button">Edit</button>'
+                                <button class="updateEventBtn btn btn-outline-dark" id="E-'.$fanbaseEvent['event_id'].'" role="button">Edit</button>'
                             : '')
                         .'
                             </div>

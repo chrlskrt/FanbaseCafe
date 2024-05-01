@@ -175,18 +175,51 @@
 ?>
 
 <!-- MODALS -->
-<div class="modal fade" tabindex="-1" role="dialog" id="addReplyModal">
+<div class="modal fade" tabindex="-1" role="dialog" id="editEventModal">
   <div class="modal-dialog modal-dialog-centered modal-lg" style="gap:10px;" role="document">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title"> Success!</h5>
-      </div>
-      <div class="modal-body">
-        <p>Account, , is successfully deleted from the system!</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      </div>
+        <div class="modal-header">
+            <h5 class="modal-title"> [ Edit Event ]</h5>
+        </div>
+        <form action="updateEvent.php" method="post" style="margin:0">
+            <div class="modal-body" style="height:74vh; overflow-y:auto">
+                <div class="flex-container" style="flex-direction:column; align-items: center; ">
+                    <div class="formsch" style="width:95%">
+                        <div class="form-floating mb-3"> 
+                            <input type="text" class="form-control" name="event_name" id="edit_event_name" placeholder="Enter event name..." required>
+                            <label for="event_name">Event Name</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" name="event_type" id="edit_event_type" placeholder="Enter event type..." required>
+                            <label for="event_type">Event Type</label>
+                        </div>
+                        <div class="flex-container" style="gap:4px;">
+                            <div class="form-floating mb-3">
+                                <input type="date" class="form-control" id="edit_event_date" name="event_date" min="<?php echo date("Y-m-d") ?>" required>
+                                <label for="event_date">Event Date</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="time" class="form-control" id="edit_event_time" name="event_time" min="07:00:00" max="20:00:00" required>
+                                <label for="event_time">Event Time</label>
+                            </div>
+                            <div class="form-floating mb-3" style="flex:1">
+                                <input type="text" class="form-control" name="event_location" id="edit_event_location" placeholder="Enter event location..." required>
+                                <label for="event_location">Event Location</label>
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control" name="event_description" id="edit_event_description" placeholder="Enter event description..." required></textarea>
+                            <label for="event_description">Event Description</label>
+                        </div>
+                        <input type="hidden" name="fanbase_id" value="<?php echo ($fanbaseID) ?>">
+                    </div>
+                </div>    
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel Edit</button>
+                <button id="btnEditEventSubmit" name="event_id" type="submit" role="button" class="btn btn-outline-dark">Update Event details</button>
+            </div>
+        </form>
     </div>
 
     <div style="display:flex; align-self:flex-start">
