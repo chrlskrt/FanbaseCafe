@@ -48,7 +48,7 @@ $(function(){
         $event_id = ($elem_id.split("-"))[1];
 
         $.ajax({
-            url: "includes/utilities/getEvent.php",
+            url: "includes/utilities/getIndivEvent.php",
             method: "POST",
             data: {
                 event_id: $event_id
