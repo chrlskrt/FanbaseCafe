@@ -32,6 +32,7 @@ function getMembersTable($fanbaseName){
         $member['account_id'] = $rowMember; // gi store ang user profile entry sa user_id sa user account
         
         $newMembersArray[] = $member; // add to the new array
+
     }
 
     // creating the Members table
@@ -111,10 +112,201 @@ function getMembersTable($fanbaseName){
         }
     }
 
+    // REPORT
+
+    // MOST POPULAR EVENT (most joined members)
+    $RepEventTableStr = "
+                <br> <div class='label'> FANBASE REPORT </div> <hr>
+                <div style='display: flex; justify-content: center; border:none; font-size:2vw'>
+                        MOST POPULAR EVENTS
+                <div class='table-responsive-lg'><table class='table table-bordered table-hover manageAppTable'>
+                    <thead>
+                        <tr>
+                            <th scope='col'>Top</th>
+                            <th scope='col'>Event_ID</th>
+                            <th scope='col'>Event Name</th>
+                            <th scope='col'>Number of Participants</th>
+                        </tr>
+                    </thead>
+                    <tbody>";
+
+    $sqlEvent = "SELECT event_id, event_name FROM tblevent WHERE fanbase_id = {$fanbase['fanbase_id']}";
+    $resultEvent = mysqli_query($connection, $sqlEvent);
+    $eventArray = array();
+
+    if ($resultEvent){
+        while ($row = $resultEvent->fetch_assoc()) {
+            $eventArray[] = $row;
+        } 
+        $resultEvent->free();
+    }
+
+    $newEventArray = array();
+
+    foreach($eventArray as $event) {
+        $sqlEventParti = "SELECT event_id, account_id, COUNT(account_id) AS Participants FROM tblevent_participant WHERE event_id = {$event['event_id']} ORDER BY Participants ASC";
+        $resultEventParti = mysqli_query($connection, $sqlEventParti);
+        $resEvent = mysqli_fetch_array($resultEventParti);
+
+        $event['event_id'] = $resEvent;
+
+        $newEventArray[] = $event;
+
+    }
+
+    $newEventArray = array_slice($newEventArray, 0, 5);
+
+    $count = 1;
+    foreach($newEventArray as $event) {
+        if($event['event_id']['Participants'] >= 1) {
+            $RepEventTableStr .= '
+            <tr>
+                <th scope="row">'.$count.'</td>
+                <td>'.$event['event_id']['event_id'].'</td>
+                <td>'.$event['event_name'].'</td>
+                <td>'.$event['event_id']['Participants'].'</td>
+            </tr>
+            ';
+            $count++;
+        }
+    }
+
+    // MOST INTERACTED POST (most replies)
+
+    $RepRepliedTableStr = "
+                <div style='display: flex; justify-content: center; border:none; font-size:2vw'>
+                        MOST INTERACTED POSTS
+                <div class='table-responsive-lg'><table class='table table-bordered table-hover manageAppTable'>
+                    <thead>
+                        <tr>
+                            <th scope='col'>Top</th>
+                            <th scope='col'>Username</th>
+                            <th scope='col'>Post_ID</th>
+                            <th scope='col'>Post</th>
+                            <th scope='col'>Date</th>
+                            <th scope='col'>Number of Replies</th>
+                        </tr>
+                    </thead>
+                <tbody>";
+
+    $sqlPost = "SELECT post_id, account_id, post_created, post_text FROM tblpost WHERE fanbase_id = {$fanbase['fanbase_id']}";
+    $resultPost = mysqli_query($connection, $sqlPost);
+    $postArray = array();
+
+    if($resultPost) {
+        while($row = $resultPost->fetch_assoc()) {
+            $postArray[] = $row;
+        }
+        $resultPost->free();
+    }
+
+    $newPostArray = array();
+
+    foreach($postArray as $post) {
+        $sqlReply = "SELECT COUNT(reply_id) as Replies FROM tblreply WHERE post_id = {$post['post_id']}";
+        $sqlUsername = "SELECT username FROM tbluseraccount WHERE account_id = {$post['account_id']}";
+
+        $resultReply = mysqli_query($connection, $sqlReply);
+        $resultUsername = mysqli_query($connection, $sqlUsername);
+
+        $resReply = mysqli_fetch_array($resultReply);
+        $resUsername = mysqli_fetch_array($resultUsername);
+
+        $post['reply_id'] = $resReply;
+        $post['account_id'] = $resUsername;
+
+        $newPostArray[] = $post;
+    }
+
+    $newPostArray = array_slice($newPostArray, 0, 5);
+
+    $count = 1;
+    foreach($newPostArray as $post) {
+        if($post['reply_id']['Replies'] >= 1) {
+            $RepRepliedTableStr .= '
+            <tr>
+                <th scope="row">'.$count.'</td>
+                <td>'.$post['account_id']['username'].'</td>
+                <td>'.$post['post_id'].'</td>
+                <td>'.$post['post_text'].'</td>
+                <td>'.$post['post_created'].'</td>
+                <td>'.$post['reply_id']['Replies'].'</td>
+            </tr>
+            ';
+            $count++;
+        }
+    }
+
+    // MOST ACTIVE USER (most posts)
+
+    $RepUserTableStr = "
+                <div style='display: flex; justify-content: center; border:none; font-size:2vw'>
+                        MOST ACTIVE USER
+                <div class='table-responsive-lg'><table class='table table-bordered table-hover manageAppTable'>
+                    <thead>
+                        <tr>
+                            <th scope='col'>Top</th>
+                            <th scope='col'>Username</th>
+                            <th scope='col'>Date Joined</th>
+                            <th scope='col'>Number of Posts</th>
+                        </tr>
+                    </thead>
+                <tbody>";
+
+    $sqlUser = "SELECT fanbase_id, account_id, COUNT(post_id) as Posts FROM tblpost WHERE fanbase_id = {$fanbase['fanbase_id']}";
+    $resultUser = mysqli_query($connection, $sqlUser);
+    $userArray = array();
+
+    if($resultUser) {
+        while($row = $resultUser->fetch_assoc()) {
+            $userArray[] = $row;
+        }
+        $resultUser->free();
+    }
+
+    $newUserArray = array();
+
+    foreach($userArray as $user) {
+        $sqlUsername = "SELECT username FROM tbluseraccount WHERE account_id = {$user['account_id']}";
+        $sqlDateJoined = "SELECT date_joined FROM tbluseraccount_fanbase WHERE account_id = {$user['account_id']} AND fanbase_id = {$user['fanbase_id']}";
+
+        $resultUsername = mysqli_query($connection, $sqlUsername);
+        $resultDateJoined = mysqli_query($connection, $sqlDateJoined);
+
+        $resUsername = mysqli_fetch_array($resultUsername);
+        $resDateJoined = mysqli_fetch_array($resultDateJoined);
+
+        $user['account_id'] = $resUsername;
+        $user['fanbase_id'] = $resDateJoined;
+
+        $newUserArray[] = $user;
+    }
+
+    $newUserArray = array_slice($newUserArray, 0, 5);
+
+    var_dump($newUserArray);
+
+    $count = 1;
+    foreach($newUserArray as $user) {
+        if($user['Posts'] >= 1) {
+            $RepUserTableStr .= '
+            <tr>
+                <th scope="row">'.$count.'</td>
+                <td>'.$user['account_id']['username'].'</td>
+                <td>'.$user['fanbase_id']['date_joined'].'</td>
+                <td>'.$user['Posts'].'</td>
+            </tr>
+            ';
+            $count++;
+        }
+    }
+
     $AdminsTableStr .= '</tbody></table></div></div>';
-
     $MembersTableStr .= '</tbody></table></div></div>';
+    $RepEventTableStr .= '</tbody></table></div></div>';
+    $RepRepliedTableStr .= '</tbody></table></div></div>';
+    $RepUserTableStr .= '</tbody></table></div></div>';
 
-    $tableStr = $AdminsTableStr.$MembersTableStr;
+    $tableStr = $AdminsTableStr.$MembersTableStr.$RepEventTableStr.$RepRepliedTableStr.$RepUserTableStr;
     return $tableStr;
 }
