@@ -25,7 +25,7 @@
         $replies = "";
 
         foreach ($replyArr as $reply){
-            $replies.= '<div style="display: flex; flex-direction: column; padding:10px; ">
+            $replies.= '<div style="display: flex; flex-direction: column;">
                             <div style="display: flex; width: 100%; justify-content: space-between;">
                                 <div style="display:flex; gap:10px">
                                     <div style="display: flex; align-items: center">

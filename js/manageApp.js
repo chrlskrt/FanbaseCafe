@@ -32,4 +32,12 @@ $(function(){
             $("#manageUsersTable").slideDown();
         }
     })
+
+    $("#appReportDiv").on("click", function(){
+        if ($("#appReportDiv2").is(":visible")) {
+            $("#appReportDiv2").slideUp();
+        } else {
+            $("#appReportDiv2").slideDown();
+        }
+    })
 });
