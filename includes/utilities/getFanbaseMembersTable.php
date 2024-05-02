@@ -142,8 +142,6 @@ function getMembersTable($fanbaseName){
         $resultEvent->free();
     }
 
-    // var_dump($eventArray);
-
     $eventArray = array_slice($eventArray, 0, 5);
 
     $count = 1;
@@ -179,7 +177,10 @@ function getMembersTable($fanbaseName){
                     </thead>
                 <tbody>";
 
-    $sqlPost = "SELECT post_id, account_id, post_created, post_text FROM tblpost WHERE fanbase_id = {$fanbase['fanbase_id']}";
+    $sqlPost = "SELECT tblpost.post_created, tblpost.post_text, tblpost.post_id, tbluseraccount.username, 
+    COUNT(DISTINCT tblreply.reply_id) as Replies FROM tblpost, tbluseraccount, tblreply WHERE tblpost.fanbase_id = {$fanbase['fanbase_id']} 
+    AND tblreply.post_id = tblpost.post_id AND tblpost.account_id = tbluseraccount.account_id GROUP BY tblpost.post_id 
+    ORDER BY Replies DESC";
     $resultPost = mysqli_query($connection, $sqlPost);
     $postArray = array();
 
@@ -189,38 +190,19 @@ function getMembersTable($fanbaseName){
         }
         $resultPost->free();
     }
-
-    $newPostArray = array();
-
-    foreach($postArray as $post) {
-        $sqlReply = "SELECT COUNT(reply_id) as Replies FROM tblreply WHERE post_id = {$post['post_id']}";
-        $sqlUsername = "SELECT username FROM tbluseraccount WHERE account_id = {$post['account_id']}";
-
-        $resultReply = mysqli_query($connection, $sqlReply);
-        $resultUsername = mysqli_query($connection, $sqlUsername);
-
-        $resReply = mysqli_fetch_array($resultReply);
-        $resUsername = mysqli_fetch_array($resultUsername);
-
-        $post['reply_id'] = $resReply;
-        $post['account_id'] = $resUsername;
-
-        $newPostArray[] = $post;
-    }
-
-    $newPostArray = array_slice($newPostArray, 0, 5);
+    $postArray = array_slice($postArray, 0, 5);
 
     $count = 1;
-    foreach($newPostArray as $post) {
-        if($post['reply_id']['Replies'] >= 1) {
+    foreach($postArray as $post) {
+        if($post['Replies'] >= 1) {
             $RepRepliedTableStr .= '
             <tr>
                 <th scope="row">'.$count.'</td>
-                <td>'.$post['account_id']['username'].'</td>
+                <td>'.$post['username'].'</td>
                 <td>'.$post['post_id'].'</td>
                 <td>'.$post['post_text'].'</td>
                 <td>'.$post['post_created'].'</td>
-                <td>'.$post['reply_id']['Replies'].'</td>
+                <td>'.$post['Replies'].'</td>
             </tr>
             ';
             $count++;
@@ -243,7 +225,10 @@ function getMembersTable($fanbaseName){
                     </thead>
                 <tbody>";
 
-    $sqlUser = "SELECT account_id, fanbase_id, date_joined FROM tbluseraccount_fanbase WHERE fanbase_id = {$fanbase['fanbase_id']}";
+    $sqlUser = "SELECT tbluseraccount.username, tbluseraccount_fanbase.date_joined, COUNT(DISTINCT tblpost.post_id) 
+    as Posts FROM tbluseraccount, tbluseraccount_fanbase, tblpost WHERE tblpost.fanbase_id = {$fanbase['fanbase_id']} AND 
+    tblpost.account_id = tbluseraccount.account_id AND tblpost.fanbase_id = {$fanbase['fanbase_id']} GROUP BY tblpost.account_id 
+    ORDER BY Posts DESC";
     $resultUser = mysqli_query($connection, $sqlUser);
     $userArray = array();
 
@@ -254,37 +239,19 @@ function getMembersTable($fanbaseName){
         $resultUser->free();
     }
 
-    $newUserArray = array();
-    
-    foreach($userArray as $user) {
-        $sqlUsername = "SELECT username FROM tbluseraccount WHERE account_id = {$user['account_id']}";
-        $sqlDateJoined = "SELECT COUNT(post_id) as Posts FROM tblpost WHERE account_id = {$user['account_id']} ORDER BY Posts ASC";
-
-        $resultUsername = mysqli_query($connection, $sqlUsername);
-        $resultDateJoined = mysqli_query($connection, $sqlDateJoined);
-
-        $resUsername = mysqli_fetch_array($resultUsername);
-        $resDateJoined = mysqli_fetch_array($resultDateJoined);
-
-        $user['account_id'] = $resUsername;
-        $user['fanbase_id'] = $resDateJoined;
-
-        $newUserArray[] = $user;
-    }
-
-    $newUserArray = array_slice($newUserArray, 0, 5);
+    $userArray = array_slice($userArray, 0, 5);
 
     // var_dump($newUserArray);
 
     $count = 1;
-    foreach($newUserArray as $user) {
-        if($user['fanbase_id']['Posts'] >= 1) {
+    foreach($userArray as $user) {
+        if($user['Posts'] >= 1) {
             $RepUserTableStr .= '
             <tr>
                 <th scope="row">'.$count.'</td>
-                <td>'.$user['account_id']['username'].'</td>
+                <td>'.$user['username'].'</td>
                 <td>'.$user['date_joined'].'</td>
-                <td>'.$user['fanbase_id']['Posts'].'</td>
+                <td>'.$user['Posts'].'</td>
             </tr>
             ';
             $count++;
