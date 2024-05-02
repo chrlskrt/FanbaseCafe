@@ -23,17 +23,17 @@
 ?>
 
 <div class="manageAppDiv" style="margin-bottom:10px; border-top: 2px black solid; border-bottom: 2px black solid;">
-    <div class="manageAppDiv" style="border-bottom: 2px black solid; border-top: 2px black solid;">
+    <div class="manageAppDiv">
         <div class="btn label" id="appReportDiv" style="font-size: 4vw; text-align:left">+ App Report</div>
         
-        <div style="display: flex; justify-content: center;" id="appReportDiv2">
+        <div style="display: flex; flex-wrap:wrap;justify-content: space-around" id="appReportDiv2">
             <?php
                 echo getAppReports();
             ?>
         </div>
     </div>
 
-    <div class="manageAppDiv">
+    <div class="manageAppDiv" style="border-top: 2px black solid;">
         <a class="btn label" id="createFanbaseDiv" style="font-size: 4vw; text-align:left">+ Create Fanbase</a>
         
         <div style="display: flex; justify-content: center;" id="createFanbaseForm">
