@@ -130,7 +130,8 @@ function getMembersTable($fanbaseName){
                     </thead>
                     <tbody>";
 
-    $sqlEvent = "SELECT event_id, event_name FROM tblevent WHERE fanbase_id = {$fanbase['fanbase_id']}";
+    $sqlEvent = "SELECT tblevent.event_id, tblevent.event_name, COUNT(tblevent_participant.account_id) AS Participants FROM tblevent, tblevent_participant WHERE 
+                tblevent.fanbase_id = {$fanbase['fanbase_id']} AND tblevent.event_id = tblevent_participant.event_id GROUP BY tblevent.event_id ORDER BY Participants DESC";
     $resultEvent = mysqli_query($connection, $sqlEvent);
     $eventArray = array();
 
@@ -141,30 +142,19 @@ function getMembersTable($fanbaseName){
         $resultEvent->free();
     }
 
-    $newEventArray = array();
+    // var_dump($eventArray);
 
-    foreach($eventArray as $event) {
-        $sqlEventParti = "SELECT event_id, account_id, COUNT(account_id) AS Participants FROM tblevent_participant WHERE event_id = {$event['event_id']} ORDER BY Participants ASC";
-        $resultEventParti = mysqli_query($connection, $sqlEventParti);
-        $resEvent = mysqli_fetch_array($resultEventParti);
-
-        $event['event_id'] = $resEvent;
-
-        $newEventArray[] = $event;
-
-    }
-
-    $newEventArray = array_slice($newEventArray, 0, 5);
+    $eventArray = array_slice($eventArray, 0, 5);
 
     $count = 1;
-    foreach($newEventArray as $event) {
-        if($event['event_id']['Participants'] >= 1) {
+    foreach($eventArray as $event) {
+        if($event['Participants'] >= 1) {
             $RepEventTableStr .= '
             <tr>
                 <th scope="row">'.$count.'</td>
-                <td>'.$event['event_id']['event_id'].'</td>
+                <td>'.$event['event_id'].'</td>
                 <td>'.$event['event_name'].'</td>
-                <td>'.$event['event_id']['Participants'].'</td>
+                <td>'.$event['Participants'].'</td>
             </tr>
             ';
             $count++;
@@ -253,22 +243,22 @@ function getMembersTable($fanbaseName){
                     </thead>
                 <tbody>";
 
-    $sqlUser = "SELECT fanbase_id, account_id, COUNT(post_id) as Posts FROM tblpost WHERE fanbase_id = {$fanbase['fanbase_id']}";
+    $sqlUser = "SELECT account_id, fanbase_id, date_joined FROM tbluseraccount_fanbase WHERE fanbase_id = {$fanbase['fanbase_id']}";
     $resultUser = mysqli_query($connection, $sqlUser);
     $userArray = array();
 
     if($resultUser) {
-        while($row = $resultUser->fetch_assoc()) {
+         while($row = $resultUser->fetch_assoc()) {
             $userArray[] = $row;
         }
         $resultUser->free();
     }
 
     $newUserArray = array();
-
+    
     foreach($userArray as $user) {
         $sqlUsername = "SELECT username FROM tbluseraccount WHERE account_id = {$user['account_id']}";
-        $sqlDateJoined = "SELECT date_joined FROM tbluseraccount_fanbase WHERE account_id = {$user['account_id']} AND fanbase_id = {$user['fanbase_id']}";
+        $sqlDateJoined = "SELECT COUNT(post_id) as Posts FROM tblpost WHERE account_id = {$user['account_id']} ORDER BY Posts ASC";
 
         $resultUsername = mysqli_query($connection, $sqlUsername);
         $resultDateJoined = mysqli_query($connection, $sqlDateJoined);
@@ -284,17 +274,17 @@ function getMembersTable($fanbaseName){
 
     $newUserArray = array_slice($newUserArray, 0, 5);
 
-    var_dump($newUserArray);
+    // var_dump($newUserArray);
 
     $count = 1;
     foreach($newUserArray as $user) {
-        if($user['Posts'] >= 1) {
+        if($user['fanbase_id']['Posts'] >= 1) {
             $RepUserTableStr .= '
             <tr>
                 <th scope="row">'.$count.'</td>
                 <td>'.$user['account_id']['username'].'</td>
-                <td>'.$user['fanbase_id']['date_joined'].'</td>
-                <td>'.$user['Posts'].'</td>
+                <td>'.$user['date_joined'].'</td>
+                <td>'.$user['fanbase_id']['Posts'].'</td>
             </tr>
             ';
             $count++;
