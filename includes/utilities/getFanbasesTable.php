@@ -60,7 +60,12 @@ function getAppReports(){
     global $connection;
 
     // get top 3 fanbases with most members
-    $sqlFanbase = "SELECT fanbase_name, count(acc_fanbase_id) as MemberCount FROM tblfanbase, tbluseraccount_fanbase WHERE tblfanbase.fanbase_id = tbluseraccount_fanbase.fanbase_id GROUP BY tblfanbase.fanbase_id ORDER BY MemberCount DESC";
+    $sqlFanbase = "SELECT fanbase_name, count(acc_fanbase_id) as MemberCount 
+                   FROM tblfanbase, tbluseraccount_fanbase 
+                   WHERE tblfanbase.fanbase_id = tbluseraccount_fanbase.fanbase_id 
+                   GROUP BY tblfanbase.fanbase_id 
+                   ORDER BY MemberCount DESC";
+
     $result = mysqli_query($connection, $sqlFanbase);
 
     $topFanbasesArr = array();
@@ -102,7 +107,10 @@ function getAppReports(){
     $fanbaseTopStr .= '</tbody></table></div></div>';
 
     // get top 3 fanbases with most posts 
-    $sqlMostPost = "SELECT fanbase_name, count(tblpost.fanbase_id) as PostCount FROM tblfanbase, tblpost WHERE tblfanbase.fanbase_id = tblpost.fanbase_id GROUP BY tblfanbase.fanbase_id";
+    $sqlMostPost = "SELECT fanbase_name, count(tblpost.fanbase_id) as PostCount 
+                    FROM tblfanbase, tblpost 
+                    WHERE tblfanbase.fanbase_id = tblpost.fanbase_id 
+                    GROUP BY tblfanbase.fanbase_id";
     $result = mysqli_query($connection, $sqlMostPost);
 
     $topPostArr = array();
@@ -125,6 +133,8 @@ function getAppReports(){
 
         $result->free();
 
+        $topPostArr = array_splice($topPostArr, 0, 3);
+
         $count = 1;
         foreach($topPostArr as $fanbase){
             $postTopStr .= '
@@ -141,7 +151,10 @@ function getAppReports(){
 
     $postTopStr .= '</tbody></table></div></div>';
     // get events with type ""
-    $sqlEvent = "SELECT event_id, fanbase_name, event_name, event_description FROM tblevent, tblfanbase WHERE tblevent.fanbase_id = tblfanbase.fanbase_id AND event_type = 'MEET & GREET'";
+    $sqlEvent = "SELECT event_id, fanbase_name, event_name, event_description 
+                 FROM tblevent, tblfanbase 
+                 WHERE tblevent.fanbase_id = tblfanbase.fanbase_id AND event_type = 'MEET & GREET'";
+                 
     $result = mysqli_query($connection, $sqlEvent);
 
     $eventArr = array();
