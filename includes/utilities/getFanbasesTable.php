@@ -106,50 +106,50 @@ function getAppReports(){
 
     $fanbaseTopStr .= '</tbody></table></div></div>';
 
-    // get top 3 fanbases with most posts 
-    $sqlMostPost = "SELECT fanbase_name, count(tblpost.fanbase_id) as PostCount 
-                    FROM tblfanbase, tblpost 
-                    WHERE tblfanbase.fanbase_id = tblpost.fanbase_id 
-                    GROUP BY tblfanbase.fanbase_id";
-    $result = mysqli_query($connection, $sqlMostPost);
+    // // get top 3 fanbases with most posts 
+    // $sqlMostPost = "SELECT fanbase_name, count(tblpost.fanbase_id) as PostCount 
+    //                 FROM tblfanbase, tblpost 
+    //                 WHERE tblfanbase.fanbase_id = tblpost.fanbase_id 
+    //                 GROUP BY tblfanbase.fanbase_id";
+    // $result = mysqli_query($connection, $sqlMostPost);
 
-    $topPostArr = array();
+    // $topPostArr = array();
 
-    $postTopStr = "<div style='display: flex; flex-direction: column; justify-content: center; border: none; font-size:2vw'>
-                    TOP 3 FANBASE w MOST POSTS
-                    <div class='table-responsive-lg'><table class='table table-bordered table-hover manageAppTable'>
-                        <thead>
-                            <tr>
-                                <th scope='col'>Top</th>
-                                <th scope='col'>Fanbase</th>
-                                <th scope='col'>Number of Posts</th>
-                        </thead>
-                        <tbody>";
+    // $postTopStr = "<div style='display: flex; flex-direction: column; justify-content: center; border: none; font-size:2vw'>
+    //                 TOP 3 FANBASE w MOST POSTS
+    //                 <div class='table-responsive-lg'><table class='table table-bordered table-hover manageAppTable'>
+    //                     <thead>
+    //                         <tr>
+    //                             <th scope='col'>Top</th>
+    //                             <th scope='col'>Fanbase</th>
+    //                             <th scope='col'>Number of Posts</th>
+    //                     </thead>
+    //                     <tbody>";
 
-    if ($result){
-        while ($row = $result->fetch_assoc()){
-            $topPostArr[] = $row;
-        }
+    // if ($result){
+    //     while ($row = $result->fetch_assoc()){
+    //         $topPostArr[] = $row;
+    //     }
 
-        $result->free();
+    //     $result->free();
 
-        $topPostArr = array_splice($topPostArr, 0, 3);
+    //     $topPostArr = array_splice($topPostArr, 0, 3);
 
-        $count = 1;
-        foreach($topPostArr as $fanbase){
-            $postTopStr .= '
-                <tr>
-                    <th scope="row">'.$count.'</td>
-                    <td>'.$fanbase['fanbase_name'].'</td>
-                    <td>'.$fanbase['PostCount'].'</td>
-                </tr>
-            ';
+    //     $count = 1;
+    //     foreach($topPostArr as $fanbase){
+    //         $postTopStr .= '
+    //             <tr>
+    //                 <th scope="row">'.$count.'</td>
+    //                 <td>'.$fanbase['fanbase_name'].'</td>
+    //                 <td>'.$fanbase['PostCount'].'</td>
+    //             </tr>
+    //         ';
 
-            $count++;
-        }
-    }
+    //         $count++;
+    //     }
+    // }
 
-    $postTopStr .= '</tbody></table></div></div>';
+    // $postTopStr .= '</tbody></table></div></div>';
     // get events with type ""
     $sqlEvent = "SELECT event_id, fanbase_name, event_name, event_description 
                  FROM tblevent, tblfanbase 
@@ -192,5 +192,6 @@ function getAppReports(){
 
     $eventStr .= '</tbody></table></div></div>';
 
-    return $fanbaseTopStr.$postTopStr.$eventStr;
+    // return $fanbaseTopStr.$postTopStr.$eventStr;
+    return $fanbaseTopStr.$eventStr;
 }

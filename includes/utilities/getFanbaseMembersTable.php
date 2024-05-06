@@ -130,8 +130,11 @@ function getMembersTable($fanbaseName){
                     </thead>
                     <tbody>";
 
-    $sqlEvent = "SELECT tblevent.event_id, tblevent.event_name, COUNT(tblevent_participant.account_id) AS Participants FROM tblevent, tblevent_participant WHERE 
-                tblevent.fanbase_id = {$fanbase['fanbase_id']} AND tblevent.event_id = tblevent_participant.event_id GROUP BY tblevent.event_id ORDER BY Participants DESC";
+    $sqlEvent = "SELECT tblevent.event_id, tblevent.event_name, COUNT(tblevent_participant.account_id) AS Participants 
+                 FROM tblevent, tblevent_participant 
+                 WHERE tblevent.fanbase_id = {$fanbase['fanbase_id']} AND tblevent.event_id = tblevent_participant.event_id 
+                 GROUP BY tblevent.event_id 
+                 ORDER BY Participants DESC";
     $resultEvent = mysqli_query($connection, $sqlEvent);
     $eventArray = array();
 
@@ -159,111 +162,112 @@ function getMembersTable($fanbaseName){
         }
     }
 
-    // MOST INTERACTED POST (most replies)
+    // // MOST INTERACTED POST (most replies)
 
-    $RepRepliedTableStr = "
-                <div style='display: flex; justify-content: center; border:none; font-size:2vw'>
-                        MOST INTERACTED POSTS
-                <div class='table-responsive-lg'><table class='table table-bordered table-hover manageAppTable'>
-                    <thead>
-                        <tr>
-                            <th scope='col'>Top</th>
-                            <th scope='col'>Username</th>
-                            <th scope='col'>Post_ID</th>
-                            <th scope='col'>Post</th>
-                            <th scope='col'>Date</th>
-                            <th scope='col'>Number of Replies</th>
-                        </tr>
-                    </thead>
-                <tbody>";
+    // $RepRepliedTableStr = "
+    //             <div style='display: flex; justify-content: center; border:none; font-size:2vw'>
+    //                     MOST INTERACTED POSTS
+    //             <div class='table-responsive-lg'><table class='table table-bordered table-hover manageAppTable'>
+    //                 <thead>
+    //                     <tr>
+    //                         <th scope='col'>Top</th>
+    //                         <th scope='col'>Username</th>
+    //                         <th scope='col'>Post_ID</th>
+    //                         <th scope='col'>Post</th>
+    //                         <th scope='col'>Date</th>
+    //                         <th scope='col'>Number of Replies</th>
+    //                     </tr>
+    //                 </thead>
+    //             <tbody>";
 
-    $sqlPost = "SELECT tblpost.post_created, tblpost.post_text, tblpost.post_id, tbluseraccount.username, 
-    COUNT(DISTINCT tblreply.reply_id) as Replies FROM tblpost, tbluseraccount, tblreply WHERE tblpost.fanbase_id = {$fanbase['fanbase_id']} 
-    AND tblreply.post_id = tblpost.post_id AND tblpost.account_id = tbluseraccount.account_id GROUP BY tblpost.post_id 
-    ORDER BY Replies DESC";
-    $resultPost = mysqli_query($connection, $sqlPost);
-    $postArray = array();
+    // $sqlPost = "SELECT tblpost.post_created, tblpost.post_text, tblpost.post_id, tbluseraccount.username, 
+    // COUNT(DISTINCT tblreply.reply_id) as Replies FROM tblpost, tbluseraccount, tblreply WHERE tblpost.fanbase_id = {$fanbase['fanbase_id']} 
+    // AND tblreply.post_id = tblpost.post_id AND tblpost.account_id = tbluseraccount.account_id GROUP BY tblpost.post_id 
+    // ORDER BY Replies DESC";
+    // $resultPost = mysqli_query($connection, $sqlPost);
+    // $postArray = array();
 
-    if($resultPost) {
-        while($row = $resultPost->fetch_assoc()) {
-            $postArray[] = $row;
-        }
-        $resultPost->free();
-    }
-    $postArray = array_slice($postArray, 0, 5);
+    // if($resultPost) {
+    //     while($row = $resultPost->fetch_assoc()) {
+    //         $postArray[] = $row;
+    //     }
+    //     $resultPost->free();
+    // }
+    // $postArray = array_slice($postArray, 0, 5);
 
-    $count = 1;
-    foreach($postArray as $post) {
-        if($post['Replies'] >= 1) {
-            $RepRepliedTableStr .= '
-            <tr>
-                <th scope="row">'.$count.'</td>
-                <td>'.$post['username'].'</td>
-                <td>'.$post['post_id'].'</td>
-                <td>'.$post['post_text'].'</td>
-                <td>'.$post['post_created'].'</td>
-                <td>'.$post['Replies'].'</td>
-            </tr>
-            ';
-            $count++;
-        }
-    }
+    // $count = 1;
+    // foreach($postArray as $post) {
+    //     if($post['Replies'] >= 1) {
+    //         $RepRepliedTableStr .= '
+    //         <tr>
+    //             <th scope="row">'.$count.'</td>
+    //             <td>'.$post['username'].'</td>
+    //             <td>'.$post['post_id'].'</td>
+    //             <td>'.$post['post_text'].'</td>
+    //             <td>'.$post['post_created'].'</td>
+    //             <td>'.$post['Replies'].'</td>
+    //         </tr>
+    //         ';
+    //         $count++;
+    //     }
+    // }
 
-    // MOST ACTIVE USER (most posts)
+    // // MOST ACTIVE USER (most posts)
 
-    $RepUserTableStr = "
-                <div style='display: flex; justify-content: center; border:none; font-size:2vw'>
-                        MOST ACTIVE USER
-                <div class='table-responsive-lg'><table class='table table-bordered table-hover manageAppTable'>
-                    <thead>
-                        <tr>
-                            <th scope='col'>Top</th>
-                            <th scope='col'>Username</th>
-                            <th scope='col'>Date Joined</th>
-                            <th scope='col'>Number of Posts</th>
-                        </tr>
-                    </thead>
-                <tbody>";
+    // $RepUserTableStr = "
+    //             <div style='display: flex; justify-content: center; border:none; font-size:2vw'>
+    //                     MOST ACTIVE USER
+    //             <div class='table-responsive-lg'><table class='table table-bordered table-hover manageAppTable'>
+    //                 <thead>
+    //                     <tr>
+    //                         <th scope='col'>Top</th>
+    //                         <th scope='col'>Username</th>
+    //                         <th scope='col'>Date Joined</th>
+    //                         <th scope='col'>Number of Posts</th>
+    //                     </tr>
+    //                 </thead>
+    //             <tbody>";
 
-    $sqlUser = "SELECT tbluseraccount.username, tbluseraccount_fanbase.date_joined, COUNT(DISTINCT tblpost.post_id) 
-    as Posts FROM tbluseraccount, tbluseraccount_fanbase, tblpost WHERE tblpost.fanbase_id = {$fanbase['fanbase_id']} AND 
-    tblpost.account_id = tbluseraccount.account_id AND tblpost.fanbase_id = {$fanbase['fanbase_id']} GROUP BY tblpost.account_id 
-    ORDER BY Posts DESC";
-    $resultUser = mysqli_query($connection, $sqlUser);
-    $userArray = array();
+    // $sqlUser = "SELECT tbluseraccount.username, tbluseraccount_fanbase.date_joined, COUNT(DISTINCT tblpost.post_id) 
+    // as Posts FROM tbluseraccount, tbluseraccount_fanbase, tblpost WHERE tblpost.fanbase_id = {$fanbase['fanbase_id']} AND 
+    // tblpost.account_id = tbluseraccount.account_id AND tblpost.fanbase_id = {$fanbase['fanbase_id']} GROUP BY tblpost.account_id 
+    // ORDER BY Posts DESC";
+    // $resultUser = mysqli_query($connection, $sqlUser);
+    // $userArray = array();
 
-    if($resultUser) {
-         while($row = $resultUser->fetch_assoc()) {
-            $userArray[] = $row;
-        }
-        $resultUser->free();
-    }
+    // if($resultUser) {
+    //      while($row = $resultUser->fetch_assoc()) {
+    //         $userArray[] = $row;
+    //     }
+    //     $resultUser->free();
+    // }
 
-    $userArray = array_slice($userArray, 0, 5);
+    // $userArray = array_slice($userArray, 0, 5);
 
-    // var_dump($newUserArray);
+    // // var_dump($newUserArray);
 
-    $count = 1;
-    foreach($userArray as $user) {
-        if($user['Posts'] >= 1) {
-            $RepUserTableStr .= '
-            <tr>
-                <th scope="row">'.$count.'</td>
-                <td>'.$user['username'].'</td>
-                <td>'.$user['date_joined'].'</td>
-                <td>'.$user['Posts'].'</td>
-            </tr>
-            ';
-            $count++;
-        }
-    }
+    // $count = 1;
+    // foreach($userArray as $user) {
+    //     if($user['Posts'] >= 1) {
+    //         $RepUserTableStr .= '
+    //         <tr>
+    //             <th scope="row">'.$count.'</td>
+    //             <td>'.$user['username'].'</td>
+    //             <td>'.$user['date_joined'].'</td>
+    //             <td>'.$user['Posts'].'</td>
+    //         </tr>
+    //         ';
+    //         $count++;
+    //     }
+    // }
 
     $AdminsTableStr .= '</tbody></table></div></div>';
     $MembersTableStr .= '</tbody></table></div></div>';
     $RepEventTableStr .= '</tbody></table></div></div>';
-    $RepRepliedTableStr .= '</tbody></table></div></div>';
-    $RepUserTableStr .= '</tbody></table></div></div>';
+    // $RepRepliedTableStr .= '</tbody></table></div></div>';
+    // $RepUserTableStr .= '</tbody></table></div></div>';
 
-    $tableStr = $AdminsTableStr.$MembersTableStr.$RepEventTableStr.$RepRepliedTableStr.$RepUserTableStr;
+    $tableStr = $AdminsTableStr.$MembersTableStr.$RepEventTableStr;
+    //$RepRepliedTableStr.$RepUserTableStr
     return $tableStr;
 }
