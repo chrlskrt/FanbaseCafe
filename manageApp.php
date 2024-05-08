@@ -37,7 +37,7 @@
         <a class="btn label" id="createFanbaseDiv" style="font-size: 4vw; text-align:left">+ Create Fanbase</a>
         
         <div style="display: flex; justify-content: center;" id="createFanbaseForm">
-            <form action="createFanbase.php" method="post">
+            <form action="createFanbase.php" method="post" enctype="multipart/form-data">
                 <div class="formsch">
                     <div class="form-floating mb-3"> 
                         <input type="text" class="form-control" name="fanbase_name" id="fanbase_name" placeholder="Enter fanbase name..." required>
@@ -50,6 +50,14 @@
                     <div class="form-floating mb-3">
                         <textarea class="form-control" name="fanbase_description" id="fanbase_description" placeholder="Enter fanbase description..." required></textarea>
                         <label for="fanbase_description">Fanbase Description</label>
+                    </div>
+                    <div class="mb-3">
+                      <label for="fanbase_photo" class="form-label">Fanbase Photo</label>
+                      <input class="form-control" type="file" name="fanbase_photo" id="fanbase_photo" accept="image/jpg, image/jpeg, image/png" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="fanbase_logo" class="form-label">Fanbase Logo</label>
+                      <input class="form-control" type="file" name="fanbase_logo" id="fanbase_logo" accept="image/jpg, image/jpeg, image/png" required>
                     </div>
                     <button id="btnCreateFanbase" value="1" type="submit" role="button" class="btn btn-outline-dark btn-lg btn-block">Create Fanbase</button>
                 </div>

@@ -6,7 +6,7 @@ function getFanbases() {
 
     $sqlfanbase = "SELECT * FROM tblfanbase";
     $resultfanbase = mysqli_query($connection, $sqlfanbase);
-    
+
     $fanbaseArray = array();
 
     if ($resultfanbase){
@@ -27,9 +27,9 @@ function getFanbases() {
     $fanbaseCard .= '
     
         <a href="fanbase.php?fanbase_ID='.$fanbase['fanbase_id'].'" class="card2">
-        <img src="images/grpPhoto/grp'.$fanbase['fanbase_name'].'.jpg" class="card2-img">
+        <img src="images/grpPhoto/'.$fanbase['fanbase_photo'].'" class="card2-img">
         <div class="cardContent">
-            <img src="images/grpLogo/grp'.$fanbase['fanbase_name'].'Logo.jpg" class="card2-logo"> 
+            <img src="images/grpLogo/'.$fanbase['fanbase_logo'].'" class="card2-logo"> 
             <p class="card2-name">'.$fanbase['fanbase_artist'].' </p>
         </div>
         </a>

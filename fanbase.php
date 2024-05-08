@@ -16,8 +16,13 @@
     if ($current_user){
         $sqlIsAdmin = "SELECT isAdmin FROM tbluseraccount_fanbase WHERE account_id = {$current_user['account_id']} AND fanbase_id = $fanbaseID";
         $result = mysqli_fetch_assoc(mysqli_query($connection, $sqlIsAdmin));
-
-        $isAdmin = $result['isAdmin']; 
+        
+        if ($result){
+            $isAdmin = $result['isAdmin'];
+        } else {
+            $isAdmin = -1;
+        }
+         
     }
 ?>
 
@@ -38,7 +43,7 @@
             <?php
                 if (($current_user && $current_user['isSysAdmin'] == 1) || ($current_user && $isAdmin == 1)){
                     echo '<a href="manageFanbase.php?fanbase='.$fanbaseName.'" class="btn btn-outline-dark">Manage Fanbase</a>';
-                } else {
+                } else if ($isAdmin == 0) {
                     echo '
                         <form action="requestToBeFanbaseAdmin.php" method="post">
                             <button type="submit" name="fanbase_id" value="'.$fanbaseID.'" class="btn btn-outline-dark">Request To Become Admin</button>
