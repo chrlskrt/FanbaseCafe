@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 08, 2024 at 02:17 PM
+-- Generation Time: May 08, 2024 at 06:21 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -36,8 +36,8 @@ CREATE TABLE `tblevent` (
   `event_date` date NOT NULL,
   `event_time` time(6) NOT NULL,
   `event_location` varchar(100) NOT NULL,
-  `event_description` varchar(500) NOT NULL,
-  `isDeleted` int(11) NOT NULL DEFAULT 0
+  `event_description` varchar(750) NOT NULL,
+  `isDeleted` int(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -60,7 +60,8 @@ INSERT INTO `tblevent` (`event_id`, `account_id`, `fanbase_id`, `event_name`, `e
 CREATE TABLE `tblevent_participant` (
   `event_participant_id` int(6) NOT NULL,
   `event_id` int(11) NOT NULL,
-  `account_id` int(11) NOT NULL
+  `account_id` int(11) NOT NULL,
+  `isParticipant` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -74,21 +75,22 @@ CREATE TABLE `tblfanbase` (
   `fanbase_name` varchar(30) NOT NULL,
   `fanbase_artist` varchar(30) NOT NULL,
   `date_created` date NOT NULL,
-  `fanbase_description` varchar(200) NOT NULL,
+  `fanbase_description` varchar(500) NOT NULL,
   `fanbase_photo` varchar(150) NOT NULL,
-  `fanbase_logo` varchar(150) NOT NULL
+  `fanbase_logo` varchar(150) NOT NULL,
+  `isDeleted` int(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tblfanbase`
 --
 
-INSERT INTO `tblfanbase` (`fanbase_id`, `fanbase_name`, `fanbase_artist`, `date_created`, `fanbase_description`, `fanbase_photo`, `fanbase_logo`) VALUES
-(1, 'CARAT', 'SEVENTEEN', '2024-05-08', 'A safe place for CARATs and SEVENTEEN', 'grpcarat.jpg', 'grpcaratLogo.jpg'),
-(2, 'BLINK', 'BLACKPINK', '2024-05-08', 'A safe place for BLINKs and BLACKPINK', 'grpblink.jpg', 'grpblinkLogo.jpg'),
-(3, 'MOA', 'Tomorrow X Together', '2024-05-08', 'A safe place for MOAs', 'grpMOA.jpg', 'grpMOALogo.jpg'),
-(4, 'ARMY', 'BTS', '2024-05-08', 'A safe place for ARMYs and BTS', 'grpARMY.jpg', 'grpARMYLogo.jpg'),
-(5, 'iKONIC', 'iKON', '2024-05-08', 'A safe place for iKONICs and iKON', 'grpikonic.jpg', 'grpikonicLogo.jpg');
+INSERT INTO `tblfanbase` (`fanbase_id`, `fanbase_name`, `fanbase_artist`, `date_created`, `fanbase_description`, `fanbase_photo`, `fanbase_logo`, `isDeleted`) VALUES
+(1, 'CARAT', 'SEVENTEEN', '2024-05-08', 'A safe place for CARATs and SEVENTEEN', 'grpcarat.jpg', 'grpcaratLogo.jpg', 0),
+(2, 'BLINK', 'BLACKPINK', '2024-05-08', 'A safe place for BLINKs and BLACKPINK', 'grpblink.jpg', 'grpblinkLogo.jpg', 0),
+(3, 'MOA', 'Tomorrow X Together', '2024-05-08', 'A safe place for MOAs', 'grpMOA.jpg', 'grpMOALogo.jpg', 0),
+(4, 'ARMY', 'BTS', '2024-05-08', 'A safe place for ARMYs and BTS', 'grpARMY.jpg', 'grpARMYLogo.jpg', 0),
+(5, 'iKONIC', 'iKON', '2024-05-08', 'A safe place for iKONICs and iKON', 'grpikonic.jpg', 'grpikonicLogo.jpg', 0);
 
 -- --------------------------------------------------------
 
@@ -99,7 +101,8 @@ INSERT INTO `tblfanbase` (`fanbase_id`, `fanbase_name`, `fanbase_artist`, `date_
 CREATE TABLE `tblfanbase_admin` (
   `fanbase_admin_id` int(6) NOT NULL,
   `acc_fanbase_id` int(6) NOT NULL,
-  `date_appointed` date NOT NULL
+  `date_appointed` date NOT NULL,
+  `isDemoted` int(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -112,7 +115,8 @@ CREATE TABLE `tblfanbase_adminrequest` (
   `adminrequest_id` int(6) NOT NULL,
   `account_id` int(6) NOT NULL,
   `fanbase_id` int(6) NOT NULL,
-  `date_requested` date NOT NULL
+  `date_requested` date NOT NULL,
+  `isRequested` int(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -126,7 +130,7 @@ CREATE TABLE `tblpost` (
   `account_id` int(6) NOT NULL,
   `fanbase_id` int(6) NOT NULL,
   `post_created` datetime NOT NULL,
-  `post_text` varchar(200) NOT NULL
+  `post_text` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -140,7 +144,7 @@ CREATE TABLE `tblreply` (
   `post_id` int(6) NOT NULL,
   `account_id` int(6) NOT NULL,
   `reply_created` datetime NOT NULL,
-  `reply_text` varchar(200) NOT NULL
+  `reply_text` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
