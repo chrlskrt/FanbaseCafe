@@ -17,7 +17,7 @@
 <header>
     <nav class="navbar">
         <section>
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="index.php">
                 <div class="label" style="font-size: 20px;"> Fanbase Cafe 
                     <a href="index.php" class="btn btn-outline-light">Home</a>
                 </div>

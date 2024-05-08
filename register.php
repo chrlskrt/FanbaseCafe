@@ -90,7 +90,7 @@
                 </div>    
 
                 <div class="form-floating mb-3">
-                    <input type="date" class="form-control" id="birthdate" name="birthdate" required>
+                    <input type="date" class="form-control" id="birthdate" name="birthdate" max="<?php echo date('Y-m-d', strtotime('-15 years')) ?>" required>
                     <label for="birthdate">Birthday:</label>
                 </div>
 

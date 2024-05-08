@@ -7,20 +7,18 @@
     echo "accid: $accID <br>";
     echo "fanbaseid: $fanbaseID";
     
-    $sqlCreate = "INSERT INTO tbluseraccount_fanbase (account_id, fanbase_id, date_joined)
-    VALUES ('$accID', '$fanbaseID', NOW())";
-    $resultCreate = mysqli_query($connection, $sqlCreate);
+    $sqlCheckIfMemberDataExists = "SELECT acc_fanbase_id FROM tbluseraccount_fanbase WHERE account_id = $accID AND fanbase_id = $fanbaseID";
+    $resultCheckIfMemberDataExists = mysqli_query($connection, $sqlCheckIfMemberDataExists);
 
-    //
-
-    $sqlCreate = "INSERT INTO tblfanbase_member (acc_fanbase_id)
-    VALUES ('$connection->insert_id')";
-    $resultCreate = mysqli_query($connection, $sqlCreate);
-
+    if (mysqli_num_rows($resultCheckIfMemberDataExists) == 1){
+        $sqlUpdate = "UPDATE tbluseraccount_fanbase SET isMember = 1 WHERE account_id = $accID AND fanbase_id = $fanbaseID";
+        $resultUpdate = mysqli_query($connection, $sqlUpdate);
+    } else {
+        $sqlCreate = "INSERT INTO tbluseraccount_fanbase (account_id, fanbase_id, date_joined)
+                      VALUES ('$accID', '$fanbaseID', NOW())";
+        $resultCreate = mysqli_query($connection, $sqlCreate);
+    }
+    
     header("Location: fanbase.php?fanbase_ID={$fanbaseID}");
     exit();
 ?>
-
-<!-- <div>
-    you have now joined the fanbase!
-</div> -->
