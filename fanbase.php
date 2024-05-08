@@ -262,13 +262,14 @@
             <div id="postBody" style="width:100%; margin-left:15px"></div>
         </div>
         <div class="modal-body" id="postReplies" style="flex:1; overflow-y:auto"></div>
-        <form action="createReply.php" method="post" style="margin:0">
+        <!-- <form action="createReply.php" method="post" style="margin:0"> -->
+            <form id="createReplyForm" style="margin:0">
             <div class="modal-footer" id="postCreateReply">
                     <div class="formsch" style="width:100%">
                         <div class="mb-3 from-group" style="display:flex; gap:10px"> 
                             <textarea class="form-control" id="createReplyInput" name="reply_text" placeholder="Write something..." required></textarea>
-                            <input type="hidden" name="fanbase_id" id="createReply_fanbaseID">
-                            <button name="post_id"  type="submit" role="button" class="btn btn-outline-dark" id="createReply_postID">Reply</button>
+                            <input type="hidden" name="fanbase_ID" id="createReply_fanbaseID">
+                            <button name="post_id" class="btn btn-outline-dark" id="createReply_postID">Reply</button>
                         </div>
                     </div>
             </div>
