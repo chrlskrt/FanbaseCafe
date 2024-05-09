@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 09, 2024 at 06:18 PM
+-- Generation Time: May 09, 2024 at 07:45 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -114,6 +114,7 @@ CREATE TABLE `tblfanbase_adminrequest` (
   `account_id` int(6) NOT NULL,
   `fanbase_id` int(6) NOT NULL,
   `date_requested` date NOT NULL,
+  `isRejected` int(1) NOT NULL DEFAULT 0,
   `isRequested` int(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 

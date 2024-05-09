@@ -45,7 +45,7 @@
                     echo '<a href="manageFanbase.php?fanbase='.$fanbaseName.'" class="btn btn-outline-dark">Manage Fanbase</a>';
                 } else if ($isAdmin == 0) {
                     echo '
-                        <form action="requestToBeFanbaseAdmin.php" method="post">
+                        <form action="php/requestToBeFanbaseAdmin.php" method="post">
                             <button type="submit" name="fanbase_id" value="'.$fanbaseID.'" class="btn btn-outline-dark">Request To Become Admin</button>
                         </form>
                     ';

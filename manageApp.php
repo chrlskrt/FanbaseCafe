@@ -5,14 +5,14 @@
 <script src="js/manageApp.js"></script>
 
 <?php
-    $sqluser = "SELECT count(user_id) as totalUser FROM tbluseraccount";
+    $sqluser = "SELECT count(user_id) as totalUser FROM tbluseraccount WHERE isDeleted = 0";
     $sqlfanbase = "SELECT count(fanbase_id) as totalFanbase FROM tblfanbase WHERE isDeleted = 0";
     $sqlevent = "SELECT avg(event_count) as average 
                  FROM (SELECT count(event_id) as event_count FROM tblevent GROUP by fanbase_id) AS h";
     $sqlpost = "SELECT avg(post_count) as average 
                 FROM (SELECT count(post_id) as post_count FROM tblpost GROUP BY fanbase_id) AS e";
-    $sqlEventTotal = "SELECT count(event_id) as totalEvent FROM tblevent GROUP BY event_id";
-    $sqlPostTotal = "SELECT count(post_id) as post_count FROM tblpost GROUP BY post_id";
+    $sqlEventTotal = "SELECT count(event_id) as totalEvent FROM tblevent";
+    $sqlPostTotal = "SELECT count(post_id) as post_count FROM tblpost";
 
     $usercount = mysqli_fetch_assoc(mysqli_query($connection, $sqluser))['totalUser'];
     $fanbasecount = mysqli_fetch_assoc(mysqli_query($connection, $sqlfanbase))['totalFanbase'];

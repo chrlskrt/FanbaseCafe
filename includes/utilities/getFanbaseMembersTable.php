@@ -5,7 +5,10 @@ function getMembersTable($fanbaseName){
     global $connection, $fanbase;
 
     // getting ALL data from tbluseraccount_fanbase
-    $sqlFanbaseMember = "SELECT * FROM tbluseraccount_fanbase WHERE fanbase_id = {$fanbase['fanbase_id']}";
+    $sqlFanbaseMember = "SELECT acc_fanbase_id, f.account_id, u.username, date_joined, isAdmin 
+                         FROM tbluseraccount_fanbase as f, tbluseraccount as u 
+                         WHERE f.account_id = u.account_id AND fanbase_id = {$fanbase['fanbase_id']} AND isMember = 1";
+
     $resultMembers = mysqli_query($connection, $sqlFanbaseMember);
     
     // creating an empty array that will hold the data from $resultUsers
@@ -24,15 +27,7 @@ function getMembersTable($fanbaseName){
 
     // looping thru each account
     foreach($membersArray as $member){
-        // getting the member's account from tblaccount
-        $sqlMember = "SELECT * FROM tbluseraccount WHERE account_id = {$member['account_id']}";
-        $resultMember = mysqli_query($connection, $sqlMember);
-        $rowMember = mysqli_fetch_array($resultMember);
-
-        $member['account_id'] = $rowMember; // gi store ang user profile entry sa user_id sa user account
-        
-        $newMembersArray[] = $member; // add to the new array
-
+       $newMembersArray[] = $member; // add to the new array
     }
 
     // creating the Members table
@@ -73,14 +68,14 @@ function getMembersTable($fanbaseName){
             $AdminsTableStr .= '
                 <tr>
                     <th scope="row">'.$member['acc_fanbase_id'].'</td>
-                    <td>'.$member['account_id']['account_id'].'</td>
-                    <td>'.$member['account_id']['username'].'</td>
+                    <td>'.$member['account_id'].'</td>
+                    <td>'.$member['username'].'</td>
                     <td>'.$member['date_joined'].'</td>
                     <td>
                         <form action="php/manageFanbaseMember.php" method="post">
                             <input type="hidden" name="fanbase_id" value="'.$fanbase['fanbase_id'].'">
                             <div class="flex-container" style="gap: 5px;">'.
-                                (($member['account_id']['account_id'] == $current_user['account_id']) ? 
+                                (($member['account_id'] == $current_user['account_id']) ? 
                                     '<button class="btn btn-outline-success" type="submit" name="demoteUser" disabled>Demote to <b>MEMBER</b></button>
                                      <button class="btn btn-danger" type="submit" name="removeUser" disabled>Remove User</button>'
                                   : '<button class="btn btn-outline-success" type="submit" name="demoteUser" value="'.$member['acc_fanbase_id'].'">Demote to <b>MEMBER</b></button>
@@ -95,8 +90,8 @@ function getMembersTable($fanbaseName){
             $MembersTableStr .= '
                 <tr>
                     <th scope="row">'.$member['acc_fanbase_id'].'</td>
-                    <td>'.$member['account_id']['account_id'].'</td>
-                    <td>'.$member['account_id']['username'].'</td>
+                    <td>'.$member['account_id'].'</td>
+                    <td>'.$member['username'].'</td>
                     <td>'.$member['date_joined'].'</td>
                     <td>
                         <form action="php/manageFanbaseMember.php" method="post">

@@ -5,7 +5,7 @@ function getUsersTable(){
     global $connection;
 
     // getting ALL data from tbluseraccount
-    $sqlUserAccs = "SELECT * FROM tbluseraccount";
+    $sqlUserAccs = "SELECT * FROM tbluseraccount WHERE isDeleted = 0";
     $resultUsers = mysqli_query($connection, $sqlUserAccs);
     
     // creating an empty array that will hold the data from $resulyUsers
