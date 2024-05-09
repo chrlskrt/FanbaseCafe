@@ -8,43 +8,6 @@ body {
     background-color: #e7e7e7;
 }
 
-.container , .CreateNLog {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.flex-container {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-}
-
-.main-container {
-    margin-left: 100px;
-    margin-right: 100px;
-    margin-bottom: 100px;
-    display: flex;
-    flex-direction: column;
-}
-
-.main-container > div {
-    margin-top: 20px;
-    padding-left: 50px;
-    padding-right: 50px;
-}
-
-.main-container-nopaddings {
-    margin-left: 0px;
-    margin-right: 0px;
-    padding-left: 0px;
-    padding-right: 0px;
-    display: flex;
-    flex-direction: column;
-}
-
 .img-icon {
     height: 200px;
     width: 200px;
@@ -187,18 +150,6 @@ a {
     transform: translate(-50%, -50%);
 }
 
-.white-container {
-    background-color: white;
-    box-shadow: 8px 10px 5px #9fc0c1;
-    display: flex; /* Use flexbox layout */
-    align-items: center; /* Align items vertically */
-    justify-content: space-between; /* Add space between image and text */
-}
-
-.white-container > div {
-    margin: 30px;
-}
-
 .tile-image {
     height: 150px;
     width: 150px;
@@ -220,15 +171,10 @@ a {
     align-items: start;
 }
 
-.socialmedia-container {
-    align-items:start; 
-    justify-content:left;
-}
 
 .modal-footer > var {
     border-top: none;
 }
-
 
 /* manageApp.php */
 .manageAppDiv , .manageFanbaseDiv {
