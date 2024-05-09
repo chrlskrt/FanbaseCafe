@@ -12,7 +12,7 @@
         $stmtJoinEvent->execute();
         $stmtJoinEvent->close();
 
-        header("Location: ../fanbase.php?fanbase_ID={$fanbase_id}");
+        header("Location: ../fanbase.php?fanbase_ID={$fanbase_id}#event{$event_id}");
         exit();
     }
 
@@ -24,7 +24,7 @@
         $stmtLeaveEvent->execute();
         $stmtLeaveEvent->close();
 
-        header("Location: ../fanbase.php?fanbase_ID={$fanbase_id}");
+        header("Location: ../fanbase.php?fanbase_ID={$fanbase_id}#event{$event_id}");
         exit();
     }
 ?>

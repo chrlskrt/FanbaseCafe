@@ -1,5 +1,5 @@
 <?php
-    include("../../connect.php");
+    include("../connect.php");
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         $event_id = $_POST['event_id'];

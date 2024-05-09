@@ -31,7 +31,7 @@ function getEvents($fanbaseID){
             $row['event_time'] = date_format(date_create($row['event_time']), "g:i A");
 
             /* storing number of event participants */
-            $sqlNumParticipants = "SELECT count(*) FROM tblevent_participant WHERE event_id = {$row['event_id']}";
+            $sqlNumParticipants = "SELECT count(event_id) FROM tblevent_participant WHERE event_id = {$row['event_id']}";
             $res = mysqli_query($connection, $sqlNumParticipants);
             $row['numberOfParticipants'] = mysqli_fetch_array($res)[0];
 
@@ -50,47 +50,52 @@ function getEvents($fanbaseID){
     $eventsStr = '';
     foreach ($fanbaseEventsArr as $fanbaseEvent) {
         $eventsStr .= '
-            <div class="flex-container" id="event'.$fanbaseEvent['event_id'].'" style="margin-bottom:5px;">
-                <div class="white-container">
-                    <div class="main-container-nopaddings">
-                        <div class="flex-container" style="justify-content: space-between">
-                            <b>'.$fanbaseEvent['event_name'].'</b>
-                            <div style="display:flex; gap:10px">'.
-                            /* if the current_user is an admin of the fanbase
-                            /* or the ORGANIZER of the event, they can delete event */
-                            (($isFanbaseAdmin == 1 || $current_user['account_id'] == $fanbaseEvent['account_id']) ? 
-                                '<form action="php/deleteEvent.php" method="POST" style="margin:0">
-                                    <input type="hidden" name="fanbase_id" value="'.$fanbaseEvent['fanbase_id'].'">
-                                    <button class="btn btn-outline-dark" name="deleteEvent" value="'.$fanbaseEvent['event_id'].'" role="button" type="submit">Delete Event</button> 
-                                </form>
-                                
-                                <button class="updateEventBtn btn btn-outline-dark" id="E-'.$fanbaseEvent['event_id'].'" role="button">Edit</button>'
-                            : '')
-                        .'
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="text"> A '.$fanbaseEvent['event_type'].' Event 
-                            <div class="text" style="color:#808080; padding: 0px"> Organizer: '.$fanbaseEvent['username'].' </div>
-                            <div class="text" style="color:#808080; padding-top: 0px"> Date: '.$fanbaseEvent['event_date'].' Time: '.$fanbaseEvent['event_time'].' Location: '.$fanbaseEvent['event_location'].' </div>
-                            '.$fanbaseEvent['event_description'].'
-                        </div>
+            <div class="event-container" id="event'.$fanbaseEvent['event_id'].'">        
+                <div class="colored-container"> 
+                    '.$fanbaseEvent['event_name'].'
+                </div>
 
-                        <hr>
-                        <div class="text" style="display:flex;justify-content:space-between">
-                            <div class="text" style="color:#808080; padding: 0px"> Participants: '.$fanbaseEvent['numberOfParticipants'].' </div>
-                            <form method="post" action="php/manageEventParticipant.php">
-                                <input type="hidden" name="fanbase_id" value="'.$fanbaseEvent['fanbase_id'].'">
-                        '.
-                        (($current_user['account_id'] != $fanbaseEvent['account_id']) ?
-                            (($fanbaseEvent['hasJoined'] == 0) ?
-                                '<button type="submit" name="joinEvent" value="'.$fanbaseEvent['event_id'].'" class="btn btn-outline-dark">Join</button>'
-                            : '
-                            <button type="submit" name="leaveEvent" value="'.$fanbaseEvent['event_id'].'" class="btn btn-outline-dark">Leave</button>')
-                        : '')
-                    .'      </form>
+                <div style="padding: 15px;">
+                    <div class="pb-2 border-bottom w-100 d-flex flex-column align-items-center"> 
+                        <div>'.$fanbaseEvent['event_type'].'</div>
+                        <div class="small-text" style="color:#7c7c7c;"> 
+                            <div> Organizer: '.$fanbaseEvent['username'].' </div>
                         </div>
                     </div>
+                    <div class="small-text" style="color:#7c7c7c;"> 
+                        <div class="d-flex mt-2" style="align-items:center; justify-content:space-between;">
+                            <div> Date: '.$fanbaseEvent['event_date'].' </div>  
+                            <div> Time: '.$fanbaseEvent['event_time'].' </div>
+                        </div>
+                        <div> Location: '.$fanbaseEvent['event_location'].' </div>
+                        <div> Participants: '.$fanbaseEvent['numberOfParticipants'].'</div>
+                    </div>
+
+                    <div class="small-text mt-2" style="word-wrap:break-word">
+                        '.$fanbaseEvent['event_description'].' 
+                    </div>
+
+                    <div class="d-flex" style="justify-content: space-around; padding:15px">'.
+                        (($isFanbaseAdmin == 1 || $current_user['account_id'] == $fanbaseEvent['account_id']) ? 
+                            '<form action="php/deleteEvent.php" method="POST" style="margin:0">
+                                <input type="hidden" name="fanbase_id" value="'.$fanbaseEvent['fanbase_id'].'">
+                                <button class="btn btn-outline-dark" name="deleteEvent" value="'.$fanbaseEvent['event_id'].'" role="button" type="submit">Delete Event</button> 
+                            </form>
+                            
+                            <button class="updateEventBtn btn btn-outline-dark" id="E-'.$fanbaseEvent['event_id'].'" role="button">Edit</button>'
+                        : 
+                            '<form method="post" action="php/manageEventParticipant.php">
+                                <input type="hidden" name="fanbase_id" value="'.$fanbaseEvent['fanbase_id'].'">'.
+                                (($current_user['account_id'] != $fanbaseEvent['account_id']) ?
+                                    (($fanbaseEvent['hasJoined'] == 0) ?
+                                        '<button type="submit" name="joinEvent" value="'.$fanbaseEvent['event_id'].'" class="btn btn-outline-dark">Interested</button>'
+                                    : '
+                                    <button type="submit" name="leaveEvent" value="'.$fanbaseEvent['event_id'].'" class="btn btn-outline-dark">Not Interested</button>')
+                                : '')
+                            .'</form>'
+                        )
+                    .'</div>
+
                 </div>
             </div>
         ';
