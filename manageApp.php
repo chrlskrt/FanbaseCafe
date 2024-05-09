@@ -11,26 +11,36 @@
                  FROM (SELECT count(event_id) as event_count FROM tblevent GROUP by fanbase_id) AS h";
     $sqlpost = "SELECT avg(post_count) as average 
                 FROM (SELECT count(post_id) as post_count FROM tblpost GROUP BY fanbase_id) AS e";
+    $sqlEventTotal = "SELECT count(event_id) as totalEvent FROM tblevent GROUP BY event_id";
+    $sqlPostTotal = "SELECT count(post_id) as post_count FROM tblpost GROUP BY post_id";
 
     $usercount = mysqli_fetch_assoc(mysqli_query($connection, $sqluser))['totalUser'];
     $fanbasecount = mysqli_fetch_assoc(mysqli_query($connection, $sqlfanbase))['totalFanbase'];
-    $eventAverage = mysqli_fetch_assoc(mysqli_query($connection, $sqlevent))['average'];
-    $postAverage = mysqli_fetch_assoc(mysqli_query($connection, $sqlpost))['average'];
+    $eventAverage = number_format(mysqli_fetch_assoc(mysqli_query($connection, $sqlevent))['average'], 0);
+    $postAverage = number_format(mysqli_fetch_assoc(mysqli_query($connection, $sqlpost))['average'], 0);
+    $postTotal = mysqli_fetch_assoc(mysqli_query($connection, $sqlPostTotal))['post_count'];
+    $eventTotal = mysqli_fetch_assoc(mysqli_query($connection, $sqlEventTotal))['totalEvent'];
     
     if (!$eventAverage){
       $eventAverage = 0;
-    }
-
-    if (!$postAverage){
+    } if (!$postAverage){
       $postAverage = 0;
+    } if(!$postTotal) {
+      $postTotal = 0;
+    } if(!$eventTotal) {
+      $eventTotal = 0;
     }
 
     echo '
         <div class="flex-container" style="flex:none; padding: 30px; flex-wrap:wrap">
-            <div class="label" style="font-size: 20px;"><h1 style="color: green">'." $usercount ".' </h1> NUMBER OF USERS</div>
-            <div class="label" style="font-size: 20px;"><h1 style="color: green">'." $fanbasecount ".' </h1> NUMBER OF FANBASE</div>
-            <div class="label" style="font-size: 20px;"><h1 style="color: green">'." $eventAverage ".' </h1> Average No. of Events per Fanbase</div>
-            <div class="label" style="font-size: 20px;"><h1 style="color: green">'." $postAverage ".' </h1> Average No. of Posts per Fanbase</div>
+            <div class="label" style="font-size: 20px;"><h1 style="color: green">'." $usercount ".' </h1> Total Users</div>
+            <div class="label" style="font-size: 20px;"><h1 style="color: green">'." $fanbasecount ".' </h1> Total Fanbases </div>
+            <div class="label" style="font-size: 20px;"><h1 style="color: green">'." $postTotal ".' </h1> Total Posts</div>
+            <div class="label" style="font-size: 20px;"><h1 style="color: green">'." $eventTotal ".' </h1> Total Events</div>
+        </div>
+        <div class="flex-container" style="flex:none; padding: 30px; flex-wrap:wrap">
+            <div class="label" style="font-size: 20px;"><h1 style="color: green">'." $eventAverage ".' </h1> Average No. of Events <br> per Fanbase</div>
+            <div class="label" style="font-size: 20px;"><h1 style="color: green">'." $postAverage ".' </h1> Average No. of Posts <br> per Fanbase</div>
         </div>
     ';
 ?>
