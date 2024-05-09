@@ -23,8 +23,9 @@
 <!-- main1 -->
 <div class="main-container" id="displayProfile" style="padding-top:100px; flex-direction:row;">
 
-    <div class="white-container" style="flex-direction: column; justify-content: space-evenly;">
+    <div class="white-container" style="flex-direction: column; justify-content: space-around;">
         <img src="images/account.png" class="card2-logo" style="height:120px; width: 120px;">
+        
         <div class="flex-container">
             
             <div class="label" style="text-align:center"> <?php echo $current_user['username'] ?>
@@ -45,12 +46,13 @@
                     Joined Fanbases: BlackPink, TXT, Seventeen
                 </div>
                 <button type="button" class="btn btn-outline-dark" id="btnUpdateProf">Update Profile</button>
+                <a role="button" href="deleteaccount.php" class="btn btn-danger" id="btnDelete"> Delete Account </a>
             </div>
             
         </div>
     </div>
 
-    <img src="images/profileBG.png" style="margin:auto;overflow:hidden;box-shadow: 8px 10px 5px #9fc0c1;">
+    <img src="images/profileBG.png" style="overflow:hidden;box-shadow: 8px 10px 5px #9fc0c1;">
 
 <!-- main1 -->
 </div>
@@ -75,7 +77,6 @@
             $old_birthdate = $profileArray['birthdate'];
         ?>
 
-        <!-- TODO: UPDATE PROFILE DETAILS -->
         <div class="manageFanbaseDiv" >
             <form action="php/updateProfileDetails.php" method="post">
                 <div class="formsch">
@@ -92,7 +93,7 @@
                     <br>
 
                     <div style="display:flex; justify-content:space-between">
-                        <button id="cancelEditProf" type="button" class="btn btn-outline-danger" >Cancel Edit</button>
+                        <button id="cancelEditProf" role="button" class="btn btn-outline-danger" >Cancel Edit</button>
                         <button id="btnUpdateProf" value="1" type="submit" role="button" class="btn btn-success">Update Profile </button>
                     </div>
                 </div>
@@ -102,9 +103,27 @@
     
     </div>
     
-    <img src="images/profileBG.png" style="margin:auto;overflow:hidden;box-shadow: 8px 10px 5px #9fc0c1;">
+    <img src="images/profileBG.png" style="overflow:hidden;box-shadow: 8px 10px 5px #9fc0c1;">
 <!-- main -->
 </div>
+
+<!-- MODAL DELETE ACCOUNT -->
+<!-- <div class="modal fade" tabindex="-1" role="dialog" id="regSuccessModal">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Success!</h5>
+      </div>
+      <div class="modal-body">
+        <p>Resgistration is a success, try logging in </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <a href="login.php" class="btn btn-outline-success">Log In </a>
+      </div>
+    </div>
+  </div>
+</div> -->
 
 <footer>
     <nav class="navbar">

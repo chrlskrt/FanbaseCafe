@@ -6,8 +6,19 @@ $(function(){
         $("#editProfile").show();
     });
 
-    $("#cancelEdit").on("click", function(){
+    $("#cancelEditProf").on("click", function(){
         $("#editProfile").hide();
         $("#displayProfile").show();
     });
+
+//     $("#btnDelete").on("click", function (){
+//         $("#deleteAccount").modal("show");
+//    })
+
+
+
+    // $("#cancelDelete").on("click", function (){
+    //     $("#deleteAccount").modal("hide");
+    // });
+
 });
