@@ -42,7 +42,7 @@ $(function(){
         $event_id = ($elem_id.split("-"))[1];
 
         $.ajax({
-            url: "includes/utilities/getIndivEvent.php",
+            url: "php/getIndivEvent.php",
             method: "POST",
             data: {
                 event_id: $event_id
@@ -73,7 +73,7 @@ $(function(){
     async function viewPostModal(postID){
         $("#createReplyInput").val("");
         $.ajax({
-            url: "includes/utilities/getIndivPost.php",
+            url: "php/getIndivPost.php",
             method: "POST",
             data: {
                 post_id: postID
