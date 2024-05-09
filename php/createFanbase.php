@@ -1,5 +1,6 @@
 <?php
-    include("includes/api.php");
+    include ("../connect.php");
+    include ("../includes/api.php");
     date_default_timezone_set('Asia/Manila');
 
     if($_SERVER['REQUEST_METHOD']==='POST'){
@@ -24,7 +25,7 @@
         $sqlFCount = mysqli_num_rows($sqlFRes);
 
         if ($sqlFCount != 0){
-            header('Location: manageApp.php?artistFanbase_exists');
+            header('Location: ../manageApp.php?artistFanbase_exists');
             exit();
         } 
         
@@ -34,7 +35,7 @@
         $sqlFNCount = mysqli_num_rows($sqlFNRes);
 
         if ($sqlFNCount != 0){
-            header('Location: manageApp.php?fanbaseName_exists');
+            header('Location: ../manageApp.php?fanbaseName_exists');
             exit();
         }
 
@@ -46,7 +47,7 @@
         move_uploaded_file($photo_tmp, $photo_folder);
         move_uploaded_file($logo_tmp, $logo_folder);
         
-		header('Location: manageApp.php?fanbaseCreate_success');
+		header('Location: ../manageApp.php?fanbaseCreate_success');
         exit();
 	}
 ?>

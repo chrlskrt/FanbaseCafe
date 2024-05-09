@@ -50,7 +50,7 @@
                                 </div>
                             </div>'.
                                 (($post['account_id'] == $current_user['account_id'] || $isFanbaseAdmin == 1) ?
-                                    '<div><form method="POST" action="deletePost.php">
+                                    '<div><form method="POST" action="php/deletePost.php">
                                         <input type="hidden" name="fanbase_id" value="'.$post['fanbase_id'].'">
                                         <button type="submit" name="post_id" value="'.$post['post_id'].'" class="btn btn-outline-light">🗑️</button>
                                     </form></div>'

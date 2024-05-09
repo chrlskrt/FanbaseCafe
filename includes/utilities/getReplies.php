@@ -37,7 +37,7 @@
                                     </div>
                                 </div>'.
                                     (($reply['account_id']['account_id'] == $current_user['account_id']) ?
-                                        '<div><form method="POST" action="deleteReply.php">
+                                        '<div><form method="POST" action="php/deleteReply.php">
                                             <input type="hidden" name="fanbase_id" value="'.$fanbase_id.'">
                                             <input type="hidden" name="post_id" value="'.$reply['post_id'].'">
                                             <button type="submit" name="reply_id" value="'.$reply['reply_id'].'" class="btn btn-outline-light">🗑️</button>

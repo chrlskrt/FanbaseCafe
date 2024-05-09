@@ -1,5 +1,6 @@
 <?php
-    include ("includes/api.php");
+    include ("../connect.php");
+    include ("../includes/api.php");
 
     $firstname = $_POST['new_fname'];
     $lastname = $_POST['new_lname'];
@@ -13,6 +14,6 @@
     $stmtUpdateFanbase->execute();
     $stmtUpdateFanbase->close();
     
-    header("Location: profile.php");
+    header("Location: ../profile.php");
     exit();
 ?>

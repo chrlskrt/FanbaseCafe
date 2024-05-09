@@ -5,7 +5,7 @@
 <section class="CreateNLog">
     <div>
         <p class="label">Log In</p>
-        <form action="logInUser.php" method="post">
+        <form action="php/logInUser.php" method="post">
             <div class="formsch">
                 <div class="form-floating mb-3">
                     

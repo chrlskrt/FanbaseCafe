@@ -1,5 +1,6 @@
 <?php
-    include ("includes/api.php");
+    include ("../connect.php");
+    include ("../includes/api.php");
 
     $fanbase = $_POST['fanbase'];
     $new_desc = $_POST['fanbase_description'];
@@ -13,6 +14,6 @@
     $stmtUpdateFanbase->execute();
     $stmtUpdateFanbase->close();
     
-    header("Location: manageFanbase.php?fanbase={$fanbase}");
+    header("Location: ../manageFanbase.php?fanbase={$fanbase}");
     exit();
 ?>

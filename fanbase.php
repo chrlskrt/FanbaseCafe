@@ -79,7 +79,7 @@
 
         <div class="flex-container" id="createEventDiv" style="flex-direction:column; align-items: center;">
             <a class="btn label" style="font-size: 20px;">[ Create Event ]</a>
-            <form action="createEvent.php" method="post">
+            <form action="./php/createEvent.php" method="post">
                 <div class="formsch">
                     <div class="form-floating mb-3"> 
                         <input type="text" class="form-control" name="event_name" id="event_name" placeholder="Enter event name..." required>
@@ -178,14 +178,14 @@
         $joinStr = NULL;
         if(mysqli_num_rows($sqlResult) == 0 || mysqli_num_rows($sqlResult) == 1 && mysqli_fetch_assoc($sqlResult)['isMember'] == 0) {
             $joinStr .= '
-            <form action="joinFanbase.php" method="POST">
+            <form action="php/joinFanbase.php" method="POST">
                 <input type="hidden" value="'.$fanbaseID.'" name="fanbaseID">
                 <button type="submit" id="btnJoinFanbase" role="button" value="'.($current_user["account_id"]).'" name="fanbaseMember" class="btn btn-outline-dark"> Join now! </button>
             </form>
         ';
         } else {
             $joinStr .= '
-            <form action="leaveFanbase.php" method="POST">
+            <form action="php/leaveFanbase.php" method="POST">
                 <input type="hidden" value="'.$fanbaseID.'" name="fanbaseID">
                 <button type="submit" id="btnLeaveFanbase" role="button" value="'.($current_user["account_id"]).'" name="leaveFanbaseMember" class="btn btn-outline-dark"> Leave fanbase? </button>
             </form>
@@ -205,7 +205,7 @@
         <div class="modal-header">
             <h5 class="modal-title"> [ Edit Event ]</h5>
         </div>
-        <form action="updateEvent.php" method="post" style="margin:0">
+        <form action="php/updateEvent.php" method="post" style="margin:0">
             <div class="modal-body" style="height:74vh; overflow-y:auto">
                 <div class="flex-container" style="flex-direction:column; align-items: center; ">
                     <div class="formsch" style="width:95%">

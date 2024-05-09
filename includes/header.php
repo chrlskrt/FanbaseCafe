@@ -28,6 +28,7 @@
             <!-- /* if naa nay concept na log-out pd nani siya on the go yesyes */ -->
             <?php
                 include_once("api.php");
+                include("connect.php");
                 if($current_user == null){
                     echo '<a href="register.php" class="btn btn-outline-light">Register</a>
                     <a href="login.php" class="btn btn-outline-light">Log In</a>';
@@ -45,7 +46,7 @@
                         echo '<a href="manageApp.php" class="btn btn-outline-light">Manage App</a> ';
                     }
                     echo '<a href="profile.php" class="btn btn-outline-light">Profile</a> ';
-                    echo '<a href="logOutUser.php" class="btn btn-outline-light">Log Out</a>';
+                    echo '<a href="php/logOutUser.php" class="btn btn-outline-light">Log Out</a>';
                 }
             ?>
         </section>

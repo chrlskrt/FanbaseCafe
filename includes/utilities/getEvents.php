@@ -5,12 +5,15 @@ function getEvents($fanbaseID){
     global $connection, $current_user;
 
     // getting the member info of the current_user from tbluseraccount_fanbase 
-    $sqlCurrFanbaseMember = "SELECT * FROM tbluseraccount_fanbase WHERE fanbase_id = {$fanbaseID} AND account_id = {$current_user['account_id']}";
+    $sqlCurrFanbaseMember = "SELECT isAdmin FROM tbluseraccount_fanbase WHERE fanbase_id = {$fanbaseID} AND account_id = {$current_user['account_id']}";
     $resMem = mysqli_fetch_array(mysqli_query($connection, $sqlCurrFanbaseMember));
     $isFanbaseAdmin = $resMem['isAdmin'];
     
     // getting ALL events for this fanbase from tblevent
-    $sqlevents = "SELECT * FROM tblevent WHERE fanbase_id = {$fanbaseID}";
+    $sqlevents = "SELECT event_id, e.account_id, username, e.fanbase_id, event_name, event_type, event_date, event_time, event_location, event_description  
+                  FROM tblevent as e, tbluseraccount as u 
+                  WHERE e.account_id = u.account_id AND fanbase_id = 1";
+
     $resultevents = mysqli_query($connection, $sqlevents);
     
     // var_dump(mysqli_fetch_array($resultevents));
@@ -26,13 +29,6 @@ function getEvents($fanbaseID){
             /* setting date format for easy read */
             $row['event_date'] = date_format(date_create($row['event_date']), "F d, Y");
             $row['event_time'] = date_format(date_create($row['event_time']), "g:i A");
-
-            /* getting organizer info using account_id */
-            $mysqlUser = "SELECT * from tbluseraccount WHERE account_id = {$row['account_id']}";
-            $res = mysqli_query($connection, $mysqlUser);
-
-            /* storing organizer into account_id */
-            $row['account_id'] = mysqli_fetch_array($res);
 
             /* storing number of event participants */
             $sqlNumParticipants = "SELECT count(*) FROM tblevent_participant WHERE event_id = {$row['event_id']}";
@@ -62,8 +58,8 @@ function getEvents($fanbaseID){
                             <div style="display:flex; gap:10px">'.
                             /* if the current_user is an admin of the fanbase
                             /* or the ORGANIZER of the event, they can delete event */
-                            (($isFanbaseAdmin == 1 || $current_user['account_id'] == $fanbaseEvent['account_id']['account_id']) ? 
-                                '<form action="deleteEvent.php" method="POST" style="margin:0">
+                            (($isFanbaseAdmin == 1 || $current_user['account_id'] == $fanbaseEvent['account_id']) ? 
+                                '<form action="php/deleteEvent.php" method="POST" style="margin:0">
                                     <input type="hidden" name="fanbase_id" value="'.$fanbaseEvent['fanbase_id'].'">
                                     <button class="btn btn-outline-dark" name="deleteEvent" value="'.$fanbaseEvent['event_id'].'" role="button" type="submit">Delete Event</button> 
                                 </form>
@@ -75,7 +71,7 @@ function getEvents($fanbaseID){
                         </div>
                         <hr>
                         <div class="text"> A '.$fanbaseEvent['event_type'].' Event 
-                            <div class="text" style="color:#808080; padding: 0px"> Organizer: '.$fanbaseEvent['account_id']['username'].' </div>
+                            <div class="text" style="color:#808080; padding: 0px"> Organizer: '.$fanbaseEvent['username'].' </div>
                             <div class="text" style="color:#808080; padding-top: 0px"> Date: '.$fanbaseEvent['event_date'].' Time: '.$fanbaseEvent['event_time'].' Location: '.$fanbaseEvent['event_location'].' </div>
                             '.$fanbaseEvent['event_description'].'
                         </div>
@@ -83,10 +79,10 @@ function getEvents($fanbaseID){
                         <hr>
                         <div class="text" style="display:flex;justify-content:space-between">
                             <div class="text" style="color:#808080; padding: 0px"> Participants: '.$fanbaseEvent['numberOfParticipants'].' </div>
-                            <form method="post" action="manageEventParticipant.php">
+                            <form method="post" action="php/manageEventParticipant.php">
                                 <input type="hidden" name="fanbase_id" value="'.$fanbaseEvent['fanbase_id'].'">
                         '.
-                        (($current_user['account_id'] != $fanbaseEvent['account_id']['account_id']) ?
+                        (($current_user['account_id'] != $fanbaseEvent['account_id']) ?
                             (($fanbaseEvent['hasJoined'] == 0) ?
                                 '<button type="submit" name="joinEvent" value="'.$fanbaseEvent['event_id'].'" class="btn btn-outline-dark">Join</button>'
                             : '

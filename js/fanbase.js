@@ -114,7 +114,7 @@ $(function(){
         fanbaseID = $("#createReply_fanbaseID").val();
 
         $.ajax({
-            url: "createReply.php",
+            url: "php/createReply.php",
             method: "POST",
             data: {
                 post_id: postID,
@@ -138,7 +138,7 @@ $(function(){
                                     </div>
                                     
                                     <div>
-                                        <form method="POST" action="deleteReply.php">
+                                        <form method="POST" action="php/deleteReply.php">
                                             <input type="hidden" name="fanbase_id" value="${reply.fanbase_id}">
                                             <input type="hidden" name="post_id" value="${reply.post_id}">
                                             <button type="submit" name="reply_id" value="${reply.reply_id}" class="btn btn-outline-light">🗑️</button>

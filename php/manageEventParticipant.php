@@ -1,5 +1,7 @@
 <?php
-    include 'includes/api.php';
+    include ("../connect.php");
+    include ("../includes/api.php");
+
     $fanbase_id = $_POST['fanbase_id'];
 
     if (isset($_POST['joinEvent'])){
@@ -10,7 +12,7 @@
         $stmtJoinEvent->execute();
         $stmtJoinEvent->close();
 
-        header("Location: fanbase.php?fanbase_ID={$fanbase_id}");
+        header("Location: ../fanbase.php?fanbase_ID={$fanbase_id}");
         exit();
     }
 
@@ -22,7 +24,7 @@
         $stmtLeaveEvent->execute();
         $stmtLeaveEvent->close();
 
-        header("Location: fanbase.php?fanbase_ID={$fanbase_id}");
+        header("Location: ../fanbase.php?fanbase_ID={$fanbase_id}");
         exit();
     }
 ?>

@@ -1,5 +1,6 @@
 <?php
-    include_once("includes/api.php");
+    include ("../connect.php");
+    include ("../includes/api.php");
 
     if($_SERVER['REQUEST_METHOD']==='POST'){
 		$uname = $_POST['username'];
@@ -17,11 +18,11 @@
 			// handleLogIn($user); // api.php ang mo set sa cookie / session 
 			/* using session */
 			$_SESSION["user"] = json_encode($user, true);
-			header("Location: index.php");
+			header("Location: ../index.php");
 		} else if ($user_count == 0){
-			header("Location: login.php?login_error_1");
+			header("Location: ../login.php?login_error_1");
 		} else {
-			header("Location: login.php?login_error_2=".$uname."");
+			header("Location: ../login.php?login_error_2=".$uname."");
 		}
 	}
 ?>

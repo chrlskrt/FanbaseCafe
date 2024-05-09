@@ -77,7 +77,7 @@
 
         <!-- TODO: UPDATE PROFILE DETAILS -->
         <div class="manageFanbaseDiv" >
-            <form action="updateProfileDetails.php" method="post">
+            <form action="php/updateProfileDetails.php" method="post">
                 <div class="formsch">
                     <div class="form-group" > 
                         <div class="label" style="text-align:center"> <?php echo $current_user['username'] ?> </div>

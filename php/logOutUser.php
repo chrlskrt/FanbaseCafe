@@ -1,5 +1,6 @@
 <?php
-    include_once("includes/api.php");
+    include ("../connect.php");
+    include ("../includes/api.php");
     /* using cookie */
     // var_dump($_COOKIE);
     // unset($_COOKIE['user']);
@@ -9,6 +10,6 @@
     /* using session */
     unset($current_user);
     session_destroy();
-    header("Location: index.php");
+    header("Location: ../index.php");
     exit();
 ?>

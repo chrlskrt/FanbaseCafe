@@ -1,5 +1,7 @@
 <?php
-    include ("includes/api.php");
+    include ("../connect.php");
+    include ("../includes/api.php");
+
     $fanbaseID = $_POST['fanbase_id'];
 
     $sqlFanbase = "SELECT fanbase_name FROM tblfanbase WHERE fanbase_id = $fanbaseID";
@@ -40,6 +42,6 @@
         $sqlDelete->close();
     }
 
-    header("Location: manageFanbase.php?fanbase=$fanbase_name");
+    header("Location: ../manageFanbase.php?fanbase=$fanbase_name");
     exit();
 ?>

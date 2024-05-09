@@ -77,7 +77,7 @@ function getMembersTable($fanbaseName){
                     <td>'.$member['account_id']['username'].'</td>
                     <td>'.$member['date_joined'].'</td>
                     <td>
-                        <form action="manageFanbaseMember.php" method="post">
+                        <form action="php/manageFanbaseMember.php" method="post">
                             <input type="hidden" name="fanbase_id" value="'.$fanbase['fanbase_id'].'">
                             <div class="flex-container" style="gap: 5px;">'.
                                 (($member['account_id']['account_id'] == $current_user['account_id']) ? 
@@ -99,7 +99,7 @@ function getMembersTable($fanbaseName){
                     <td>'.$member['account_id']['username'].'</td>
                     <td>'.$member['date_joined'].'</td>
                     <td>
-                        <form action="manageFanbaseMember.php" method="post">
+                        <form action="php/manageFanbaseMember.php" method="post">
                             <input type="hidden" name="fanbase_id" value="'.$fanbase['fanbase_id'].'">
                             <div class="flex-container" style="gap: 5px;">
                                 <button class="btn btn-outline-success" type="submit" name="promoteUser" value="'.$member['acc_fanbase_id'].'">Promote to <b>ADMIN</b></button>

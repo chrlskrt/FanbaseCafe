@@ -22,7 +22,7 @@
     </div>
 
     <div class="manageFanbaseDiv" id="editFanbaseDetailsDiv">
-        <form action="updateFanbaseDetails.php" method="post">
+        <form action="php/updateFanbaseDetails.php" method="post">
             <div class="formsch">
                 <div class="form-group" > 
                     <div class="label" style="font-weight:unset; font-size: 3vw;">Date founded:</div>
@@ -38,7 +38,7 @@
                 </div>
             </div>
         </form>
-        <form action="deleteFanbase.php" method="POST">
+        <form action="php/deleteFanbase.php" method="POST">
             <button id="btnDeleteFanbase" value="<?php echo $fanbaseName ?>" name="fanbase" type="submit" role="button" class="btn btn-outline-danger">Delete Fanbase</button>
         </form>
     </div>

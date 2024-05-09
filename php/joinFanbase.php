@@ -1,5 +1,6 @@
 <?php
-    include("includes/api.php");
+    include ("../connect.php");
+    include ("../includes/api.php");
 
     $fanbaseID = $_POST["fanbaseID"];
     $accID = $_POST["fanbaseMember"];
@@ -19,6 +20,6 @@
         $resultCreate = mysqli_query($connection, $sqlCreate);
     }
     
-    header("Location: fanbase.php?fanbase_ID={$fanbaseID}");
+    header("Location: ../fanbase.php?fanbase_ID={$fanbaseID}");
     exit();
 ?>

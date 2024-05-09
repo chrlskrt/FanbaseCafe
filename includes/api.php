@@ -1,5 +1,4 @@
 <?php
-    include("connect.php");
     include("utilities/getFanbases.php");
     include("utilities/getEvents.php");    
     include("utilities/getPosts.php");

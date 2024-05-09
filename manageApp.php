@@ -60,7 +60,7 @@
         <a class="btn label" id="createFanbaseDiv" style="font-size: 4vw; text-align:left">+ Create Fanbase</a>
         
         <div style="display: flex; justify-content: center;" id="createFanbaseForm">
-            <form action="createFanbase.php" method="post" enctype="multipart/form-data">
+            <form action="php/createFanbase.php" method="post" enctype="multipart/form-data">
                 <div class="formsch">
                     <div class="form-floating mb-3"> 
                         <input type="text" class="form-control" name="fanbase_name" id="fanbase_name" placeholder="Enter fanbase name..." required>

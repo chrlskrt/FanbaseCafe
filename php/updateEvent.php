@@ -1,5 +1,6 @@
 <?php
-    include ("includes/api.php");
+    include ("../connect.php");
+    include ("../includes/api.php");
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         // getting inputs of form submission
@@ -17,7 +18,7 @@
         $stmtAddEvent->execute();
         $stmtAddEvent->close();
       
-        header("Location: fanbase.php?fanbase_ID={$fanbase_id}#E-{$event_id}");
+        header("Location: ../fanbase.php?fanbase_ID={$fanbase_id}#E-{$event_id}");
         exit();
     }
 ?>

@@ -1,5 +1,6 @@
 <?php
-    include ("includes/api.php");
+    include ("../connect.php");
+    include ("../includes/api.php");
 
     // getting inputs of form submission
     $event_name = $_POST['event_name'];
@@ -26,6 +27,6 @@
         $stmtAddEvent->close();
     }
 
-    header("Location: fanbase.php?fanbase_ID={$fanbase_id}");
+    header("Location: ../fanbase.php?fanbase_ID={$fanbase_id}");
     exit();
 ?>

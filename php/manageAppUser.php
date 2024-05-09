@@ -1,5 +1,7 @@
 <?php
-    include 'includes/api.php';
+    include ("../connect.php");
+    include ("../includes/api.php");
+
     $_SESSION['manageAppUser_data'] = $_POST;
 
     if (isset($_POST['promoteUser'])){
@@ -20,7 +22,7 @@
         }
 
         if ($resultPromoteUser){
-            header('Location: manageApp.php?promoteUser');
+            header('Location: ../manageApp.php?promoteUser');
             exit();
         }
     }
@@ -36,7 +38,7 @@
         $resultDemoteUser = mysqli_query($connection, $sqlDemoteUser);
 
         if ($resultDemoteUser){
-            header('Location: manageApp.php?demoteUser');
+            header('Location: ../manageApp.php?demoteUser');
             exit();
         }
     }
@@ -48,7 +50,7 @@
         $resultDeleteUserAcc = mysqli_query($connection, $sqlDeleteUserAcc);
 
         if ($resultDeleteUserAcc){
-            header('Location: manageApp.php?deleteUserAcc');
+            header('Location: ../manageApp.php?deleteUserAcc');
             exit();
         }
     }
