@@ -7,7 +7,7 @@
 		$pass = $_POST['password'];
 
 		//check tbluseraccount if username is existing
-		$sql ="SELECT * from tbluseraccount where username='".$uname."'";
+		$sql ="SELECT * from tbluseraccount where username='".$uname."' AND isDeleted = 0";
 		
 		$result = mysqli_query($connection,$sql);	
 		

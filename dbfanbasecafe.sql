@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 09, 2024 at 05:51 PM
+-- Generation Time: May 09, 2024 at 06:18 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -157,17 +157,18 @@ CREATE TABLE `tbluseraccount` (
   `email_add` varchar(30) NOT NULL,
   `username` varchar(30) NOT NULL,
   `password` varchar(72) NOT NULL,
-  `isSysAdmin` tinyint(1) NOT NULL DEFAULT 0
+  `isSysAdmin` tinyint(1) NOT NULL DEFAULT 0,
+  `isDeleted` int(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tbluseraccount`
 --
 
-INSERT INTO `tbluseraccount` (`account_id`, `user_id`, `email_add`, `username`, `password`, `isSysAdmin`) VALUES
-(1, 1, 'admin101@gmail.com', 'admin101', '$2y$10$xrlIhsfu/vbFINVIKFVLUeshT70j58Xr9LF2CLQeJ35lEnyatUAIa', 1),
-(2, 2, 'pop@gmail.com', 'pop', '$2y$10$RZ07r0zBo4NA0jIvEvEa1.WkPPCuIOYzXtc0jSm9ZQNy0xvhY2WRq', 0),
-(3, 3, 'ice@gmail.com', 'ice', '$2y$10$AZcGp4n3a/YrYisn8qjgTu8Buy3BLEN2PgbJ8bR2v7P4N.ievgmru', 0);
+INSERT INTO `tbluseraccount` (`account_id`, `user_id`, `email_add`, `username`, `password`, `isSysAdmin`, `isDeleted`) VALUES
+(1, 1, 'admin101@gmail.com', 'admin101', '$2y$10$xrlIhsfu/vbFINVIKFVLUeshT70j58Xr9LF2CLQeJ35lEnyatUAIa', 1, 0),
+(2, 2, 'pop@gmail.com', 'pop', '$2y$10$RZ07r0zBo4NA0jIvEvEa1.WkPPCuIOYzXtc0jSm9ZQNy0xvhY2WRq', 0, 0),
+(3, 3, 'ice@gmail.com', 'ice', '$2y$10$AZcGp4n3a/YrYisn8qjgTu8Buy3BLEN2PgbJ8bR2v7P4N.ievgmru', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -226,18 +227,17 @@ CREATE TABLE `tbluserprofile` (
   `user_id` int(6) NOT NULL,
   `firstname` varchar(30) NOT NULL,
   `lastname` varchar(30) NOT NULL,
-  `birthdate` date NOT NULL,
-  `isDeleted` int(1) NOT NULL DEFAULT 0
+  `birthdate` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tbluserprofile`
 --
 
-INSERT INTO `tbluserprofile` (`user_id`, `firstname`, `lastname`, `birthdate`, `isDeleted`) VALUES
-(1, 'admin101', 'admin101', '2000-01-01', 0),
-(2, 'pop', 'pop', '2004-09-19', 0),
-(3, 'ice', 'ice', '2009-05-08', 0);
+INSERT INTO `tbluserprofile` (`user_id`, `firstname`, `lastname`, `birthdate`) VALUES
+(1, 'admin101', 'admin101', '2000-01-01'),
+(2, 'pop', 'pop', '2004-09-19'),
+(3, 'ice', 'ice', '2009-05-08');
 
 --
 -- Indexes for dumped tables
