@@ -121,7 +121,7 @@
 
         <div class="flex-container" id="createPostDiv" style="flex-direction:column; align-items: center;">
             <a class="btn label" style="font-size: 20px;">[ Create Post ]</a>
-            <form action="createPost.php" method="post">
+            <form action="php/createPost.php" method="post">
                 <div class="formsch">
                     <div class="mb-3"> 
                         <textarea class="form-control" name="post_text" id="post_text" placeholder="Write something..." required></textarea>

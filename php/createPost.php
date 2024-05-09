@@ -1,5 +1,6 @@
 <?php
-    include ("includes/api.php");
+    include ("../connect.php");
+    include ("../includes/api.php");
 
     if ($_SERVER["REQUEST_METHOD"] == "POST"){
          // getting inputs of form submission
@@ -15,7 +16,7 @@
         $stmtAddPost->close();
         
         $post_id = $connection->insert_id;
-        header("Location: fanbase.php?fanbase_ID={$fanbase_id}#post{$post_id}");
+        header("Location: ../fanbase.php?fanbase_ID={$fanbase_id}#post{$post_id}");
         exit();
     }
 ?>

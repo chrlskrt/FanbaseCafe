@@ -12,7 +12,7 @@ function getEvents($fanbaseID){
     // getting ALL events for this fanbase from tblevent
     $sqlevents = "SELECT event_id, e.account_id, username, e.fanbase_id, event_name, event_type, event_date, event_time, event_location, event_description  
                   FROM tblevent as e, tbluseraccount as u 
-                  WHERE e.account_id = u.account_id AND fanbase_id = 1";
+                  WHERE e.account_id = u.account_id AND fanbase_id = {$fanbaseID}";
 
     $resultevents = mysqli_query($connection, $sqlevents);
     
