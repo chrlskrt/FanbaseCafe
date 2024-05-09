@@ -71,6 +71,7 @@ $(function(){
     })
 
     async function viewPostModal(postID){
+        $("#createReplyInput").val("");
         $.ajax({
             url: "includes/utilities/getIndivPost.php",
             method: "POST",
@@ -94,7 +95,66 @@ $(function(){
         $("#viewPostModal").modal("show");
     }
 
-    $("#viewPostExitBtn").on("click", function(){
+    $("#createReplyForm").on("submit", function(e){
+        e.preventDefault();
         $("#createReplyInput").val("");
     })
+
+    $("#createReply_postID").on("click", function(){
+        replyText = $("#createReplyInput").val();
+        console.log(replyText);
+
+        if (replyText.length == 0){
+            return;
+        }
+
+        postID = $("#createReply_postID").val();
+        console.log(postID);
+
+        fanbaseID = $("#createReply_fanbaseID").val();
+
+        $.ajax({
+            url: "createReply.php",
+            method: "POST",
+            data: {
+                post_id: postID,
+                reply_text: replyText,
+                fanbase_id: fanbaseID
+            },
+            success: function(data){
+                console.log(data);
+                reply = JSON.parse(data);
+
+                replyDiv = `<div style="display: flex; flex-direction: column;">
+                                <div style="display: flex; width: 100%; justify-content: space-between;">
+                                    <div style="display:flex; gap:10px">
+                                        <div style="display: flex; align-items: center">
+                                            <img src="https://ui-avatars.com/api/?rounded=true&name=${reply.username}" alt="" style="height: 35; width:35">
+                                        </div>
+                                        <div style="display:flex; flex-direction:column; justify-content:center">
+                                            <h5 style="margin-bottom:3px;">${reply.username}</h5>
+                                            <p style="font-size: 10; color: gray; margin:0">${reply.reply_created}</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div>
+                                        <form method="POST" action="deleteReply.php">
+                                            <input type="hidden" name="fanbase_id" value="${reply.fanbase_id}">
+                                            <input type="hidden" name="post_id" value="${reply.post_id}">
+                                            <button type="submit" name="reply_id" value="${reply.reply_id}" class="btn btn-outline-light">🗑️</button>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <div style="margin-left: 45px">${reply.reply_text}</div>
+                            </div>`;
+                
+                $("#postReplies").children(":first-child").append(replyDiv);
+            },
+
+            error: function(data){
+                console.log("error", data);
+            }
+        })
+    });
 })

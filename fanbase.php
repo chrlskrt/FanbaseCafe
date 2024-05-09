@@ -16,8 +16,13 @@
     if ($current_user){
         $sqlIsAdmin = "SELECT isAdmin FROM tbluseraccount_fanbase WHERE account_id = {$current_user['account_id']} AND fanbase_id = $fanbaseID";
         $result = mysqli_fetch_assoc(mysqli_query($connection, $sqlIsAdmin));
-
-        $isAdmin = $result['isAdmin']; 
+        
+        if ($result){
+            $isAdmin = $result['isAdmin'];
+        } else {
+            $isAdmin = -1;
+        }
+         
     }
 ?>
 
@@ -38,7 +43,7 @@
             <?php
                 if (($current_user && $current_user['isSysAdmin'] == 1) || ($current_user && $isAdmin == 1)){
                     echo '<a href="manageFanbase.php?fanbase='.$fanbaseName.'" class="btn btn-outline-dark">Manage Fanbase</a>';
-                } else {
+                } else if ($isAdmin == 0) {
                     echo '
                         <form action="requestToBeFanbaseAdmin.php" method="post">
                             <button type="submit" name="fanbase_id" value="'.$fanbaseID.'" class="btn btn-outline-dark">Request To Become Admin</button>
@@ -80,9 +85,16 @@
                         <input type="text" class="form-control" name="event_name" id="event_name" placeholder="Enter event name..." required>
                         <label for="event_name">Event Name</label>
                     </div>
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" name="event_type" id="event_type" placeholder="Enter event type..." required>
+                    <div class="mb-3 flex-container" style="gap: 10px">
                         <label for="event_type">Event Type</label>
+                        <select name="event_type" id="event_type" class="form-select" style="flex:1" aria-label="Choose Event Type" required>
+                            <option value="">Choose an Event Type</option>
+                            <option value="Meet & Greet">Meet & Greet</option>
+                            <option value="Cupsleeve">Cupsleeve</option>
+                            <option value="Fan Festival">Fan Festival</option>
+                            <option value="Fan Concert">Fan Concert</option>
+                            <option value="Watch Party / Screening">Watch Party / Screening</option>
+                        </select>
                     </div>
                     <div class="form-floating mb-3">
                         <input type="date" class="form-control" id="event_date" name="event_date" min="<?php echo date("Y-m-d") ?>" required>
@@ -157,15 +169,14 @@
 
 
 <?php
-    // echo "fanbase name : $fanbaseName <br> fanbase artist : $fanbaseArtist <br> fanbase description : $fanbaseDescription";
     function displayButton(){
         global $connection, $fanbaseID, $current_user;
 
-        $sqlfanbase = "SELECT * FROM tbluseraccount_fanbase WHERE fanbase_id = {$fanbaseID} AND account_id = {$current_user['account_id']}";
+        $sqlfanbase = "SELECT isMember FROM tbluseraccount_fanbase WHERE fanbase_id = {$fanbaseID} AND account_id = {$current_user['account_id']}";
         $sqlResult = mysqli_query($connection, $sqlfanbase);
 
         $joinStr = NULL;
-        if(mysqli_num_rows($sqlResult) == 0) {
+        if(mysqli_num_rows($sqlResult) == 0 || mysqli_num_rows($sqlResult) == 1 && mysqli_fetch_assoc($sqlResult)['isMember'] == 0) {
             $joinStr .= '
             <form action="joinFanbase.php" method="POST">
                 <input type="hidden" value="'.$fanbaseID.'" name="fanbaseID">
@@ -262,13 +273,14 @@
             <div id="postBody" style="width:100%; margin-left:15px"></div>
         </div>
         <div class="modal-body" id="postReplies" style="flex:1; overflow-y:auto"></div>
-        <form action="createReply.php" method="post" style="margin:0">
+        <!-- <form action="createReply.php" method="post" style="margin:0"> -->
+            <form id="createReplyForm" style="margin:0">
             <div class="modal-footer" id="postCreateReply">
                     <div class="formsch" style="width:100%">
                         <div class="mb-3 from-group" style="display:flex; gap:10px"> 
                             <textarea class="form-control" id="createReplyInput" name="reply_text" placeholder="Write something..." required></textarea>
-                            <input type="hidden" name="fanbase_id" id="createReply_fanbaseID">
-                            <button name="post_id"  type="submit" role="button" class="btn btn-outline-dark" id="createReply_postID">Reply</button>
+                            <input type="hidden" name="fanbase_ID" id="createReply_fanbaseID">
+                            <button name="post_id" class="btn btn-outline-dark" id="createReply_postID">Reply</button>
                         </div>
                     </div>
             </div>
