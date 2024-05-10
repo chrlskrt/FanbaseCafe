@@ -107,6 +107,57 @@ function getMembersTable($fanbaseName){
         }
     }
 
+    // admin request
+    $sqlRequests = "SELECT adminrequest_id, r.account_id, username, date_requested 
+                    FROM tblfanbase_adminrequest as r, tbluseraccount as u
+                    WHERE r.account_id = u.account_id AND isRequested = 1 AND fanbase_id = {$fanbase['fanbase_id']}";
+    $resultRequests = mysqli_query($connection, $sqlRequests);
+
+    $requests = array();
+
+    if ($resultRequests){
+        while ($row = mysqli_fetch_array($resultRequests)){
+           $requests[] = $row;
+        }
+
+        $resultRequests->free();
+    }
+
+    // creating the Requests table
+    $RequestsTableStr = "<div style='display: flex; justify-content: center; border: none; font-size:2vw'>
+                    Request to be Admin
+                <div class='table-responsive-lg'><table class='table table-bordered table-hover manageAppTable'>
+                    <thead>
+                        <tr>
+                            <th scope='col'>Account_ID</th>
+                            <th scope='col'>Username</th>
+                            <th scope='col'>Date Requested</th>
+                            <th scope='col'>        </th>
+                        </tr>
+                    </thead>
+                    <tbody>";
+
+    foreach($requests as $request){
+        $RequestsTableStr .= '
+            <tr>
+                <th scope="row">'.$request['account_id'].'</td>
+                <td>'.$request['username'].'</td>
+                <td>'.$request['date_requested'].'</td>
+                <td>
+                    <form action="php/manageAdminRequest.php" method="post">
+                        <input type="hidden" name="account_id" value="'.$request['account_id'].'">
+                        <input type="hidden" name="fanbase_id" value="'.$fanbase['fanbase_id'].'">
+                        <input type="hidden" name="fanbase_name" value="'.$fanbase['fanbase_name'].'">
+                        <div class="flex-container" style="gap: 5px;">
+                            <button class="btn btn-outline-success" type="submit" name="approveRequest" value="'.$request['adminrequest_id'].'">Approve</button>
+                            <button class="btn btn-danger" type="submit" name="denyRequest" value="'.$request['adminrequest_id'].'">Deny</button>
+                        </div>
+                    </form>
+                </td>
+            </tr>
+        ';
+    }
+
     // REPORT
 
     // MOST POPULAR EVENT (most joined members)
@@ -258,11 +309,12 @@ function getMembersTable($fanbaseName){
 
     $AdminsTableStr .= '</tbody></table></div></div>';
     $MembersTableStr .= '</tbody></table></div></div>';
+    $RequestsTableStr .= '</tbody></table></div></div>';
     $RepEventTableStr .= '</tbody></table></div></div>';
     // $RepRepliedTableStr .= '</tbody></table></div></div>';
     // $RepUserTableStr .= '</tbody></table></div></div>';
 
-    $tableStr = $AdminsTableStr.$MembersTableStr.$RepEventTableStr;
+    $tableStr = $AdminsTableStr.$MembersTableStr.$RequestsTableStr.$RepEventTableStr;
     //$RepRepliedTableStr.$RepUserTableStr
     return $tableStr;
 }

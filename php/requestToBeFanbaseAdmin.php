@@ -12,7 +12,7 @@
 
         var_dump($resultCheckRequest);
         if (mysqli_num_rows($resultCheckRequest) == 1){
-            $stmt = $connection->prepare("UPDATE tblfanbase_adminrequest SET isRequested = 1, date_requested = ? WHERE account_id = ? AND fanbase_id = ?");
+            $stmt = $connection->prepare("UPDATE tblfanbase_adminrequest SET isRequested = 1, date_requested = ?, isRejected = 0 WHERE account_id = ? AND fanbase_id = ?");
             $stmt->bind_param("sii", $date, $current_user['account_id'], $fanbase_id);
             $stmt->execute();
             $stmt->close();

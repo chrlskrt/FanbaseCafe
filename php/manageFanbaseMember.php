@@ -21,7 +21,7 @@
             $sqlCheckIfAdmin = "SELECT fanbase_admin_id FROM tblfanbase_admin WHERE acc_fanbase_id = {$acc_fanbase_id}";
             $res = mysqli_query($connection, $sqlCheckIfAdmin);
 
-            if ($res){
+            if (mysqli_num_rows($res) == 1){
                 $sqlUpdate2 = "UPDATE tblfanbase_admin SET isDemoted = 0 WHERE acc_fanbase_id = {$acc_fanbase_id}";
                 $res2 = mysqli_query($connection, $sqlUpdate2);
             } else {

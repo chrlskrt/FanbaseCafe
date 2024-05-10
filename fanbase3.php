@@ -90,7 +90,7 @@
 
                 if ($isRejected == 1){
                     echo '
-                        <div class="small-text">Your request to become an admin has been rejected.</div>
+                        <div class="d-flex justify-content-center small-text">Your request to become an admin has been rejected.</div>
                     ';
                 }
 
