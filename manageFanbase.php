@@ -1,14 +1,13 @@
 <?php
     include("includes/header.php");
 
-    $fanbaseName = $_GET['fanbase'];
+    $fanbase_id = $_GET['fanbase'];
 
-    $sqlFanbase = "SELECT * FROM tblFanbase WHERE fanbase_name='".$fanbaseName."'";
+    $sqlFanbase = "SELECT * FROM tblFanbase WHERE fanbase_id='".$fanbase_id."'";
     $resultFanbase = $connection->query($sqlFanbase);
     $fanbase = mysqli_fetch_array($resultFanbase);
-
-    // var_dump($fanbase);
 ?>
+
 <script src="js/manageFanbase.js"></script>
 <!-- <h5 style="font-size:4vw">FANBASE SETTINGS</h5> -->
 <div class="manageFanbaseDiv" style="gap:5px;">
@@ -34,19 +33,19 @@
                 </div>
                 <div style="display:flex; justify-content:space-between">
                     <button type="button" class="btn btn-warning" id="cancelEdit">Cancel Edit</button>
-                    <button id="btnUpdateFanbaseDetails" value="<?php echo $fanbaseName ?>" name="fanbase" type="submit" role="button" class="btn btn-success">Update Details</button>
+                    <button id="btnUpdateFanbaseDetails" value="<?php echo $fanbase_id ?>" name="fanbase" type="submit" role="button" class="btn btn-success">Update Details</button>
                 </div>
             </div>
         </form>
         <form action="php/deleteFanbase.php" method="POST">
-            <button id="btnDeleteFanbase" value="<?php echo $fanbaseName ?>" name="fanbase" type="submit" role="button" class="btn btn-outline-danger">Delete Fanbase</button>
+            <button id="btnDeleteFanbase" value="<?php echo $fanbase_id ?>" name="fanbase_id" type="submit" role="button" class="btn btn-outline-danger">Delete Fanbase</button>
         </form>
     </div>
 
     <div class="manageFanbaseDiv">
         <div class="btn label" id="manageMembersDiv" style="font-size: 3vw; text-align:left; font-weight:unset">+ Manage Fanbase MEMBERS</div>
         <?php
-            echo getMembersTable($fanbaseName);
+            echo getMembersTable();
         ?>
     </div>
 </div>

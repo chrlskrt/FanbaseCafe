@@ -2,32 +2,20 @@
     include("includes/header.php");
 
     $fanbaseID = $_GET["fanbase_ID"];
-    $query = "SELECT fanbase_name, fanbase_artist, fanbase_description FROM tblfanbase WHERE fanbase_id = ?";
+    $query = "SELECT fanbase_name, fanbase_artist, fanbase_description, fanbase_photo FROM tblfanbase WHERE fanbase_id = ?";
     $stmt = mysqli_prepare($connection, $query);
     mysqli_stmt_bind_param($stmt, "i", $fanbaseID);
     mysqli_stmt_execute($stmt);
 
-    mysqli_stmt_bind_result($stmt, $fanbaseName, $fanbaseArtist, $fanbaseDesc);
+    mysqli_stmt_bind_result($stmt, $fanbaseName, $fanbaseArtist, $fanbaseDesc, $fanbasePhoto);
 
     mysqli_stmt_fetch($stmt);
 
     $stmt -> close();
-    $isAdmin = 0;
-    if ($current_user){
-        $sqlIsAdmin = "SELECT isAdmin FROM tbluseraccount_fanbase WHERE account_id = {$current_user['account_id']} AND fanbase_id = $fanbaseID";
-        $result = mysqli_fetch_assoc(mysqli_query($connection, $sqlIsAdmin));
-        
-        if ($result){
-            $isAdmin = $result['isAdmin'];
-        } else {
-            $isAdmin = -1;
-        }
-         
-    }
 ?>
 
 <div class="flex-container" style="flex-direction: column; padding: 40px;"> 
-    <img src="images/grpPhoto/grp<?php echo "$fanbaseName" ?>.jpg" style="height: 800px; width:800px;">
+    <img src="images/grpPhoto/<?php echo $fanbasePhoto ?>" style="height: 800px; width:800px;">
     <div class="label" style="font-size: 40px; padding: 30px;"> 
         <?php echo "$fanbaseArtist" ?> 
     </div>
@@ -70,7 +58,7 @@
             </form>
         ';
         } else {
-            header("Location:fanbase3.php?fanbase_ID={$fanbaseID}");
+            header("Location:fanbase.php?fanbase_ID={$fanbaseID}");
             exit();
         }
 

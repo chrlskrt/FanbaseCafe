@@ -1,7 +1,7 @@
 <?php
 
 /* manageFanbase.php */
-function getMembersTable($fanbaseName){
+function getMembersTable(){
     global $connection, $fanbase;
 
     // getting ALL data from tbluseraccount_fanbase

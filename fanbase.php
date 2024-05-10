@@ -2,17 +2,16 @@
     include("includes/header.php");
 
     $fanbaseID = $_GET["fanbase_ID"];
-    $query = "SELECT fanbase_name, fanbase_artist, fanbase_description FROM tblfanbase WHERE fanbase_id = ?";
+    $query = "SELECT fanbase_name, fanbase_artist, fanbase_description, fanbase_photo FROM tblfanbase WHERE fanbase_id = ?";
     $stmt = mysqli_prepare($connection, $query);
     mysqli_stmt_bind_param($stmt, "i", $fanbaseID);
     mysqli_stmt_execute($stmt);
 
-    mysqli_stmt_bind_result($stmt, $fanbaseName, $fanbaseArtist, $fanbaseDesc);
+    mysqli_stmt_bind_result($stmt, $fanbaseName, $fanbaseArtist, $fanbaseDesc, $fanbasePhoto);
 
     mysqli_stmt_fetch($stmt);
 
     $stmt -> close();
-    $isAdmin = 0;
     if ($current_user){
         $sqlIsAdmin = "SELECT isAdmin FROM tbluseraccount_fanbase WHERE account_id = {$current_user['account_id']} AND fanbase_id = $fanbaseID";
         $result = mysqli_fetch_assoc(mysqli_query($connection, $sqlIsAdmin));
@@ -22,51 +21,96 @@
         } else {
             $isAdmin = -1;
         }
-         
+    }
+
+    $isRequested = 0;
+    $isRejected = -1;
+
+    if ($isAdmin == 0){
+        $sqlRequest = "SELECT isRequested, isRejected FROM tblfanbase_adminrequest WHERE account_id = {$current_user['account_id']} AND fanbase_id = $fanbaseID";
+        $res = mysqli_fetch_assoc(mysqli_query($connection, $sqlRequest));
+
+        if ($res){
+            $isRequested = $res['isRequested'];
+            $isRejected = $res['isRejected'];
+        }
     }
 ?>
 
 <script src="js/fanbase.js"></script>
-
-<div class="white-container" style="align-items:flex-start; justify-content:space-evenly;">
-    <div class="main-container-nopaddings"> 
-        <h4 style="font-weight: bold;"> <a href="https://weverse.io/txt/feed"> VIEW LATEST ANNOUNCEMENT (DI PA FINAL) >> </a> </h4>
-        <!-- TODO: Href links to latest added event ??? -->
-    </div>
+<div class="announcement-container">
+    "Wish to become admin? [ Request Admin Button ]" OR "Edit or Update details? [ Manage Fanbase ]"
 </div>
+ 
+<div class="main-container" style="flex-direction:row; justify-content:center; padding-top: 40px;">
+    <div style="display:flex; flex:1;">  
+        
+        <div style="display:flex; flex-direction:column; flex:1">
+            <form action="createPost.php" method="post">
+                <div class="formsch" style="width:auto">
+                    <div class="mb-3"> 
+                        <textarea class="form-control" name="post_text" id="post_text" placeholder="Write something..." required></textarea>
+                        <label for="post_text"></label>
+                    </div>
+                    <input type="hidden" name="fanbase_id" value="<?php echo ($fanbaseID) ?>">
+                    <button id="btnCreatePostSubmit" value="1" type="submit" role="button" class="btn btn-outline-dark btn-lg">Post</button>
+                </div>
+            </form> 
+            
+        
+            <div class="postevent-container mainFanbaseContent" id="displayPosts">        
+                <?php
+                    echo getPosts($fanbaseID);
+                ?>
+            </div>
 
-<div class="flex-container" style="flex-direction: column; padding: 40px;"> 
-    <img src="images/grpPhoto/grp<?php echo "$fanbaseName" ?>.jpg" style="height: 800px; width:800px;">
-    <div class="label" style="font-size: 40px; padding: 30px;"> 
-        <?php echo "$fanbaseArtist" ?> 
-        <div class="text" style="padding: 0px;">
+        </div>
+
+    </div>
+    <div style="display:flex; flex:0.8; justify-content:center;">
+        <div class="main-container-nopaddings">
+            <img src="images/grpPhoto/<?php echo "$fanbasePhoto" ?>" style="height: 350px; width:350px;"> <br>
+            <div class="label" style="font-size: 30px"> <?php echo "$fanbaseArtist" ?> </div> 
             <?php
                 if (($current_user && $current_user['isSysAdmin'] == 1) || ($current_user && $isAdmin == 1)){
-                    echo '<a href="manageFanbase.php?fanbase='.$fanbaseName.'" class="btn btn-outline-dark">Manage Fanbase</a>';
-                } else if ($isAdmin == 0) {
+                    echo '<a href="manageFanbase.php?fanbase='.$fanbaseID.'" class="btn btn-outline-dark">Manage Fanbase</a>';
+                } else if ($current_user && $isAdmin == 0 && $isRequested == 0) {
                     echo '
-                        <form action="php/requestToBeFanbaseAdmin.php" method="post">
-                            <button type="submit" name="fanbase_id" value="'.$fanbaseID.'" class="btn btn-outline-dark">Request To Become Admin</button>
+                        <form action="php/requestToBeFanbaseAdmin.php" method="post" class="flex-container">
+                            <button type="submit" name="request" value="'.$fanbaseID.'" class="btn btn-outline-dark" style="width:100%">Request To Become Admin</button>
+                        </form>
+                    '; 
+                } else if ($current_user && $isRequested == 1){
+                    echo '
+                        <form action="php/requestToBeFanbaseAdmin.php" method="post" class="flex-container">
+                            <button type="submit" name="cancelrequest" value="'.$fanbaseID.'" class="btn btn-outline-dark" style="width:100%">Cancel Request To Become Admin</button>
+                        </form>
+                    ';
+                }
+
+                if ($isRejected == 1){
+                    echo '
+                        <div class="d-flex justify-content-center small-text">Your request to become an admin has been rejected.</div>
+                    ';
+                }
+
+                if ($current_user){
+                    echo '
+                        <form action="php/leaveFanbase.php" method="POST" class="flex-container" style="margin-top:10px">
+                            <input type="hidden" value="'.$fanbaseID.'" name="fanbaseID">
+                            <button type="submit" id="btnLeaveFanbase" role="button" value="'.($current_user["account_id"]).'" name="leaveFanbaseMember" class="btn btn-outline-dark"> Leave fanbase? </button>
                         </form>
                     ';
                 }
             ?>
+            
+            <div class="post-event-container mainFanbaseContent" id="displayEvents">
+                <?php
+                    echo getEvents($fanbaseID);
+                ?>
+            </div>
         </div>
     </div>
-
-    <hr>
-    
-    <div class="text" style="font-weight:bold;">
-        <?php
-        echo "$fanbaseDesc <br>
-            Total Member count:" ?> 
-    </div>
-
-    <?php 
-        if ($current_user){
-            echo displayButton();
-        }
-    ?>
 </div>
 
 <section id="mainFanbaseContent" style="display:flex; flex-direction:column;">
@@ -110,7 +154,7 @@
                         <label for="event_location">Event Location</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <textarea class="form-control" name="event_description" id="event_description" placeholder="Enter event description..." required></textarea>
+                        <textarea rows=8 class="form-control" name="event_description" id="event_description" placeholder="Enter event description..." required></textarea>
                         <label for="event_description">Event Description</label>
                     </div>
                     <input type="hidden" name="fanbase_id" value="<?php echo ($fanbaseID) ?>">
@@ -134,27 +178,7 @@
         </div>
     </div>
 
-    <hr>
-
-    <div class="manageAppDiv" id="displayEvents" style="align-items: center;">
-        <div class="label" style="font-size: 20px; justify-content:flex-start">Events</div>
-        
-        <div style="display: flex; flex-direction:column; gap: 10px; justify-content: center; align-items: center; width: 75vw;">
-            <?php
-                echo getEvents($fanbaseID);
-            ?>
-        </div>
-    </div>
-
-    <div class="manageAppDiv" id="displayPosts" style="align-items: center;">
-        <div class="label" style="font-size: 20px; justify-content:flex-start">Posts</div>
-        
-        <div style="display: flex; flex-direction:column; gap: 10px; justify-content: center; width: 80vw;">
-            <?php
-                echo getPosts($fanbaseID);
-            ?>
-        </div>
-    </div>
+    <hr>    
 </section>
 
 <footer>
@@ -198,40 +222,59 @@
 
 <!-- MODALS -->
 
-<!-- WRITE POST MODAL START -->
-<div class="modal fade" tabindex="-1" role="dialog" id="createPostModal">
+<!-- edit event modal -->
+<div class="modal fade" tabindex="-1" role="dialog" id="editEventModal">
   <div class="modal-dialog modal-dialog-centered modal-lg" style="gap:10px;" role="document">
     <div class="modal-content">
-        <div class="modal-header" style="justify-self:center; flex-direction: column">
-            <h5 class="modal-title"> Write a post </h5>
-            <div>
-                <?php echo '
-                    <div class="small-text"> '.$fanbaseName.' </div> 
-                ';
-                ?>
-            </div>
+        <div class="modal-header">
+            <h5 class="modal-title"> [ Edit Event ]</h5>
         </div>
-
-        <form action="php/createPost.php" method="post" style="margin:0">
+        <form action="php/updateEvent.php" method="post" style="margin:0">
             <div class="modal-body" style="height:74vh; overflow-y:auto">
                 <div class="flex-container" style="flex-direction:column; align-items: center; ">
-                    <div class="formsch" style="width:95%; outline:none;">
-                    <div data-mdb-input-init class="form-outline">
-                        <textarea class="form-control" name="post_text" id="post_text" rows="15"></textarea>
-                    </div>
+                    <div class="formsch" style="width:95%">
+                        <div class="form-floating mb-3"> 
+                            <input type="text" class="form-control" name="event_name" id="edit_event_name" placeholder="Enter event name..." required>
+                            <label for="event_name">Event Name</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" name="event_type" id="edit_event_type" placeholder="Enter event type..." required>
+                            <label for="event_type">Event Type</label>
+                        </div>
+                        <div class="flex-container" style="gap:4px;">
+                            <div class="form-floating mb-3">
+                                <input type="date" class="form-control" id="edit_event_date" name="event_date" min="<?php echo date("Y-m-d") ?>" required>
+                                <label for="event_date">Event Date</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="time" class="form-control" id="edit_event_time" name="event_time" min="07:00:00" max="20:00:00" required>
+                                <label for="event_time">Event Time</label>
+                            </div>
+                            <div class="form-floating mb-3" style="flex:1">
+                                <input type="text" class="form-control" name="event_location" id="edit_event_location" placeholder="Enter event location..." required>
+                                <label for="event_location">Event Location</label>
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <textarea rows=8 class="form-control" style="height:max-content" name="event_description" id="edit_event_description" placeholder="Enter event description..." required></textarea>
+                            <label for="event_description">Event Description</label>
+                        </div>
                         <input type="hidden" name="fanbase_id" value="<?php echo ($fanbaseID) ?>">
                     </div>
                 </div>    
             </div>
             <div class="modal-footer">
-                <button id="btnCreatePostSubmit" value="1" type="submit" role="button" class="btn btn-outline-dark btn-lg">Post</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel Edit</button>
+                <button id="btnEditEventSubmit" name="event_id" type="submit" role="button" class="btn btn-outline-dark">Update Event details</button>
             </div>
         </form>
-        
+    </div>
+
+    <div style="display:flex; align-self:flex-start">
+        <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">X</button>
     </div>
   </div>
 </div>
-<!-- WRITE POST MODAL END -->
 
 
 <?php
@@ -250,7 +293,7 @@
 <div class="modal fade" tabindex="-1" role="dialog" id="viewPostModal">
   <div class="modal-dialog modal-dialog-centered modal-lg" style="gap:10px;" role="document">
     <div class="modal-content" style="height:92vh;">
-        <div class="modal-header">
+        <div class="modal-header" style="padding:25px">
             <div id="postBody" style="width:100%; margin-left:15px"></div>
         </div>
         <div class="modal-body" id="postReplies" style="flex:1; overflow-y:auto"></div>

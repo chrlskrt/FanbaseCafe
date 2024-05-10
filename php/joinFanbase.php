@@ -20,6 +20,6 @@
         $resultCreate = mysqli_query($connection, $sqlCreate);
     }
     
-    header("Location: ../fanbase3.php?fanbase_ID={$fanbaseID}");
+    header("Location: ../fanbase.php?fanbase_ID={$fanbaseID}");
     exit();
 ?>

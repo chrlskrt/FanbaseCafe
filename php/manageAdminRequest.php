@@ -2,9 +2,8 @@
     include('../includes/api.php');
     include('../connect.php');
     
-    $fanbase_name = $_POST['fanbase_name'];
     $reqAccount_id = $_POST['account_id'];
-    $reqFanbase_id = $_POST['fanbase_id'];
+    $fanbase_id = $_POST['fanbase_id'];
 
     if (isset($_POST['approveRequest'])){
         $adminrequest_id = $_POST['approveRequest'];
@@ -14,7 +13,7 @@
         $stmt->execute();
         $stmt->close();
 
-        $sqlAccFanbaseID = "SELECT acc_fanbase_id FROM tbluseraccount_fanbase WHERE account_id = $reqAccount_id AND fanbase_id = $reqFanbase_id";
+        $sqlAccFanbaseID = "SELECT acc_fanbase_id FROM tbluseraccount_fanbase WHERE account_id = $reqAccount_id AND fanbase_id = $fanbase_id";
         $acc_fanbase_id = mysqli_fetch_assoc(mysqli_query($connection, $sqlAccFanbaseID))['acc_fanbase_id'];
 
         $sqlUpdate = "UPDATE tbluseraccount_fanbase SET isAdmin = 1 WHERE acc_fanbase_id = {$acc_fanbase_id}";
@@ -40,6 +39,6 @@
         $stmt->close();
     }
 
-    header("Location: ../manageFanbase.php?fanbase=$fanbase_name");
+    header("Location: ../manageFanbase.php?fanbase=$fanbase_id");
     exit();
 ?>
