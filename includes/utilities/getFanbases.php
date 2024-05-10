@@ -4,7 +4,7 @@
 function getFanbases() {
     global $connection;
 
-    $sqlfanbase = "SELECT * FROM tblfanbase";
+    $sqlfanbase = "SELECT * FROM tblfanbase WHERE isDeleted = 0";
     $resultfanbase = mysqli_query($connection, $sqlfanbase);
 
     $fanbaseArray = array();

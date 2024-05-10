@@ -17,6 +17,17 @@
             $acc_fanbase_id = $_POST['promoteUser'];
             // update isAdmin to 1
             $isAdmin = 1;
+
+            $sqlCheckIfAdmin = "SELECT fanbase_admin_id FROM tblfanbase_admin WHERE acc_fanbase_id = {$acc_fanbase_id}";
+            $res = mysqli_query($connection, $sqlCheckIfAdmin);
+
+            if ($res){
+                $sqlUpdate2 = "UPDATE tblfanbase_admin SET isDemoted = 0 WHERE acc_fanbase_id = {$acc_fanbase_id}";
+                $res2 = mysqli_query($connection, $sqlUpdate2);
+            } else {
+                $sqlInsert = "INSERT INTO tblfanbase_admin (acc_fanbase_id, date_appointed) VALUES ('$acc_fanbase_id', NOW())";
+                $res3 = mysqli_query($connection, $sqlInsert);
+            }
         }
     
         if (isset($_POST['demoteUser'])){
@@ -24,6 +35,9 @@
             $acc_fanbase_id = $_POST['demoteUser'];
             // update isAdmin to 0
             $isAdmin = 0;
+
+            $sqlUpdate2 = "UPDATE tblfanbase_admin SET isDemoted = 1 WHERE acc_fanbase_id = {$acc_fanbase_id}";
+            $res2 = mysqli_query($connection, $sqlUpdate2);
         }
 
         $sqlManageAdminStatus->bind_param('ii', $isAdmin, $acc_fanbase_id);
@@ -36,7 +50,7 @@
         $acc_fanbase_id = $_POST['removeUser'];
 
         // delete from tbluseraccount_fanbase, same mechanism sa leave fanbase
-        $sqlDelete = $connection->prepare("DELETE FROM tbluseraccount_fanbase WHERE acc_fanbase_id = ?");
+        $sqlDelete = $connection->prepare("UPDATE tbluseraccount_fanbase SET isMember = 0 WHERE acc_fanbase_id = ?");
         $sqlDelete->bind_param('i', $acc_fanbase_id);
         $sqlDelete->execute();
         $sqlDelete->close();

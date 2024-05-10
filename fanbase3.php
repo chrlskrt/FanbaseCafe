@@ -12,7 +12,6 @@
     mysqli_stmt_fetch($stmt);
 
     $stmt -> close();
-    $isAdmin = 0;
     if ($current_user){
         $sqlIsAdmin = "SELECT isAdmin FROM tbluseraccount_fanbase WHERE account_id = {$current_user['account_id']} AND fanbase_id = $fanbaseID";
         $result = mysqli_fetch_assoc(mysqli_query($connection, $sqlIsAdmin));
@@ -22,7 +21,19 @@
         } else {
             $isAdmin = -1;
         }
-         
+    }
+
+    $isRequested = 0;
+    $isRejected = -1;
+
+    if ($isAdmin == 0){
+        $sqlRequest = "SELECT isRequested, isRejected FROM tblfanbase_adminrequest WHERE account_id = {$current_user['account_id']} AND fanbase_id = $fanbaseID";
+        $res = mysqli_fetch_assoc(mysqli_query($connection, $sqlRequest));
+
+        if ($res){
+            $isRequested = $res['isRequested'];
+            $isRejected = $res['isRejected'];
+        }
     }
 ?>
 
@@ -63,11 +74,23 @@
             <?php
                 if (($current_user && $current_user['isSysAdmin'] == 1) || ($current_user && $isAdmin == 1)){
                     echo '<a href="manageFanbase.php?fanbase='.$fanbaseName.'" class="btn btn-outline-dark">Manage Fanbase</a>';
-                } else if ($current_user && $isAdmin == 0) {
+                } else if ($current_user && $isAdmin == 0 && $isRequested == 0) {
                     echo '
                         <form action="php/requestToBeFanbaseAdmin.php" method="post" class="flex-container">
-                            <button type="submit" name="fanbase_id" value="'.$fanbaseID.'" class="btn btn-outline-dark" style="width:100%">Request To Become Admin</button>
+                            <button type="submit" name="request" value="'.$fanbaseID.'" class="btn btn-outline-dark" style="width:100%">Request To Become Admin</button>
                         </form>
+                    '; 
+                } else if ($current_user && $isRequested == 1){
+                    echo '
+                        <form action="php/requestToBeFanbaseAdmin.php" method="post" class="flex-container">
+                            <button type="submit" name="cancelrequest" value="'.$fanbaseID.'" class="btn btn-outline-dark" style="width:100%">Cancel Request To Become Admin</button>
+                        </form>
+                    ';
+                }
+
+                if ($isRejected == 1){
+                    echo '
+                        <div class="small-text">Your request to become an admin has been rejected.</div>
                     ';
                 }
 
@@ -131,7 +154,7 @@
                         <label for="event_location">Event Location</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <textarea class="form-control" name="event_description" id="event_description" placeholder="Enter event description..." required></textarea>
+                        <textarea rows=8 class="form-control" name="event_description" id="event_description" placeholder="Enter event description..." required></textarea>
                         <label for="event_description">Event Description</label>
                     </div>
                     <input type="hidden" name="fanbase_id" value="<?php echo ($fanbaseID) ?>">
@@ -233,7 +256,7 @@
                             </div>
                         </div>
                         <div class="form-floating mb-3">
-                            <textarea rows=8 class="form-control" name="event_description" id="edit_event_description" placeholder="Enter event description..." required></textarea>
+                            <textarea rows=8 class="form-control" style="height:max-content" name="event_description" id="edit_event_description" placeholder="Enter event description..." required></textarea>
                             <label for="event_description">Event Description</label>
                         </div>
                         <input type="hidden" name="fanbase_id" value="<?php echo ($fanbaseID) ?>">
@@ -270,7 +293,7 @@
 <div class="modal fade" tabindex="-1" role="dialog" id="viewPostModal">
   <div class="modal-dialog modal-dialog-centered modal-lg" style="gap:10px;" role="document">
     <div class="modal-content" style="height:92vh;">
-        <div class="modal-header">
+        <div class="modal-header" style="padding:25px">
             <div id="postBody" style="width:100%; margin-left:15px"></div>
         </div>
         <div class="modal-body" id="postReplies" style="flex:1; overflow-y:auto"></div>

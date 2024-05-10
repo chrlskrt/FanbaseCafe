@@ -62,7 +62,7 @@ function getAppReports(){
     // get top 3 fanbases with most members
     $sqlFanbase = "SELECT fanbase_name, count(acc_fanbase_id) as MemberCount 
                    FROM tblfanbase, tbluseraccount_fanbase 
-                   WHERE tblfanbase.fanbase_id = tbluseraccount_fanbase.fanbase_id 
+                   WHERE tblfanbase.fanbase_id = tbluseraccount_fanbase.fanbase_id AND tblfanbase.isDeleted = 0
                    GROUP BY tblfanbase.fanbase_id 
                    ORDER BY MemberCount DESC";
 

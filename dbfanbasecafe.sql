@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 08, 2024 at 06:21 PM
+-- Generation Time: May 09, 2024 at 07:45 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -36,20 +36,19 @@ CREATE TABLE `tblevent` (
   `event_date` date NOT NULL,
   `event_time` time(6) NOT NULL,
   `event_location` varchar(100) NOT NULL,
-  `event_description` varchar(750) NOT NULL,
-  `isDeleted` int(1) NOT NULL DEFAULT 0
+  `event_description` varchar(750) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tblevent`
 --
 
-INSERT INTO `tblevent` (`event_id`, `account_id`, `fanbase_id`, `event_name`, `event_type`, `event_date`, `event_time`, `event_location`, `event_description`, `isDeleted`) VALUES
-(1, 1, 1, 'SVT CEBU MEET & GREET', 'Meet & Greet', '2024-05-08', '15:00:00.000000', 'SM Seaside, Cebu', 'K-POP Boy Group SEVENTEEN will hold an offsite MEETING with CARATs in CEBU!', 0),
-(2, 1, 2, 'BLINK CUP-SLEEVE EXTRAVAGANZA!', 'Cupsleeve', '2024-05-31', '10:00:00.000000', 'SM Seaside, Cebu', 'Design you own BLACKPINK cup sleeve & win merch!', 0),
-(3, 1, 3, 'TXT \"Dream Chapter: MOA Playground\"', 'Fan Festival', '2024-08-14', '18:00:00.000000', 'Anjo World Theme Park, Minglanilla, Cebu', 'Live music, games, fansign & exclusive merch! Don\'t miss out on the fun!', 0),
-(4, 1, 4, 'BTS Muster: Light the Night ', 'Fan Concert', '2024-08-22', '18:00:00.000000', 'Ayala Malls, Lahug', 'Calling all ARMY!  ✨  Get ready to light up the night with BTS! The  BTS Muster: Light the Night fan concert is back, and it\'s going to be epic. Don\'t miss unforgettable performances, special stages, and the chance to connect with the amazing BTS fandom. Join us for an unforgettable night!', 0),
-(5, 1, 5, 'iKONIC Night: Dive into the KINGDOM', 'Fan Festival', '2024-10-10', '18:00:00.000000', 'Cebu Institute of Technology-University', 'iKONICs, relive KINGDOM & celebrate iKON! ', 0);
+INSERT INTO `tblevent` (`event_id`, `account_id`, `fanbase_id`, `event_name`, `event_type`, `event_date`, `event_time`, `event_location`, `event_description`) VALUES
+(1, 1, 1, 'SVT CEBU MEET & GREET', 'Meet & Greet', '2024-05-08', '15:00:00.000000', 'SM Seaside, Cebu', 'K-POP Boy Group SEVENTEEN will hold an offsite MEETING with CARATs in CEBU!'),
+(2, 1, 2, 'BLINK CUP-SLEEVE EXTRAVAGANZA!', 'Cupsleeve', '2024-05-31', '10:00:00.000000', 'SM Seaside, Cebu', 'Design you own BLACKPINK cup sleeve & win merch!'),
+(3, 1, 3, 'TXT \"Dream Chapter: MOA Playground\"', 'Fan Festival', '2024-08-14', '18:00:00.000000', 'Anjo World Theme Park, Minglanilla, Cebu', 'Live music, games, fansign & exclusive merch! Don\'t miss out on the fun!'),
+(4, 1, 4, 'BTS Muster: Light the Night ', 'Fan Concert', '2024-08-22', '18:00:00.000000', 'Ayala Malls, Lahug', 'Calling all ARMY!  ✨  Get ready to light up the night with BTS! The  BTS Muster: Light the Night fan concert is back, and it\'s going to be epic. Don\'t miss unforgettable performances, special stages, and the chance to connect with the amazing BTS fandom. Join us for an unforgettable night!'),
+(5, 1, 5, 'iKONIC Night: Dive into the KINGDOM', 'Fan Festival', '2024-10-10', '18:00:00.000000', 'Cebu Institute of Technology-University', 'iKONICs, relive KINGDOM & celebrate iKON! ');
 
 -- --------------------------------------------------------
 
@@ -60,8 +59,7 @@ INSERT INTO `tblevent` (`event_id`, `account_id`, `fanbase_id`, `event_name`, `e
 CREATE TABLE `tblevent_participant` (
   `event_participant_id` int(6) NOT NULL,
   `event_id` int(11) NOT NULL,
-  `account_id` int(11) NOT NULL,
-  `isParticipant` int(11) NOT NULL DEFAULT 1
+  `account_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -116,6 +114,7 @@ CREATE TABLE `tblfanbase_adminrequest` (
   `account_id` int(6) NOT NULL,
   `fanbase_id` int(6) NOT NULL,
   `date_requested` date NOT NULL,
+  `isRejected` int(1) NOT NULL DEFAULT 0,
   `isRequested` int(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -159,17 +158,18 @@ CREATE TABLE `tbluseraccount` (
   `email_add` varchar(30) NOT NULL,
   `username` varchar(30) NOT NULL,
   `password` varchar(72) NOT NULL,
-  `isSysAdmin` tinyint(1) NOT NULL DEFAULT 0
+  `isSysAdmin` tinyint(1) NOT NULL DEFAULT 0,
+  `isDeleted` int(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tbluseraccount`
 --
 
-INSERT INTO `tbluseraccount` (`account_id`, `user_id`, `email_add`, `username`, `password`, `isSysAdmin`) VALUES
-(1, 1, 'admin101@gmail.com', 'admin101', '$2y$10$xrlIhsfu/vbFINVIKFVLUeshT70j58Xr9LF2CLQeJ35lEnyatUAIa', 1),
-(2, 2, 'pop@gmail.com', 'pop', '$2y$10$RZ07r0zBo4NA0jIvEvEa1.WkPPCuIOYzXtc0jSm9ZQNy0xvhY2WRq', 0),
-(3, 3, 'ice@gmail.com', 'ice', '$2y$10$AZcGp4n3a/YrYisn8qjgTu8Buy3BLEN2PgbJ8bR2v7P4N.ievgmru', 0);
+INSERT INTO `tbluseraccount` (`account_id`, `user_id`, `email_add`, `username`, `password`, `isSysAdmin`, `isDeleted`) VALUES
+(1, 1, 'admin101@gmail.com', 'admin101', '$2y$10$xrlIhsfu/vbFINVIKFVLUeshT70j58Xr9LF2CLQeJ35lEnyatUAIa', 1, 0),
+(2, 2, 'pop@gmail.com', 'pop', '$2y$10$RZ07r0zBo4NA0jIvEvEa1.WkPPCuIOYzXtc0jSm9ZQNy0xvhY2WRq', 0, 0),
+(3, 3, 'ice@gmail.com', 'ice', '$2y$10$AZcGp4n3a/YrYisn8qjgTu8Buy3BLEN2PgbJ8bR2v7P4N.ievgmru', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -208,7 +208,7 @@ CREATE TABLE `tbluseraccount_sysadmin` (
   `sysAdmin_id` int(6) NOT NULL,
   `account_id` int(6) NOT NULL,
   `date_appointed` date NOT NULL,
-  `isDemoted` int(11) NOT NULL DEFAULT 0
+  `isDemoted` int(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --

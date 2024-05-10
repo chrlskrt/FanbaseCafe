@@ -1,6 +1,6 @@
 export const viewModal = async (postID) => {
     $.ajax({
-        url: "includes/utilities/getIndivPost.php",
+        url: "php/getIndivPost.php",
         method: "POST",
         data: {
             post_id: postID

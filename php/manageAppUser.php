@@ -13,11 +13,11 @@
         $checkUserSysAdminStat = "SELECT sysAdmin_id FROM tbluseraccount_sysadmin WHERE account_id = {$account_id}";
         $result = mysqli_fetch_assoc(mysqli_query($connection, $checkUserSysAdminStat));
 
-        if ($result){
-            $sqlInsert = "INSERT INTO tbluseraccount_sysadmin (account_id, date_appointed) VALUES ($account_id, date('Y-m-d H:i'))";
+        if (!$result){
+            $sqlInsert = "INSERT INTO tbluseraccount_sysadmin (account_id, date_appointed) VALUES ('$account_id', NOW())";
             $res = mysqli_query($connection, $sqlInsert);
         } else {
-            $sqlUpdate = "UPDATE tbluseraccount_sysadmin SET isDemoted = 0, date_appointed = date('Y-m-d H:i') WHERE account_id = {$account_id}";
+            $sqlUpdate = "UPDATE tbluseraccount_sysadmin SET isDemoted = 0, date_appointed = NOW() WHERE account_id = {$account_id}";
             $res = mysqli_query($connection, $sqlUpdate);
         }
 
@@ -46,7 +46,7 @@
     if (isset($_POST['deleteUserAcc'])){
         // echo ("DELETING USER ID: " . $_POST['deleteUserAcc']);
         $account_id = $_POST['deleteUserAcc'];
-        $sqlDeleteUserAcc = "DELETE FROM tbluseraccount WHERE account_id={$account_id}";
+        $sqlDeleteUserAcc = "UPDATE tbluseraccount SET isDeleted = 1 WHERE account_id={$account_id}";
         $resultDeleteUserAcc = mysqli_query($connection, $sqlDeleteUserAcc);
 
         if ($resultDeleteUserAcc){
