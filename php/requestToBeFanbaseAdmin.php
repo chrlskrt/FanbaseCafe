@@ -23,7 +23,7 @@
             $stmt->close();
         }
 
-        header("Location: ../fanbase3.php?fanbase_ID={$fanbase_id}");
+        header("Location: ../fanbase.php?fanbase_ID={$fanbase_id}");
         exit();
     }
 
