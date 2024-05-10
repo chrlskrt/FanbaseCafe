@@ -198,59 +198,40 @@
 
 <!-- MODALS -->
 
-<!-- edit event modal -->
-<div class="modal fade" tabindex="-1" role="dialog" id="editEventModal">
+<!-- WRITE POST MODAL START -->
+<div class="modal fade" tabindex="-1" role="dialog" id="createPostModal">
   <div class="modal-dialog modal-dialog-centered modal-lg" style="gap:10px;" role="document">
     <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title"> [ Edit Event ]</h5>
+        <div class="modal-header" style="justify-self:center; flex-direction: column">
+            <h5 class="modal-title"> Write a post </h5>
+            <div>
+                <?php echo '
+                    <div class="small-text"> '.$fanbaseName.' </div> 
+                ';
+                ?>
+            </div>
         </div>
-        <form action="php/updateEvent.php" method="post" style="margin:0">
+
+        <form action="php/createPost.php" method="post" style="margin:0">
             <div class="modal-body" style="height:74vh; overflow-y:auto">
                 <div class="flex-container" style="flex-direction:column; align-items: center; ">
-                    <div class="formsch" style="width:95%">
-                        <div class="form-floating mb-3"> 
-                            <input type="text" class="form-control" name="event_name" id="edit_event_name" placeholder="Enter event name..." required>
-                            <label for="event_name">Event Name</label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" name="event_type" id="edit_event_type" placeholder="Enter event type..." required>
-                            <label for="event_type">Event Type</label>
-                        </div>
-                        <div class="flex-container" style="gap:4px;">
-                            <div class="form-floating mb-3">
-                                <input type="date" class="form-control" id="edit_event_date" name="event_date" min="<?php echo date("Y-m-d") ?>" required>
-                                <label for="event_date">Event Date</label>
-                            </div>
-                            <div class="form-floating mb-3">
-                                <input type="time" class="form-control" id="edit_event_time" name="event_time" min="07:00:00" max="20:00:00" required>
-                                <label for="event_time">Event Time</label>
-                            </div>
-                            <div class="form-floating mb-3" style="flex:1">
-                                <input type="text" class="form-control" name="event_location" id="edit_event_location" placeholder="Enter event location..." required>
-                                <label for="event_location">Event Location</label>
-                            </div>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <textarea class="form-control" name="event_description" id="edit_event_description" placeholder="Enter event description..." required></textarea>
-                            <label for="event_description">Event Description</label>
-                        </div>
+                    <div class="formsch" style="width:95%; outline:none;">
+                    <div data-mdb-input-init class="form-outline">
+                        <textarea class="form-control" name="post_text" id="post_text" rows="15"></textarea>
+                    </div>
                         <input type="hidden" name="fanbase_id" value="<?php echo ($fanbaseID) ?>">
                     </div>
                 </div>    
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel Edit</button>
-                <button id="btnEditEventSubmit" name="event_id" type="submit" role="button" class="btn btn-outline-dark">Update Event details</button>
+                <button id="btnCreatePostSubmit" value="1" type="submit" role="button" class="btn btn-outline-dark btn-lg">Post</button>
             </div>
         </form>
-    </div>
-
-    <div style="display:flex; align-self:flex-start">
-        <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">X</button>
+        
     </div>
   </div>
 </div>
+<!-- WRITE POST MODAL END -->
 
 
 <?php

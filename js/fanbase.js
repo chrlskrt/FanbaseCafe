@@ -156,5 +156,10 @@ $(function(){
                 console.log("error", data);
             }
         })
+    });  
+    
+    $("#btnCreatePost").on("click", function (){
+        $("#createPostModal").modal("show");
     });
-})
+
+});

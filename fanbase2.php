@@ -49,20 +49,13 @@
     <div style="display:flex; flex:1; width: 70%;">  
         
         <div>
-        <form action="createPost.php" method="post">
-            <div class="formsch">
-                <div class="mb-3"> 
-                    <textarea class="form-control" name="post_text" id="post_text" placeholder="Write something..." required></textarea>
-                    <label for="post_text"></label>
-                </div>
-                <input type="hidden" name="fanbase_id" value="<?php echo ($fanbaseID) ?>">
-                <button id="btnCreatePostSubmit" value="1" type="submit" role="button" class="btn btn-outline-dark btn-lg">Post</button>
-            </div>
-        </form> 
+
+            <textarea class="form-control mb-3 formsch" id="createPost" placeholder="What's on your mind?" required></textarea>
+            <button type="button" class="btn btn-outline-dark" id="btnCreatePost">Create Post</button>
         
-        <div class="event-container" style="border-radius: 15px; padding: 20px;">
-            g rato ang pikas, icopy paste nlng tong modal2?? chuhcu sa getPost chuchuchu
-        </div>
+            <div class="event-container" style="border-radius: 15px; padding: 20px;">
+                g rato ang pikas, icopy paste nlng tong modal2?? chuhcu sa getPost chuchuchu
+            </div>
 
         </div>
         
@@ -147,6 +140,39 @@
         </div>
     </div>
 
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="createPostModal">
+  <div class="modal-dialog modal-dialog-centered modal-lg" style="gap:10px;" role="document">
+    <div class="modal-content">
+        <div class="modal-header" style="justify-self:center; flex-direction: column">
+            <h5 class="modal-title"> Write a post </h5>
+            <div>
+                <?php echo '
+                    <div class="small-text"> '.$fanbaseName.' </div> 
+                ';
+                ?>
+            </div>
+        </div>
+
+        <form action="php/createPost.php" method="post" style="margin:0">
+            <div class="modal-body" style="height:74vh; overflow-y:auto">
+                <div class="flex-container" style="flex-direction:column; align-items: center; ">
+                    <div class="formsch" style="width:95%; outline:none;">
+                    <div data-mdb-input-init class="form-outline">
+                        <textarea class="form-control" name="post_text" id="post_text" rows="15"></textarea>
+                    </div>
+                        <input type="hidden" name="fanbase_id" value="<?php echo ($fanbaseID) ?>">
+                    </div>
+                </div>    
+            </div>
+            <div class="modal-footer">
+                <button id="btnCreatePostSubmit" value="1" type="submit" role="button" class="btn btn-outline-dark btn-lg">Post</button>
+            </div>
+        </form>
+        
+    </div>
+  </div>
 </div>
 
 <footer>
