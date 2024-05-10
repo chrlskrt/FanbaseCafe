@@ -16,7 +16,7 @@ $(function(){
     })
 
     $("#btnCreatePost").on("click", function(){
-        $("#createPostDiv").toggle();
+        $("#createPostModal").modal("show");
     })
 
     if ($("#btnLeaveFanbase").length){
@@ -157,9 +157,5 @@ $(function(){
             }
         })
     });  
-    
-    $("#btnCreatePost").on("click", function (){
-        $("#createPostModal").modal("show");
-    });
 
 });

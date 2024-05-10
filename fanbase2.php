@@ -28,20 +28,11 @@
 
 <script src="js/fanbase.js"></script>
 
-<div class="announcement-container">
-    "Wish to become admin? [ Request Admin Button ]" OR "Edit or Update details? [ Manage Fanbase ]"
+<div class="announcement-container" style="justify-content:space-evenly">
+    <!-- "Wish to become admin? [ Request Admin Button ]" OR "Edit or Update details? [ Manage Fanbase ]" -->
+    Wish to become admin? <a href="..."> Request to become Admin </a>
     <div>
-        <?php
-                if (($current_user && $current_user['isSysAdmin'] == 1) || ($current_user && $isAdmin == 1)){
-                    echo '<a href="manageFanbase.php?fanbase='.$fanbaseName.'" class="btn btn-outline-dark">Manage Fanbase</a>';
-                } else if ($isAdmin == 0) {
-                    echo '
-                        <form action="requestToBeFanbaseAdmin.php" method="post">
-                            <button type="submit" name="fanbase_id" value="'.$fanbaseID.'" class="btn btn-outline-dark">Request To Become Admin</button>
-                        </form>
-                    ';
-                }
-        ?>
+        
     </div>
 </div>
 

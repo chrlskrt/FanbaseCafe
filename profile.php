@@ -43,10 +43,11 @@
 
                 <div class="text">
                     <?php //echo "Joined Fanbases: " .$userProf['birthdate'] ?>  
+                    <!-- TODO: JOINED FANBASES AREA -->
                     Joined Fanbases: BlackPink, TXT, Seventeen
                 </div>
                 <button type="button" class="btn btn-outline-dark" id="btnUpdateProf">Update Profile</button>
-                <a role="button" href="deleteaccount.php" class="btn btn-danger" id="btnDelete"> Delete Account </a>
+                <button class="btn btn-danger" id="btnDeleteAccount"> Delete Account </button>
             </div>
             
         </div>
@@ -108,22 +109,22 @@
 </div>
 
 <!-- MODAL DELETE ACCOUNT -->
-<!-- <div class="modal fade" tabindex="-1" role="dialog" id="regSuccessModal">
+<div class="modal fade" tabindex="-1" role="dialog" id="deleteAccountModal">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Success!</h5>
+        <h5 class="modal-title">Delete Account</h5>
       </div>
       <div class="modal-body">
-        <p>Resgistration is a success, try logging in </p>
+        <p> Are you sure? This action cannot be undone! </p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <a href="login.php" class="btn btn-outline-success">Log In </a>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Cancel </button>
+        <a role="button" href="deleteAccount.php" id="btnDeleteConfirm" class="btn btn-danger"> Delete </a>
       </div>
     </div>
   </div>
-</div> -->
+</div>
 
 <footer>
     <nav class="navbar">

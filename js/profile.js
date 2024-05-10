@@ -11,14 +11,9 @@ $(function(){
         $("#displayProfile").show();
     });
 
-//     $("#btnDelete").on("click", function (){
-//         $("#deleteAccount").modal("show");
-//    })
+    $("#btnDeleteAccount").on("click", function (){
+        $("#deleteAccountModal").modal("show");
+   })
 
-
-
-    // $("#cancelDelete").on("click", function (){
-    //     $("#deleteAccount").modal("hide");
-    // });
 
 });
