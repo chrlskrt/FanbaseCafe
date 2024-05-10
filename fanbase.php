@@ -46,7 +46,7 @@
     <div style="display:flex; flex:1;">  
         
         <div style="display:flex; flex-direction:column; flex:1">
-            <form action="createPost.php" method="post">
+            <form action="php/createPost.php" method="post">
                 <div class="formsch" style="width:auto">
                     <div class="mb-3"> 
                         <textarea class="form-control" name="post_text" id="post_text" placeholder="Write something..." required></textarea>
@@ -118,7 +118,6 @@
     <div class="manageAppDiv">
         <div class="container" style="justify-content: space-around">
             <button type="button" class="btn btn-outline-dark" id="btnCreateEvent">Create Event</button>
-            <button type="button" class="btn btn-outline-dark" id="btnCreatePost">Create Post</button>
         </div>
 
         <div class="flex-container" id="createEventDiv" style="flex-direction:column; align-items: center;">
@@ -162,23 +161,7 @@
                 </div>
             </form>
         </div>
-
-        <div class="flex-container" id="createPostDiv" style="flex-direction:column; align-items: center;">
-            <a class="btn label" style="font-size: 20px;">[ Create Post ]</a>
-            <form action="php/createPost.php" method="post">
-                <div class="formsch">
-                    <div class="mb-3"> 
-                        <textarea class="form-control" name="post_text" id="post_text" placeholder="Write something..." required></textarea>
-                        <label for="post_text"></label>
-                    </div>
-                    <input type="hidden" name="fanbase_id" value="<?php echo ($fanbaseID) ?>">
-                    <button id="btnCreatePostSubmit" value="1" type="submit" role="button" class="btn btn-outline-dark btn-lg">Post</button>
-                </div>
-            </form>
-        </div>
     </div>
-
-    <hr>    
 </section>
 
 <footer>
@@ -191,34 +174,6 @@
     </nav>
 </footer>
 
-
-<?php
-    function displayButton(){
-        global $connection, $fanbaseID, $current_user;
-
-        $sqlfanbase = "SELECT isMember FROM tbluseraccount_fanbase WHERE fanbase_id = {$fanbaseID} AND account_id = {$current_user['account_id']}";
-        $sqlResult = mysqli_query($connection, $sqlfanbase);
-
-        $joinStr = NULL;
-        if(mysqli_num_rows($sqlResult) == 0 || mysqli_num_rows($sqlResult) == 1 && mysqli_fetch_assoc($sqlResult)['isMember'] == 0) {
-            $joinStr .= '
-            <form action="php/joinFanbase.php" method="POST">
-                <input type="hidden" value="'.$fanbaseID.'" name="fanbaseID">
-                <button type="submit" id="btnJoinFanbase" role="button" value="'.($current_user["account_id"]).'" name="fanbaseMember" class="btn btn-outline-dark"> Join now! </button>
-            </form>
-        ';
-        } else {
-            $joinStr .= '
-            <form action="php/leaveFanbase.php" method="POST">
-                <input type="hidden" value="'.$fanbaseID.'" name="fanbaseID">
-                <button type="submit" id="btnLeaveFanbase" role="button" value="'.($current_user["account_id"]).'" name="leaveFanbaseMember" class="btn btn-outline-dark"> Leave fanbase? </button>
-            </form>
-            ';
-        }
-
-        return $joinStr;
-    }
-?>
 
 <!-- MODALS -->
 
