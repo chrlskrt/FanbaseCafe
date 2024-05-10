@@ -37,7 +37,7 @@
     <div class="text" style="font-weight:bold;">
         <?php
             $sqlTotalMember = "SELECT count(acc_fanbase_id) as totalMemberCount FROM tbluseraccount_fanbase
-            WHERE {$current_user['account_id']} = account_id AND {$fanbaseID} = fanbase_id";
+            WHERE account_id = {$current_user['account_id']} AND fanbase_id = {$fanbaseID}";
 
             $sqlResult = mysqli_fetch_assoc(mysqli_query($connection,$sqlTotalMember,))['totalMemberCount'];
 
