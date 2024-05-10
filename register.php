@@ -167,9 +167,10 @@
       // validate if user already has an account
       $sqlTblUserAccountValidation = "SELECT * FROM tbluseraccount WHERE user_id = '$user_id'";
       $acc_result = mysqli_query($connection, $sqlTblUserAccountValidation);
+      $isDeleted = mysqli_fetch_assoc($acc_result)['isDeleted'];
       $tbluseraccount_row = mysqli_num_rows($acc_result);
 
-      if ($tbluseraccount_row != 0){
+      if ($tbluseraccount_row != 0 && $isDeleted == 0){
         // if user already has an account, pop modal
 
         echo "<script defer >
@@ -183,7 +184,7 @@
     }
 
         // validate email in tbluseraccount
-		$sqlUserEmailValidation = "SELECT email_add FROM tbluseraccount WHERE email_add = '$email'";
+		$sqlUserEmailValidation = "SELECT email_add FROM tbluseraccount WHERE email_add = '$email' AND isDeleted = 0";
     $email_result = mysqli_query($connection, $sqlUserEmailValidation);
     $email_row = mysqli_num_rows($email_result);
 
@@ -202,11 +203,11 @@
     }
 
     // validate username in tbluseraccount
-    $sqlUsernameValidation = "SELECT username FROM tbluseraccount WHERE username = '$uname'";
+    $sqlUsernameValidation = "SELECT username FROM tbluseraccount WHERE username = '$uname' AND isDeleted = 0";
     $username_result = mysqli_query($connection, $sqlUsernameValidation);
     $username_row = mysqli_num_rows($username_result);
 
-    if ($username_row!= 0){
+    if ($username_row != 0){
       // username already taken
       echo "<script language='javascript'>
           $(function(){
@@ -220,13 +221,21 @@
       return;
     }
 
-    $sql ="INSERT into tbluseraccount(user_id, email_add,username,password) values ('.$sqlUser_ID.', '".$email."','".$uname."','".$pword."')";
-    mysqli_query($connection,$sql);
+    if ($isDeleted == 1){
+      $sql = $connection->prepare("UPDATE tbluseraccount SET username = ?, email_add = ?, password = ?, isDeleted = 0 WHERE user_id = $sqlUser_ID");
+      $sql->bind_param("sss", $uname, $email, $pword);
+    } else {
+      $sql = $connection->prepare("INSERT into tbluseraccount(user_id, email_add,username, password) values (?,?,?,?)");
+      $sql->bind_param("isss", $sqlUser_ID, $email, $uname, $pword);
+    }
+
+    $sql->execute();
+    $sql->close();
     echo "<script language='javascript'>
           $(function(){
               $('#regSuccessModal').modal('show');
           })
         </script>";
-    exit();
+    // exit();
 	}	
 ?>
