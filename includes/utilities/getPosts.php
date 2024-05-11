@@ -63,7 +63,7 @@
                             .'
                         </div>
 
-                        <div style="margin-top:10px;font-size:20px">'.$post['post_text'].'</div>
+                        <div style="max-width:600px; margin-top:10px;font-size:20px; overflow-wrap: break-word">'.$post['post_text'].'</div>
                     </section>
 
                     <div role="button" class="btn btnReply" value="'.$post['post_id'].'">
