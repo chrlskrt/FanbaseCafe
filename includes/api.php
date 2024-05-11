@@ -4,8 +4,7 @@
     include("utilities/getPosts.php");
     include("utilities/getReplies.php");
     include("utilities/getFanbaseMembersTable.php");
-    include("utilities/getFanbasesTable.php");
-    include("utilities/getUsersTable.php");  
+    include("utilities/manageAppTables.php");
     /* using cookie */ 
     // $current_user = (isset($_COOKIE['user'])) ? unserialize(base64_decode(urldecode($_COOKIE['user']))) : null;
 

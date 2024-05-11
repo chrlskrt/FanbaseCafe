@@ -11,37 +11,43 @@
         // var_dump($_FILES['fanbase_photo']['UPLOAD_ERR_INI_SIZE']);
         $photo = $_FILES['fanbase_photo']['name'];
         $photo_tmp = $_FILES['fanbase_photo']['tmp_name'];
-        $photo_folder = "./images/grpPhoto/".$photo;
+        $photo_folder = "../images/grpPhoto/".$photo;
         $logo = $_FILES['fanbase_logo']['name'];
         $logo_tmp = $_FILES['fanbase_logo']['tmp_name'];
-        $logo_folder = "./images/grpLogo/".$logo;
+        $logo_folder = "../images/grpLogo/".$logo;
 
         // storing current form submission into session for later use
         $_SESSION['createFanbase_data'] = $_POST;
        
         // check if the artist has a fanbase already
-        $sqlF = 'SELECT fanbase_id FROM tblfanbase WHERE fanbase_artist = "'.$artist.'"';
+        $sqlF = 'SELECT fanbase_id, isDeleted FROM tblfanbase WHERE fanbase_artist = "'.$artist.'"';
         $sqlFRes = mysqli_query($connection, $sqlF);
         $sqlFCount = mysqli_num_rows($sqlFRes);
 
-        if ($sqlFCount != 0){
+        if ($sqlFCount != 0 && mysqli_fetch_assoc($sqlFRes)['isDeleted'] == 0){
             header('Location: ../manageApp.php?artistFanbase_exists');
             exit();
         } 
         
         // checking if the fanbase name is already taken
-        $sqlFName = 'SELECT fanbase_id FROM tblfanbase WHERE fanbase_name = "'.$fname.'"';
+        $sqlFName = 'SELECT fanbase_id, isDeleted FROM tblfanbase WHERE fanbase_name = "'.$fname.'"';
         $sqlFNRes = mysqli_query($connection, $sqlFName);
         $sqlFNCount = mysqli_num_rows($sqlFNRes);
 
-        if ($sqlFNCount != 0){
+        if (($sqlFCount == 0 && $sqlFNCount != 0) || ($sqlFNCount != 0 && mysqli_fetch_assoc($sqlFNRes)['isDeleted'] == 0)){
             header('Location: ../manageApp.php?fanbaseName_exists');
             exit();
         }
 
-        // creating the fanbase | inserting new fanbase record into tblFanbase
-        $sqlCreate ="INSERT into tblfanbase(fanbase_name,fanbase_artist, date_created, fanbase_description, fanbase_photo, fanbase_logo) values ('$fname', '$artist','$date','$desc', '$photo','$logo')";
-        mysqli_query($connection,$sqlCreate);
+        if ($sqlFCount != 0){
+            // updating the database
+            $sqlUpdate = "UPDATE tblfanbase SET fanbase_name = '$fname', fanbase_artist = '$artist', date_created = '$date', fanbase_description = '$desc', fanbase_photo = '$photo', fanbase_logo = '$logo', isDeleted = 0 WHERE fanbase_artist = '$artist'";
+            mysqli_query($connection, $sqlUpdate);
+        } else {
+            // creating the fanbase | inserting new fanbase record into tblFanbase
+            $sqlCreate ="INSERT into tblfanbase(fanbase_name,fanbase_artist, date_created, fanbase_description, fanbase_photo, fanbase_logo) values ('$fname', '$artist','$date','$desc', '$photo','$logo')";
+            mysqli_query($connection,$sqlCreate);
+        }
 
         // moving the photo and logo to the server
         move_uploaded_file($photo_tmp, $photo_folder);

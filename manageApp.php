@@ -3,6 +3,7 @@
 ?>
 
 <script src="js/manageApp.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <?php
     $sqluser = "SELECT count(user_id) as totalUser FROM tbluseraccount WHERE isDeleted = 0";
@@ -34,22 +35,30 @@
     }
 
     echo '
-        <div class="flex-container" style="flex:none; padding: 30px; flex-wrap:wrap">
+        <div class="flex-container" style="flex:none; padding: 25px; flex-wrap:wrap">
             <div class="label" style="font-size: 20px;"><h1 style="color: green">'." $usercount ".' </h1> Total Users</div>
             <div class="label" style="font-size: 20px;"><h1 style="color: green">'." $fanbasecount ".' </h1> Total Fanbases </div>
             <div class="label" style="font-size: 20px;"><h1 style="color: green">'." $postTotal ".' </h1> Total Posts</div>
             <div class="label" style="font-size: 20px;"><h1 style="color: green">'." $eventTotal ".' </h1> Total Events</div>
-        </div>
-        <div class="flex-container" style="flex:none; padding: 30px; flex-wrap:wrap">
             <div class="label" style="font-size: 20px;"><h1 style="color: green">'." $eventAverage ".' </h1> Average No. of Events <br> per Fanbase</div>
             <div class="label" style="font-size: 20px;"><h1 style="color: green">'." $postAverage ".' </h1> Average No. of Posts <br> per Fanbase</div>
         </div>
     ';
 ?>
 
-<div class="manageAppDiv" style="margin-bottom:10px; border-top: 2px black solid; border-bottom: 2px black solid;">
-    <div class="manageAppDiv">
-        <div class="btn label" id="appReportDiv" style="font-size: 4vw; text-align:left">+ App Report</div>
+
+<div class="manageAppDiv" style="margin-bottom:10px;border-top: 2px black solid; border-bottom: 2px black solid; padding:0; gap:0">
+    <div class="manageAppDiv" style="padding:0">
+      <div class="btn label" id="chartsDiv" style="font-size: 35px; text-align:left">+ Get Charts</div>
+      <div style="display: flex; justify-content: center;" id="charts-container">
+        <div class="chart-container">
+          <canvas id="membersChart"></canvas>
+        </div>
+      </div>
+    </div>
+    
+    <div class="manageAppDiv" style="padding:0; border-top: 2px black solid;">
+        <div class="btn label" id="appReportDiv" style="font-size: 35px; text-align:left">+ App Report</div>
         
         <div style="display: flex; flex-wrap:wrap;justify-content: space-around" id="appReportDiv2">
             <?php
@@ -58,10 +67,10 @@
         </div>
     </div>
 
-    <div class="manageAppDiv" style="border-top: 2px black solid;">
-        <a class="btn label" id="createFanbaseDiv" style="font-size: 4vw; text-align:left">+ Create Fanbase</a>
+    <div class="manageAppDiv" style="border-top: 2px black solid; padding:0">
+        <a class="btn label" id="createFanbaseDiv" style="font-size: 35px; text-align:left">+ Create Fanbase</a>
         
-        <div style="display: flex; justify-content: center;" id="createFanbaseForm">
+        <div style="display: flex; justify-content: center; padding-bottom:5px" id="createFanbaseForm">
             <form action="php/createFanbase.php" method="post" enctype="multipart/form-data">
                 <div class="formsch">
                     <div class="form-floating mb-3"> 
@@ -90,8 +99,8 @@
         </div>
     </div>
 
-    <div class="manageAppDiv" style="border-bottom: 2px black solid; border-top: 2px black solid;">
-        <div class="btn label" id="manageFanbasesDiv" style="font-size: 4vw; text-align:left">+ Manage Fanbases</div>
+    <div class="manageAppDiv" style="border-bottom: 2px black solid; border-top: 2px black solid; padding:0">
+        <div class="btn label" id="manageFanbasesDiv" style="font-size: 35px; text-align:left">+ Manage Fanbases</div>
         
         <div style="display: flex; justify-content: center;" id="manageFanbasesTable">
             <?php
@@ -100,8 +109,8 @@
         </div>
     </div>
 
-    <div class="manageAppDiv">
-        <div class="btn label" id="manageUsersDiv" style="font-size: 4vw; text-align:left">+ Manage Users</div>
+    <div class="manageAppDiv" style="padding:0">
+        <div class="btn label" id="manageUsersDiv" style="font-size: 35px; text-align:left">+ Manage Users</div>
         
         <div style="display: flex; justify-content: center;" id="manageUsersTable">
             <?php

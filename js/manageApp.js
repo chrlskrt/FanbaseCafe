@@ -2,9 +2,10 @@ $(function(){
     $("#createFanbaseForm").hide();
     $("#manageFanbasesTable").hide();
     $("#manageUsersTable").hide();
-
+    $("#appReportDiv2").hide();
+    $("#charts-container").hide();
+    generateCharts();
     $("#createFanbaseDiv").on("click", function(){
-        // $("#createFanbaseForm").toggle();
         if ($("#createFanbaseForm").is(":visible")) {
             $("#fanbase_name").val("");
             $("#fanbase_artist").val("");
@@ -16,7 +17,6 @@ $(function(){
     })
 
     $("#manageFanbasesDiv").on("click", function(){
-        // $("#manageFanbasesTable").toggle();
         if ($("#manageFanbasesTable").is(":visible")) {
             $("#manageFanbasesTable").slideUp();
         } else {
@@ -25,7 +25,6 @@ $(function(){
     })
 
     $("#manageUsersDiv").on("click", function(){
-        // $("#manageUsersTable").toggle();
         if ($("#manageUsersTable").is(":visible")) {
             $("#manageUsersTable").slideUp();
         } else {
@@ -40,4 +39,8 @@ $(function(){
             $("#appReportDiv2").slideDown();
         }
     })
+
+    async function generateCharts(){
+        
+    }
 });
