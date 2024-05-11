@@ -20,67 +20,54 @@
 
 <script src="js/profile.js"></script>
 
-<!-- main1 -->
-<div class="main-container" id="displayProfile" style="padding-top:100px; flex-direction:row;">
+<!-- MAIN PROFILE DIV -->
+<div class="profile-container" id="displayProfile">
+    <div class="profile-details-container" style="width:40%;">
+        <img src="images/account.png" class="profile-icon-container">
+        <div class="label" style="text-align:center;overflow-wrap:break-word;"> <?php echo $current_user['username'] ?> </div>
+        <div class="text" style="color:gray; font-size: 16px;">
+            <?php echo $current_user['account_id'] ?> 
+        </div>
 
-    <div class="white-container" style="flex-direction: column; justify-content: space-around;">
-        <img src="images/account.png" class="card2-logo" style="height:120px; width: 120px;">
-        
-        <div class="flex-container">
-            
-            <div class="label" style="text-align:center"> <?php echo $current_user['username'] ?>
-                <div class="text"> 
-                    <div class="text" style="color:gray">
-                        <?php echo $current_user['account_id'] ?> 
-                    </div>
-                    <?php echo "Name: " .$userProf['firstname'] ?> 
-                    <?php echo $userProf['lastname'] ?> 
-                </div>
-
-                <div class="text">
-                    <?php echo "Birthday: " .$userProf['birthdate'] ?> 
-                </div>
-
-                <div class="text">
-                    <?php //echo "Joined Fanbases: " .$userProf['birthdate'] ?>  
-                </div>
-                <button type="button" class="btn btn-outline-dark" id="btnUpdateProf">Update Profile</button>
-                <button class="btn btn-danger" style="margin-top:15px;"id="btnDeleteAccount"> Delete Account </button>
+        <div style="flex-direction:column;overflow-wrap:break-word;">
+            <div class="text" style="padding:0px;"> 
+                <?php echo "Name: " .$userProf['firstname'] ?> 
+                <?php echo $userProf['lastname'] ?> 
             </div>
-            
+
+            <div class="text" style="padding:0px;">
+                <?php echo "Birthday: " .$userProf['birthdate'] ?> 
+            </div>
+        </div>
+
+        <div style="padding:20px; align-items: center;margin-bottom:auto;">
+            <button type="button" style="margin: 10px;" class="btn btn-outline-dark" id="btnUpdateProf">Update Profile</button>
+            <button class="btn btn-danger" style="margin: 10px;" id="btnDeleteAccount"> Delete Account </button>
         </div>
     </div>
+    <img src="images/profileBG.png" style="height:600px; width:60%; object-fit:cover;">
 
-    <img src="images/profileBG.png" style="overflow:hidden;box-shadow: 8px 10px 5px #9fc0c1;">
-
-<!-- main1 -->
 </div>
 
-<div class="main-container"  id="editProfile" style="padding-top:100px; flex-direction:row;">
+<!-- EDIT PROFILE DIV -->
+<div class="profile-container" id="editProfile">
+    <div class="profile-details-container" style="width:40%;">
+        <img src="images/account.png" class="profile-icon-container">
+        <div class="label" style="text-align:center;overflow-wrap:break-word;"> <?php echo $current_user['username'] ?> </div>
 
-    <div class="white-container" style="flex-direction: column; justify-content: space-evenly;">
-        <img src="images/account.png" class="card2-logo" style="height:120px; width: 120px;">
-            <div class="text" style="color:gray">
-                <?php echo $current_user['account_id'] ?> 
-            </div>
-    
-    <div> 
-        <?php
-            $stmtUpdateFanbase = "SELECT firstname, lastname, birthdate FROM tbluserprofile WHERE user_id = {$current_user['user_id']}";
-            
-            $result = mysqli_query($connection,$stmtUpdateFanbase);
-            $profileArray = mysqli_fetch_array($result);
+        <div>
+            <?php
+                $stmtUpdateFanbase = "SELECT firstname, lastname, birthdate FROM tbluserprofile WHERE user_id = {$current_user['user_id']}";
+                
+                $result = mysqli_query($connection,$stmtUpdateFanbase);
+                $profileArray = mysqli_fetch_array($result);
 
-            $old_firstname = $profileArray['firstname'];
-            $old_lastname = $profileArray['lastname'];
-            $old_birthdate = $profileArray['birthdate'];
-        ?>
-
-        <div class="manageFanbaseDiv" >
+                $old_firstname = $profileArray['firstname'];
+                $old_lastname = $profileArray['lastname'];
+                $old_birthdate = $profileArray['birthdate'];
+            ?>
             <form action="php/updateProfileDetails.php" method="post">
-                <div class="formsch">
                     <div class="form-group" > 
-                        <div class="label" style="text-align:center"> <?php echo $current_user['username'] ?> </div>
                         <div class="text"> First Name:</div>
                         <input class="form-control" style="height:50px;" id="new_fname" name="new_fname" value="<?php echo $old_firstname?>"> </input>
                         <div class="text">Last Name: </div>
@@ -91,19 +78,16 @@
                     
                     <br>
 
-                    <div style="display:flex; justify-content:space-between">
+                    <div style="padding:20px; align-items: center; margin-bottom:auto;">
                         <button id="cancelEditProf" role="button" class="btn btn-outline-danger" >Cancel Edit</button>
                         <button id="btnUpdateProf" value="1" type="submit" role="button" class="btn btn-success">Update Profile </button>
                     </div>
-                </div>
             </form>
         </div>
+
     </div>
-    
-    </div>
-    
-    <img src="images/profileBG.png" style="overflow:hidden;box-shadow: 8px 10px 5px #9fc0c1;">
-<!-- main -->
+    <img src="images/profileBG.png" style="height:600px; width:60%; object-fit:cover;">
+
 </div>
 
 <!-- MODAL DELETE ACCOUNT -->
