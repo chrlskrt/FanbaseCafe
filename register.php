@@ -4,6 +4,68 @@
 
 <script src="js/register.js"></script>
 
+<section class="CreateNLog">
+    <div>
+        <div class="label">Register</div>
+        <form action="register.php" method="post">
+            <div class="formsch">
+
+                <div class="flex-container" style="justify-content:space-between;">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" name="firstname" id="firstname" placeholder="First Name" required>
+                        <label for="firstname">First Name</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Last Name" required>
+                        <label for="lastname">Last Name</label>
+                    </div>
+                </div>    
+
+                <div class="form-floating mb-3">
+                    <input type="date" class="form-control" id="birthdate" name="birthdate" max="<?php echo date('Y-m-d', strtotime('-15 years')) ?>" required>
+                    <label for="birthdate">Birthday:</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
+                    <label for="email">Email</label>
+                </div>
+                    
+                <div class="form-floating mb-3"> 
+                    <input type="text" class="form-control" name="username" id="username" placeholder="Username" required>
+                    <label for="username">Username</label>
+                </div>
+
+                <div class="form-floating mb-3"> 
+                    <input type="password" name="password" class="form-control" id="password" placeholder="Password" required>
+                    <label for="password">Password</label>
+                </div>
+            
+                <div class="form-floating mb-3"> 
+                    <input type="password" name="cpassword" class="form-control" id="cpassword" placeholder="Confirm Password" required>
+                    <label for="cpassword">Confirm Password</label>
+                </div>
+            
+                <button id="btnRegister" type="submit" role="button" class="btn btn-outline-warning btn-lg btn-block" 
+                value="1">Sign Up</button>
+            </div>
+        </form>
+
+        <p>Already have an account? <a href="login.php" style="color:blue">Log In</a></p>
+    </div>
+</section>
+
+<footer>
+    <nav class="navbar">
+        <a class="navbar-brand" href="#">
+            Charlene Repuesto
+            <br>
+            BSCS 2
+        </a>
+    </nav>
+</footer>
+
 <!-- MODALS -->
 <div class="modal fade" tabindex="-1" role="dialog" id="userExistsModal">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -70,69 +132,6 @@
     </div>
   </div>
 </div>
-
-<section class="CreateNLog">
-    <div>
-        <div class="label">Register</div>
-        <form action="register.php" method="post">
-            <div class="formsch">
-
-                <div class="flex-container" style="justify-content:space-between;">
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" name="firstname" id="firstname" placeholder="First Name" required>
-                        <label for="firstname">First Name</label>
-                    </div>
-
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Last Name" required>
-                        <label for="lastname">Last Name</label>
-                    </div>
-                </div>    
-
-                <div class="form-floating mb-3">
-                    <input type="date" class="form-control" id="birthdate" name="birthdate" max="<?php echo date('Y-m-d', strtotime('-15 years')) ?>" required>
-                    <label for="birthdate">Birthday:</label>
-                </div>
-
-                <div class="form-floating mb-3">
-                    <input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
-                    <label for="email">Email</label>
-                </div>
-                    
-                <div class="form-floating mb-3"> 
-                    <input type="text" class="form-control" name="username" id="username" placeholder="Username" required>
-                    <label for="username">Username</label>
-                </div>
-
-                <div class="form-floating mb-3"> 
-                    <input type="password" name="password" class="form-control" id="password" placeholder="Password" required>
-                    <label for="password">Password</label>
-                </div>
-            
-                <div class="form-floating mb-3"> 
-                    <input type="password" name="cpassword" class="form-control" id="cpassword" placeholder="Confirm Password" required>
-                    <label for="cpassword">Confirm Password</label>
-                </div>
-            
-                <button id="btnRegister" type="submit" role="button" class="btn btn-outline-warning btn-lg btn-block" 
-                value="1">Sign Up</button>
-            </div>
-        </form>
-
-        <p>Already have an account? <a href="login.php" style="color:blue">Log In</a></p>
-    </div>
-</section>
-
-
-<footer>
-    <nav class="navbar">
-        <a class="navbar-brand" href="#">
-            Charlene Repuesto
-            <br>
-            BSCS 2
-        </a>
-    </nav>
-</footer>
 
 <?php	
 	if($_SERVER['REQUEST_METHOD'] === 'POST'){		

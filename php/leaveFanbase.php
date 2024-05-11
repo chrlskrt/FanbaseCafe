@@ -15,6 +15,6 @@
 
     $stmt->close();
 
-    header("Location: ../fanbase.php?fanbase_ID={$fanbaseID}");
+    header("Location: ../joinFanbase.php?fanbase_ID={$fanbaseID}");
     exit();
 ?>

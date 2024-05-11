@@ -221,3 +221,11 @@ a {
 form {
     margin:0;
 }
+
+.modal-exit-btn {
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 35;
+    font-weight: 500;
+}

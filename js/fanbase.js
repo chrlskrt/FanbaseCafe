@@ -10,6 +10,10 @@ $(function(){
     $("#createEventDiv").hide();
     $("#createPostDiv").hide();
     $(".replyDiv").hide();
+
+    $("#btnLeaveFanbase").on("click", function(){
+        $("#leaveFanbaseModal").modal("show");
+    })
     
     $("#btnCreateEvent").on("click", function(){
         $("#createEventModal").modal("show");
@@ -19,11 +23,15 @@ $(function(){
         $("#createPostModal").modal("show");
     })
 
-    $(".btnDeletePost").on("click", function(){
+    $(".btnDeletePost").on("click", function(e){
+        let post_id = $(e.target).val();
+        $("#btnDeletePostConfirm").val(post_id);
         $("#deletePostModal").modal("show");
     })
 
-    $(".btnDeleteEvent").on("click", function(){
+    $(".btnDeleteEvent").on("click", function(e){
+        let event_id = $(e.target).val();
+        $("#btnDeleteEventConfirm").val(event_id);
         $("#deleteEventModal").modal("show");
     })
 
@@ -100,12 +108,23 @@ $(function(){
                 $("#postReplies").html($(postzz).children(":last-child").html());
                 $("#createReply_fanbaseID").val(post.fanbase_id);
                 $("#createReply_postID").val(post.post_id);
-                // $("#postCreateReply").html(postCreateReplyContent);
+                $("#viewPostExitBtn").val(post.post_id + "-" + post.fanbase_id );
             }
         })
 
         $("#viewPostModal").modal("show");
     }
+
+    $("#viewPostExitBtn").on("click", function(){
+        let val = $(this).val();
+        val = val.split("-");
+        let post = val[0];
+        let fanbaseID = val[1];
+        console.log(post);
+        console.log(fanbaseID);
+        $("#viewPostModal").modal("hide");
+        window.location.replace("fanbase.php?fanbase_ID=" + fanbaseID).scrollTop($("#post"+post).offset().top);
+    })
 
     $("#createReplyForm").on("submit", function(e){
         e.preventDefault();
