@@ -1,5 +1,6 @@
 <?php
     include("includes/header.php");
+    include("php/getChartData.php");
 ?>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -51,9 +52,15 @@
 <div class="manageAppDiv" style="margin-bottom:10px;border-top: 2px black solid; border-bottom: 2px black solid; padding:0; gap:0">
     <div class="manageAppDiv" style="padding:0">
       <div class="btn label" id="chartsDiv" style="font-size: 35px; text-align:left">+ Get Charts</div>
-      <div style="display: flex; justify-content: center;" id="charts-container">
+      <div style="display: flex; justify-content: space-evenly;" id="charts-container">
         <div class="chart-container">
-          <canvas id="membersChart" height="250"></canvas>
+          <canvas id="membersChart"></canvas>
+        </div>
+        <div class="chart-container">
+          <canvas id="eventsChart"></canvas>
+        </div>
+        <div class="chart-container">
+          <canvas id="postsChart"></canvas>
         </div>
       </div>
     </div>
@@ -290,51 +297,83 @@
 
 <script>
   var ctx = document.getElementById("membersChart").getContext("2d");
-  console.log(ctx);
-  $.ajax({
-    url: "php/getChartData.php",
-    method: "POST",
-    dataType: 'JSON',
-    success: function(data){
-        console.log(data);
-
-        // for fanbase-member count chart
-        let fanbase_members = data.fanbase_members;
-        console.log(fanbase_members);
-
-        let fanbase = [];
-        let member_count = [];
-        for (let i in fanbase_members) {
-            fanbase.push(fanbase_members[i].fanbase_name);
-            member_count.push(fanbase_members[i].member_count);
-        }
-
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: fanbase,
-                datasets : [
-                    {
-                        label: 'Fanbase Member Count',
-                        backgroundColor: 'rgba(64,219,196)',
-                        borderColor: 'rgba(200, 200, 200, 0.75)',
-                        hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
-                        hoverBorderColor: 'rgba(200, 200, 200, 1)',
-                        data: member_count
-                    }
-                ]
-            },
-            options: {
-              legend: {
-                  display: true,
-                  position: 'bottom'
-              },
-              responsive: true,
-              maintainAspectRatio: false,
-              aspectRatio: .5
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: <?php echo json_encode($fanbaseMembers['fanbase']) ?>,
+        datasets : [
+            {
+                label: 'Member Count per Fanbase',
+                backgroundColor: 'rgba(64,219,196)',
+                borderColor: 'rgba(200, 200, 200, 0.75)',
+                hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
+                hoverBorderColor: 'rgba(200, 200, 200, 1)',
+                data: <?php echo json_encode($fanbaseMembers['member_count']) ?>
             }
-        })
-
+        ]
+    },
+    options: {
+      legend: {
+          display: true,
+          position: 'bottom'
+      },
+      responsive: true,
+      maintainAspectRatio: false,
+      aspectRatio: 0.5
     }
   })
+
+  var etx = document.getElementById("eventsChart").getContext("2d");
+  new Chart(etx, {
+    type: 'bar',
+    data: {
+        labels: <?php echo json_encode($fanbaseEvents['fanbase']) ?>,
+        datasets : [
+            {
+                label: 'Event Count per Fanbase',
+                backgroundColor: 'rgba(64,219,196)',
+                borderColor: 'rgba(200, 200, 200, 0.75)',
+                hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
+                hoverBorderColor: 'rgba(200, 200, 200, 1)',
+                data: <?php echo json_encode($fanbaseEvents['event_count']) ?>
+            }
+        ]
+    },
+    options: {
+      legend: {
+          display: true,
+          position: 'bottom'
+      },
+      responsive: true,
+      maintainAspectRatio: false,
+      aspectRatio: 0.5
+    }
+  });
+
+  var ptx = document.getElementById("postsChart").getContext("2d");
+  new Chart(ptx, {
+    type: 'bar',
+    data: {
+        labels: <?php echo json_encode($fanbasePosts['fanbase']) ?>,
+        datasets : [
+            {
+                label: 'Post Count per Fanbase',
+                backgroundColor: 'rgba(64,219,196)',
+                borderColor: 'rgba(200, 200, 200, 0.75)',
+                hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
+                hoverBorderColor: 'rgba(200, 200, 200, 1)',
+                data: <?php echo json_encode($fanbasePosts['post_count']) ?>
+            }
+        ]
+    },
+    options: {
+      legend: {
+          display: true,
+          position: 'bottom'
+      },
+      responsive: true,
+      maintainAspectRatio: false,
+      aspectRatio: 0.5
+    }
+  });
 </script>
