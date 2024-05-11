@@ -11,11 +11,11 @@
 <script src="js/manageFanbase.js"></script>
 
 <div class="manageFanbaseDiv justify-content-center" style="gap:50px; height: 78vh">
-    <div class="d-flex justify-content-center" style="flex-direction:row; border:none">
+    <div class="d-flex" style="flex-direction:row; justify-content:space-around; border:none">
         <div style="width: 300px; box-shadow:none">
             <img src="images/grpPhoto/<?php echo $fanbase['fanbase_photo'] ?>" class="card2-img" style="height: 300px; width:300px">
             <div class="cardContent" style="flex-direction:row;box-shadow:none">
-                <img src="images/grpLogo/<?php echo $fanbase['fanbase_logo'] ?>" class="card2-logo"> 
+                <img src="images/grpLogo/<?php echo $fanbase['fanbase_logo'] ?>" class="card2-logo" style="align-self:flex-start; margin-top: 10px; margin-left:5px"> 
                 <div class="d-flex" style="flex-direction:column; flex:1; padding:10px">
                     <div class="label" style="font-size:30px"><?php echo ($fanbase['fanbase_artist']) ?></div>
                     <div class="label" style="font-weight:normal; font-size:25px"><?php echo ($fanbase['fanbase_name']) ?></div>
