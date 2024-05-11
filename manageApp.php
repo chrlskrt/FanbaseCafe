@@ -2,8 +2,9 @@
     include("includes/header.php");
 ?>
 
-<script src="js/manageApp.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script src="js/manageApp.js"></script>
 
 <?php
     $sqluser = "SELECT count(user_id) as totalUser FROM tbluseraccount WHERE isDeleted = 0";
@@ -52,7 +53,7 @@
       <div class="btn label" id="chartsDiv" style="font-size: 35px; text-align:left">+ Get Charts</div>
       <div style="display: flex; justify-content: center;" id="charts-container">
         <div class="chart-container">
-          <canvas id="membersChart"></canvas>
+          <canvas id="membersChart" height="250"></canvas>
         </div>
       </div>
     </div>
@@ -286,3 +287,54 @@
           </script>";
     }
 ?>
+
+<script>
+  var ctx = document.getElementById("membersChart").getContext("2d");
+  console.log(ctx);
+  $.ajax({
+    url: "php/getChartData.php",
+    method: "POST",
+    dataType: 'JSON',
+    success: function(data){
+        console.log(data);
+
+        // for fanbase-member count chart
+        let fanbase_members = data.fanbase_members;
+        console.log(fanbase_members);
+
+        let fanbase = [];
+        let member_count = [];
+        for (let i in fanbase_members) {
+            fanbase.push(fanbase_members[i].fanbase_name);
+            member_count.push(fanbase_members[i].member_count);
+        }
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: fanbase,
+                datasets : [
+                    {
+                        label: 'Fanbase Member Count',
+                        backgroundColor: 'rgba(64,219,196)',
+                        borderColor: 'rgba(200, 200, 200, 0.75)',
+                        hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
+                        hoverBorderColor: 'rgba(200, 200, 200, 1)',
+                        data: member_count
+                    }
+                ]
+            },
+            options: {
+              legend: {
+                  display: true,
+                  position: 'bottom'
+              },
+              responsive: true,
+              maintainAspectRatio: false,
+              aspectRatio: .5
+            }
+        })
+
+    }
+  })
+</script>
