@@ -40,7 +40,7 @@
                                         '<div><form method="POST" action="php/deleteReply.php">
                                             <input type="hidden" name="fanbase_id" value="'.$fanbase_id.'">
                                             <input type="hidden" name="post_id" value="'.$reply['post_id'].'">
-                                            <button type="submit" name="reply_id" value="'.$reply['reply_id'].'" class="btn btn-outline-light">🗑️</button>
+                                            <button type="button" role="button" id="btnDeleteReply" name="reply_id" value="'.$reply['reply_id'].'" class="btn btn-outline-light">🗑️</button>
                                         </form></div>'
                                         :
                                         ''
@@ -55,3 +55,20 @@
         return $replies;
     }
 ?>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="deleteReplyModal">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Delete Event</h5>
+      </div>
+      <div class="modal-body">
+        <p> Are you sure you want to delete this event? This action cannot be undone!</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Cancel </button>
+            <button type="submit" name="event_id" class="btn btn-danger"> Delete </button>
+      </div>
+    </div>
+  </div>
+</div>

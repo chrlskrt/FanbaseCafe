@@ -12,11 +12,23 @@ $(function(){
     $(".replyDiv").hide();
     
     $("#btnCreateEvent").on("click", function(){
-        $("#createEventDiv").toggle();
+        $("#createEventModal").modal("show");
     })
 
     $("#btnCreatePost").on("click", function(){
         $("#createPostModal").modal("show");
+    })
+
+    $("#btnDeletePost").on("click", function(){
+        $("#deletePostModal").modal("show");
+    })
+
+    $("#btnDeleteEvent").on("click", function(){
+        $("#deleteEventModal").modal("show");
+    })
+
+    $("#btnDeleteReply").on("click", function(){
+        $("#deleteReplyModal").modal("show");
     })
 
     if ($("#btnLeaveFanbase").length){

@@ -79,7 +79,7 @@ function getEvents($fanbaseID){
                         (($isFanbaseAdmin == 1 || $current_user['account_id'] == $fanbaseEvent['account_id']) ? 
                             '<form action="php/deleteEvent.php" method="POST" style="margin:0">
                                 <input type="hidden" name="fanbase_id" value="'.$fanbaseEvent['fanbase_id'].'">
-                                <button class="btn btn-outline-dark" name="deleteEvent" value="'.$fanbaseEvent['event_id'].'" role="button" type="submit">Delete Event</button> 
+                                <button class="btn btn-outline-dark" name="deleteEvent" value="'.$fanbaseEvent['event_id'].'" role="button" type="button" id="btnDeleteEvent">Delete Event</button> 
                             </form>
                             
                             <button class="updateEventBtn btn btn-outline-dark" id="E-'.$fanbaseEvent['event_id'].'" role="button">Edit</button>'
@@ -103,3 +103,22 @@ function getEvents($fanbaseID){
 
     return $eventsStr;
 }
+?>
+
+<!-- DELETE EVENT MODAL  -->
+<div class="modal fade" tabindex="-1" role="dialog" id="deleteEventModal">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Delete Event</h5>
+      </div>
+      <div class="modal-body">
+        <p> Are you sure you want to delete this event? This action cannot be undone!</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Cancel </button>
+            <button type="submit" name="event_id" class="btn btn-danger"> Delete </button>
+      </div>
+    </div>
+  </div>
+</div>
