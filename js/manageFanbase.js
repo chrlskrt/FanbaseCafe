@@ -10,4 +10,8 @@ $(function(){
         $("#editFanbaseDetailsDiv").hide();
         $("#displayFanbaseDetailsDiv").show();
     });
+
+    $("#btnDeleteFanbase").on("click", function(){
+        $("#deleteFanbaseModal").modal("show");
+    })
 });

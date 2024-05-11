@@ -11,8 +11,10 @@
                  FROM (SELECT count(event_id) as event_count FROM tblevent GROUP by fanbase_id) AS h";
     $sqlpost = "SELECT avg(post_count) as average 
                 FROM (SELECT count(post_id) as post_count FROM tblpost GROUP BY fanbase_id) AS e";
-    $sqlEventTotal = "SELECT count(event_id) as totalEvent FROM tblevent";
-    $sqlPostTotal = "SELECT count(post_id) as post_count FROM tblpost";
+    $sqlEventTotal = "SELECT count(event_id) as totalEvent FROM tblevent as e, tblfanbase as f
+                      WHERE e.fanbase_id = f.fanbase_id AND f.isDeleted = 0";
+    $sqlPostTotal = "SELECT count(post_id) as post_count FROM tblpost as p, tblfanbase as f
+                     WHERE p.fanbase_id = f.fanbase_id AND f.isDeleted = 0";
 
     $usercount = mysqli_fetch_assoc(mysqli_query($connection, $sqluser))['totalUser'];
     $fanbasecount = mysqli_fetch_assoc(mysqli_query($connection, $sqlfanbase))['totalFanbase'];

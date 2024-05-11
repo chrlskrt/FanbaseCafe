@@ -37,9 +37,7 @@
                 </div>
             </div>
         </form>
-        <form action="php/deleteFanbase.php" method="POST">
-            <button id="btnDeleteFanbase" value="<?php echo $fanbase_id ?>" name="fanbase_id" type="submit" role="button" class="btn btn-outline-danger">Delete Fanbase</button>
-        </form>
+        <button id="btnDeleteFanbase" class="btn btn-outline-danger">Delete Fanbase</button>
     </div>
 
     <div class="manageFanbaseDiv">
@@ -59,3 +57,23 @@
         </a>
     </nav>
 </footer>
+
+<!-- MODAL DELETE FANBASE -->
+<div class="modal fade" tabindex="-1" role="dialog" id="deleteFanbaseModal">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Delete Fanbase</h5>
+        </div>
+        <div class="modal-body">
+            <p> Are you sure? This action cannot be undone! </p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Cancel </button>
+            <form action="php/deleteFanbase.php" method="POST">
+                <button value="<?php echo $fanbase_id ?>" name="fanbase_id" type="submit" role="button" class="btn btn-outline-danger">Delete</button>
+            </form>
+        </div>
+    </div>
+  </div>
+</div>
