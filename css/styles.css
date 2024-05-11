@@ -14,6 +14,11 @@ body {
     background: linear-gradient(180deg, rgba(64,219,196,1) 0%, rgba(231,231,231,1) 7%);
 }
 
+.profileBG {
+    background: rgb(64,219,196);
+    background: linear-gradient(180deg, rgba(64,219,196,1) 0%, rgba(38,26,58,0) 10%);
+}
+
 .img-icon {
     height: 200px;
     width: 200px;

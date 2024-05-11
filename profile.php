@@ -20,6 +20,9 @@
 
 <script src="js/profile.js"></script>
 
+<div class="profileBG" style="background-image: url('images/profileBG2.png');">
+<div class="announcement-container"></div>
+
 <!-- MAIN PROFILE DIV -->
 <div class="profile-container" id="displayProfile">
     <div class="profile-details-container" style="width:40%;">
@@ -30,19 +33,19 @@
         </div>
 
         <div style="flex-direction:column;overflow-wrap:break-word;">
-            <div class="text" style="padding:0px;"> 
+            <div class="text" style="padding:5px;"> 
                 <?php echo "Name: " .$userProf['firstname'] ?> 
                 <?php echo $userProf['lastname'] ?> 
             </div>
 
-            <div class="text" style="padding:0px;">
+            <div class="text" style="padding:5px;">
                 <?php echo "Birthday: " .$userProf['birthdate'] ?> 
             </div>
         </div>
 
-        <div style="padding:20px; align-items: center;margin-bottom:auto;">
-            <button type="button" style="margin: 10px;" class="btn btn-outline-dark" id="btnUpdateProf">Update Profile</button>
-            <button class="btn btn-danger" style="margin: 10px;" id="btnDeleteAccount"> Delete Account </button>
+        <div style="padding:20px; align-items: center;margin-bottom:auto; margin-top:auto;">
+            <button type="button" style="margin: 10px;" class="btn btn-dark" id="btnUpdateProf">Update Profile</button>
+            <button class="btn btn-outline-danger" style="margin: 10px;" id="btnDeleteAccount"> Delete Account </button>
         </div>
     </div>
     <img src="images/profileBG.png" style="height:600px; width:60%; object-fit:cover;">
@@ -78,9 +81,9 @@
                     
                     <br>
 
-                    <div style="padding:20px; align-items: center; margin-bottom:auto;">
-                        <button id="cancelEditProf" role="button" class="btn btn-outline-danger" >Cancel Edit</button>
-                        <button id="btnUpdateProf" value="1" type="submit" role="button" class="btn btn-success">Update Profile </button>
+                    <div style="padding:20px; align-items: center;margin-bottom:auto; margin-top:auto;">
+                        <button id="btnUpdateProf" style="margin: 10px;" value="1" type="submit" role="button" class="btn btn-dark">Update </button>
+                        <button id="cancelEditProf" style="margin: 10px;" role="button" class="btn btn-outline-danger" >Cancel </button>
                     </div>
             </form>
         </div>
@@ -108,9 +111,11 @@
   </div>
 </div>
 
+</div>
+
 <footer>
-    <nav class="navbar">
-        <a class="navbar-brand" href="#">
+    <nav class="navbar" style="background-color:#261a3a;">
+        <a class="navbar-brand" href="#" style="color:white;">
             Angel Sheinen O. Cambarijan
             <br>
             BSCS 2
