@@ -9,6 +9,11 @@ body {
     min-width: 1000px;
 }
 
+.fanbaseBG {
+    background: rgb(64,219,196);
+    background: linear-gradient(180deg, rgba(64,219,196,1) 0%, rgba(231,231,231,1) 7%);
+}
+
 .img-icon {
     height: 200px;
     width: 200px;

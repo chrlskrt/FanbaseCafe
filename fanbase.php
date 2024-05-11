@@ -38,9 +38,7 @@
 ?>
 
 <script src="js/fanbase.js"></script>
-<div class="announcement-container">
-    "Wish to become admin? [ Request Admin Button ]" OR "Edit or Update details? [ Manage Fanbase ]"
-</div>
+<div class="fanbaseBG">
  
 <div class="main-container" style="flex-direction:row; justify-content:center; padding-top: 40px;">
     <div style="display:flex; flex:1;">  
@@ -49,7 +47,8 @@
             <form action="php/createPost.php" method="post">
                 <div class="formsch" style="width:auto">
                     <div class="mb-3"> 
-                        <textarea class="form-control" name="post_text" id="btnCreatePost" placeholder="What's on your mind?"></textarea>
+                        <div class="text" style="padding-left:15px; padding-bottom:10px; padding-top:0px;"> Welcome back, <?php echo $current_user['username']?>!</div>
+                        <input class="form-control" name="post_text" id="btnCreatePost" style="border-radius:18px;" placeholder="What's on your mind?">
                         <label for="post_text"></label>
                     </div>
                     <input type="hidden" name="fanbase_id" value="<?php echo ($fanbaseID) ?>">
@@ -57,7 +56,7 @@
             </form> 
             
         
-            <div class="postevent-container mainFanbaseContent" id="displayPosts">        
+            <div class="postevent-container mainFanbaseContent" id="displayPosts">     
                 <?php
                     echo getPosts($fanbaseID);
                 ?>
@@ -68,7 +67,7 @@
     </div>
     <div style="display:flex; flex:0.8; justify-content:center;">
         <div class="main-container-nopaddings">
-            <img src="images/grpPhoto/<?php echo "$fanbasePhoto" ?>" style="height: 350px; width:350px;"> <br>
+            <img src="images/grpPhoto/<?php echo "$fanbasePhoto" ?>" style="height: 350px; width:350px; margin-top:3px;"> <br>
             <div class="label" style="font-size: 30px"> <?php echo "$fanbaseArtist" ?> </div> 
             <?php
                 if (($current_user && $current_user['isSysAdmin'] == 1) || ($current_user && $isAdmin == 1)){
@@ -97,14 +96,14 @@
                     echo '
                         <form action="php/leaveFanbase.php" method="POST" class="flex-container" style="margin-top:10px">
                             <input type="hidden" value="'.$fanbaseID.'" name="fanbaseID">
-                            <button type="submit" id="btnLeaveFanbase" role="button" value="'.($current_user["account_id"]).'" name="leaveFanbaseMember" class="btn btn-outline-dark"> Leave fanbase? </button>
+                            <button type="submit" id="btnLeaveFanbase" role="button" value="'.($current_user["account_id"]).'" name="leaveFanbaseMember" class="btn btn-outline-danger"> Leave fanbase? </button>
                         </form>
                     ';
                 }
             ?>
             
             <div class="post-event-container mainFanbaseContent" id="displayEvents">
-                <div class="white-container" style="box-shadow:none; padding: 10px; margin-top: 30px; border-radius:15px;">
+                <div class="white-container" style="box-shadow:none; padding-left:10px;padding-right:10px; margin-top: 30px; border-radius:15px;">
                     <div>
                         <div class="label" style="font-size:18px; margin:10px;">WANT TO HOST AN EVENT?</div>
                         <div class="text d-flex justify-content-center" style="padding: 0px"> Create events for the community! </div>
@@ -122,6 +121,7 @@
         </div>
     </div>
 </div>
+
 
 <footer>
     <nav class="navbar">
@@ -318,6 +318,47 @@
             </div>
         </form>
         
+    </div>
+  </div>
+</div>
+
+<!-- DELETE EVENT MODAL -->
+<div class="modal fade" tabindex="-1" role="dialog" id="deleteEventModal">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Delete Event</h5>
+        </div>
+        <div class="modal-body">
+            <p> Are you sure? This action cannot be undone! </p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Cancel </button>
+            <form action="php/deleteEvent.php" method="POST">
+                <button value="<?php echo $fanbase_id ?>" name="fanbase_id" type="submit" role="button" class="btn btn-outline-danger">Delete</button>
+            </form>
+        </div>
+    </div>
+  </div>
+</div>
+
+<!-- DELETE POST MODAL  -->
+<div class="modal fade" tabindex="-1" role="dialog" id="deletePostModal">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Delete Post</h5>
+      </div>
+      <div class="modal-body">
+        <p> Are you sure you want to delete this post?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Cancel </button>
+        <form method="POST" action="php/deletePost.php">
+            <input type="hidden" name="fanbase_id" value="<?php $post['fanbase_id'] ?>">
+            <button type="submit" name="post_id" value="<?php $post['post_id'] ?>" class="btn btn-danger"> Delete </button>
+        </form>
+      </div>
     </div>
   </div>
 </div>

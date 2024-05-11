@@ -19,7 +19,7 @@
     <nav class="navbar">
         <section>
             <a class="navbar-brand" href="index.php">
-                <div class="label" style="font-size: 20px;"> Fanbase Cafe 
+                <div class="label" style="font-size: 30px;padding-left:15px;"> FANBASECAFE
                     <a href="index.php" class="btn btn-outline-light">Home</a>
                 </div>
             </a>
@@ -34,7 +34,6 @@
                     <a href="login.php" class="btn btn-outline-light">Log In</a>';
                 } 
             ?>
-            
             <!-- <a href="register.php" class="btn btn-outline-light">Sign Up</a>
             <a href="login.php" class="btn btn-outline-light ">Log In</a> -->
             <a href="aboutus.php" class="btn btn-outline-light">About Us</a>

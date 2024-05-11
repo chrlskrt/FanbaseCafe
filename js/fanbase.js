@@ -19,11 +19,11 @@ $(function(){
         $("#createPostModal").modal("show");
     })
 
-    $("#btnDeletePost").on("click", function(){
+    $(".btnDeletePost").on("click", function(){
         $("#deletePostModal").modal("show");
     })
 
-    $("#btnDeleteEvent").on("click", function(){
+    $(".btnDeleteEvent").on("click", function(){
         $("#deleteEventModal").modal("show");
     })
 

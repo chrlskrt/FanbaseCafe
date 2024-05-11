@@ -47,7 +47,7 @@
     margin: 30px;
 }
 
-.event-container, .post {
+.event-container {
     display:flex;
     background-color: white;
     box-shadow: 8px 10px 5px #9fc0c1;
@@ -109,4 +109,6 @@
     background-color: white;
     border-radius: 10px;
     width: 100%;
+    border-bottom-style: solid;
+    border-bottom-color: #7aa2a2;
 }

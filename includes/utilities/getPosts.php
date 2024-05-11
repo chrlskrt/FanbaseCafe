@@ -55,7 +55,7 @@
                                 (($post['account_id'] == $current_user['account_id'] || $isFanbaseAdmin == 1) ?
                                     '<div><form method="POST" action="php/deletePost.php">
                                         <input type="hidden" name="fanbase_id" value="'.$post['fanbase_id'].'">
-                                        <button type="button" id="btnDeletePost" name="post_id" value="'.$post['post_id'].'" class="btn btn-outline-light">🗑️</button>
+                                        <button type="button" name="post_id" value="'.$post['post_id'].'" class="btn btn-outline-light btnDeletePost">🗑️</button>
                                     </form></div>'
                                     :
                                     ''
@@ -88,24 +88,3 @@
         return $posts;
     }
 ?>
-
-<!-- DELETE POST MODAL  -->
-<div class="modal fade" tabindex="-1" role="dialog" id="deletePostModal">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Delete Post</h5>
-      </div>
-      <div class="modal-body">
-        <p> Are you sure you want to delete this post?</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Cancel </button>
-        <form method="POST" action="php/deletePost.php">
-            <input type="hidden" name="fanbase_id" value="<?php $post['fanbase_id'] ?>">
-            <button type="submit" name="post_id" value="<?php $post['post_id'] ?>" class="btn btn-danger"> Delete </button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>

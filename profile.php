@@ -43,11 +43,9 @@
 
                 <div class="text">
                     <?php //echo "Joined Fanbases: " .$userProf['birthdate'] ?>  
-                    <!-- TODO: JOINED FANBASES AREA -->
-                    Joined Fanbases: BlackPink, TXT, Seventeen
                 </div>
                 <button type="button" class="btn btn-outline-dark" id="btnUpdateProf">Update Profile</button>
-                <button class="btn btn-danger" id="btnDeleteAccount"> Delete Account </button>
+                <button class="btn btn-danger" style="margin-top:15px;"id="btnDeleteAccount"> Delete Account </button>
             </div>
             
         </div>
