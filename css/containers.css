@@ -91,7 +91,7 @@
 
 .postevent-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     gap: 20px;
     padding:10px;
     align-items: center;
