@@ -185,13 +185,13 @@
     </div>
 
     <div style="display:flex; align-self:flex-start">
-        <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">X</button>
+        <button type="button" class="modal-content modal-exit-btn" data-bs-dismiss="modal">X</button>
     </div>
   </div>
 </div>
 
 <!-- CREATE EVENT REAL -->
-<div class="modal fade" tabindex="-1" role="dialog" id="createEventModal">
+<div class="modal fade" tabindex="-1" role="dialog" data-bs-backdrop="static" id="createEventModal">
   <div class="modal-dialog modal-dialog-centered modal-lg" style="gap:10px;" role="document">
     <div class="modal-content">
         <div class="modal-header">
@@ -245,6 +245,10 @@
             </div>
         </form>
     </div>
+
+    <div style="display:flex; align-self:flex-start">
+        <button type="button" class="modal-content modal-exit-btn" data-bs-dismiss="modal">X</button>
+    </div>
   </div>
 </div>
 
@@ -261,7 +265,7 @@
 ?>
 
 <!-- view post modal  -->
-<div class="modal fade" tabindex="-1" role="dialog" id="viewPostModal">
+<div class="modal fade" tabindex="-1" role="dialog" data-bs-backdrop="static" id="viewPostModal">
   <div class="modal-dialog modal-dialog-centered modal-lg" style="gap:10px;" role="document">
     <div class="modal-content" style="height:92vh;">
         <div class="modal-header" style="padding:25px">
@@ -283,13 +287,13 @@
     </div>
 
     <div style="display:flex; align-self:flex-start">
-        <button id="viewPostExitBtn" type="button" class="btn btn-outline-light" data-bs-dismiss="modal">X</button>
+        <button id="viewPostExitBtn" type="button" class="modal-content modal-exit-btn" data-bs-dismiss="modal">X</button>
     </div>
   </div>
 </div>
 
 <!-- CREATE POST MODAL -->
-<div class="modal fade" tabindex="-1" role="dialog" id="createPostModal">
+<div class="modal fade" tabindex="-1" role="dialog" data-bs-backdrop="static" id="createPostModal">
   <div class="modal-dialog modal-dialog-centered modal-lg" style="gap:10px;" role="document">
     <div class="modal-content">
         <div class="modal-header" style="justify-self:center; flex-direction: column">
@@ -318,6 +322,10 @@
             </div>
         </form>
         
+    </div>
+
+    <div style="display:flex; align-self:flex-start">
+        <button type="button" class="modal-content modal-exit-btn" data-bs-dismiss="modal">X</button>
     </div>
   </div>
 </div>
