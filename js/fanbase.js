@@ -108,7 +108,7 @@ $(function(){
                 $("#postReplies").html($(postzz).children(":last-child").html());
                 $("#createReply_fanbaseID").val(post.fanbase_id);
                 $("#createReply_postID").val(post.post_id);
-                $("#viewPostExitBtn").val(post.post_id);
+                $("#viewPostExitBtn").val(post.post_id + "-" + post.fanbase_id );
             }
         })
 
@@ -116,9 +116,14 @@ $(function(){
     }
 
     $("#viewPostExitBtn").on("click", function(){
-        let post = $(this).val();
+        let val = $(this).val();
+        val = val.split("-");
+        let post = val[0];
+        let fanbaseID = val[1];
+        console.log(post);
+        console.log(fanbaseID);
         $("#viewPostModal").modal("hide");
-        window.location.reload().scrollTop($("#post"+post).offset().top);
+        window.location.replace("fanbase.php?fanbase_ID=" + fanbaseID).scrollTop($("#post"+post).offset().top);
     })
 
     $("#createReplyForm").on("submit", function(e){

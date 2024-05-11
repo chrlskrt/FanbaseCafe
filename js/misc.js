@@ -15,7 +15,7 @@ export const viewModal = async (postID) => {
             $("#postReplies").html($(postzz).children(":last-child").html());
             $("#createReply_fanbaseID").val(post.fanbase_id);
             $("#createReply_postID").val(post.post_id);
-            // $("#postCreateReply").html(postCreateReplyContent);
+            $("#viewPostExitBtn").val(post.post_id + "-" + post.fanbase_id );
         }
     })
 
