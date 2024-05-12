@@ -2,7 +2,7 @@
     include("utilities/getFanbases.php");
     include("utilities/getEvents.php");    
     include("utilities/getPosts.php");
-    include("utilities/getReplies.php");
+    // include("utilities/getReplies.php");
     include("utilities/getFanbaseMembersTable.php");
     include("utilities/manageAppTables.php");
     /* using cookie */ 

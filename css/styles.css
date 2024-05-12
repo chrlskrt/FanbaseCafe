@@ -234,3 +234,7 @@ form {
     font-size: 35;
     font-weight: 500;
 }
+/* for modals */
+#deletePostModal {
+    z-index: 1080! important;
+}

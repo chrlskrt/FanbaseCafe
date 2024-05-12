@@ -24,9 +24,15 @@ $(function(){
     })
 
     $(".btnDeletePost").on("click", function(e){
+        console.log("Delete");
         let post_id = $(e.target).val();
         $("#btnDeletePostConfirm").val(post_id);
+        $("#viewPostModal").css("z-index", '1050');
         $("#deletePostModal").modal("show");
+    })
+
+    $(".btnDeleteCancel").on("click", function(){
+        $("#viewPostModal").css("z-index", '1070');
     })
 
     $(".btnDeleteEvent").on("click", function(e){
@@ -78,10 +84,9 @@ $(function(){
                 $("#edit_event_time").val($event.event_time);
                 $("#edit_event_location").val($event.event_location);
                 $("#edit_event_description").val($event.event_description).height(this.scrollHeight + "px");
+                $("#editEventModal").modal("show");
             }
         })
-
-        $("#editEventModal").modal("show");
     });
 
     $(".btnReply").on("click", (e)=>{
@@ -104,15 +109,26 @@ $(function(){
                 post = data;
                 
                 postzz = `#post${postID}`
-                $("#postBody").html($(postzz).children(":first-child").html());
-                $("#postReplies").html($(postzz).children(":last-child").html());
+                $("#postBody").append($(postzz).children(":first-child").children(":first-child").html());
+                $("#modalDeletePost").val(post.post_id);
                 $("#createReply_fanbaseID").val(post.fanbase_id);
                 $("#createReply_postID").val(post.post_id);
                 $("#viewPostExitBtn").val(post.post_id + "-" + post.fanbase_id );
+                $("#viewPostModal").modal("show");
             }
-        })
-
-        $("#viewPostModal").modal("show");
+        }).done( function (data){
+            post = data;
+            $.ajax({
+                url: "php/getReplies.php",
+                method: "POST",
+                data: {
+                    post_id: postID, fanbase_id: post.fanbase_id
+                },
+                success: function(data){
+                    // TODO: replies
+                }
+            })
+    })
     }
 
     $("#viewPostExitBtn").on("click", function(){
@@ -168,13 +184,8 @@ $(function(){
                                         </div>
                                     </div>
                                     
-                                    <div>
-                                        <form method="POST" action="php/deleteReply.php">
-                                            <input type="hidden" name="fanbase_id" value="${reply.fanbase_id}">
-                                            <input type="hidden" name="post_id" value="${reply.post_id}">
-                                            <button type="submit" name="reply_id" value="${reply.reply_id}" class="btn btn-outline-light">🗑️</button>
-                                        </form>
-                                    </div>
+                                   <button type="button" name="reply_id" value="${reply.reply_id}" class="btnDeleteReply btn btn-outline-light">🗑️</button>
+                                       
                                 </div>
 
                                 <div style="margin-left: 45px">${reply.reply_text}</div>
@@ -189,4 +200,9 @@ $(function(){
         })
     });  
 
+
+    $(".btnDeleteReply").on("click", function(e){
+        console.log("delete reply")
+
+    })
 });

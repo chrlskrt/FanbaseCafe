@@ -41,29 +41,30 @@
         foreach($fanbasePostsArr as $post){
             $posts .= '
                 <div class="post" id="post'.$post['post_id'].'">
-                    <section style="width:100%">
-                        <div style="display: flex;justify-content: space-between; gap:10px;">
-                            <div style="display:flex; gap:10px">
-                                <div style="display: flex; align-items: center">
-                                    <img src="https://ui-avatars.com/api/?rounded=true&name=' . $post['postOwner'] . '" alt="" style="height: 50; width:50">
+                    <section style="width:100%; display: flex;justify-content: space-between; gap:10px;align-items:flex-start">
+                        <section>
+                            <div style="display: flex; flex-direction:column; gap:10px;">
+                                <div style="display:flex; gap:10px">
+                                    <div style="display: flex; align-items: center">
+                                        <img src="https://ui-avatars.com/api/?rounded=true&name=' . $post['postOwner'] . '" alt="" style="height: 50; width:50">
+                                    </div>
+                                    <div style="display:flex; flex-direction:column; justify-content:center">
+                                        <h4 style="margin-bottom:3px;">' . $post['postOwner'] . '</h4>
+                                        <p style="font-size: 12; color: gray; margin:0">' . $post['post_created'] . '</p>
+                                    </div>
                                 </div>
-                                <div style="display:flex; flex-direction:column; justify-content:center">
-                                    <h4 style="margin-bottom:3px;">' . $post['postOwner'] . '</h4>
-                                    <p style="font-size: 12; color: gray; margin:0">' . $post['post_created'] . '</p>
-                                </div>
-                            </div>'.
-                                (($post['account_id'] == $current_user['account_id'] || $isFanbaseAdmin == 1) ?
-                                    '<div><form method="POST" action="php/deletePost.php">
-                                        <input type="hidden" name="fanbase_id" value="'.$post['fanbase_id'].'">
-                                        <button type="button" name="post_id" value="'.$post['post_id'].'" class="btn btn-outline-light btnDeletePost">🗑️</button>
-                                    </form></div>'
-                                    :
-                                    ''
-                                )
-                            .'
-                        </div>
-
-                        <div style="max-width:50vw; margin-top:10px;font-size:20px; overflow-wrap: break-word">'.$post['post_text'].'</div>
+                                <div style="max-width:50vw; margin-top:10px;font-size:20px; overflow-wrap: break-word">'.$post['post_text'].'</div>
+                            </div>
+                        </section>
+                        '.
+                            (($post['account_id'] == $current_user['account_id'] || $isFanbaseAdmin == 1) ?
+                                '
+                                    <button type="button" name="post_id" data-bs-toggle="modal" value="'.$post['post_id'].'" class="btn btn-outline-light btnDeletePost">🗑️</button>
+                                '
+                                :
+                                ''
+                            )
+                        .'
                     </section>
 
                     <div role="button" class="btn btnReply" value="'.$post['post_id'].'">
@@ -77,9 +78,9 @@
                     .'</div>
 
                     <section class="ReplyDiv" style="width:100%;">
-                            <div style="display:flex; width:100%; flex-direction:column-reverse;">'.
-                                getReplies($post['post_id'], $post['fanbase_id'])
-                            .'</div>
+                        <div style="display:flex; width:100%; flex-direction:column-reverse;gap:10px">'.''
+                            // getReplies($post['post_id'], $post['fanbase_id'])
+                        .'</div>
                     </section>
                 </div>
             ';
