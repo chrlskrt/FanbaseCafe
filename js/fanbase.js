@@ -77,6 +77,30 @@ $(function(){
         })
     });
 
+    $("#updateEventDivReal").hide();
+    $("#updateEventYes").on("click", ()=>{
+        $("#updateEventDivReal").show();
+        $(".updateEventDiv").hide();
+
+        $("#event_name_confirm").html($("#edit_event_name").val());
+        $("#event_type_confirm").html($("#edit_event_type").val());
+        $("#event_date_confirm").html($("#edit_event_date").val());
+        $("#event_time_confirm").html($("#edit_event_time").val());
+        $("#event_location_confirm").html($("#edit_event_location").val());
+        $("#event_description_confirm").html($("#edit_event_description").val());
+    })
+
+    $(".btnCancelEdit").on("click", ()=>{
+        $("#editEventModal").modal("hide");
+        $(".updateEventDiv").show();
+        $("#updateEventDivReal").hide();
+    })
+
+    $("#btnCancelEventEdit").on("click", ()=>{
+        $(".updateEventDiv").show();
+        $("#updateEventDivReal").hide();
+    })
+
     $(".btnReply").on("click", (e)=>{
         elem_id = $(e.target).attr("value");
 

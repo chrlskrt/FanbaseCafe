@@ -18,7 +18,7 @@
         $stmtAddEvent->execute();
         $stmtAddEvent->close();
       
-        header("Location: ../fanbase.php?fanbase_ID={$fanbase_id}#E-{$event_id}");
+        header("Location: ../fanbase.php?fanbase_ID={$fanbase_id}#event{$event_id}");
         exit();
     }
 ?>

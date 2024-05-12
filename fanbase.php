@@ -148,7 +148,7 @@
             </div>
         </div>
         <form action="php/updateEvent.php" method="post" style="margin:0">
-            <div class="modal-body" style="overflow-y:auto">
+            <div class="modal-body updateEventDiv" style="overflow-y:auto">
                 <div class="flex-container" style="flex-direction:column; align-items: center; ">
                     <div class="formsch" style="width:95%">
                         <div class="form-floating mb-3"> 
@@ -181,15 +181,38 @@
                     </div>
                 </div>    
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button id="btnEditEventSubmit" name="event_id" type="submit" role="button" class="btn btn-outline-dark">Update Event details</button>
+            <div id="updateEventDivReal">
+                <div class="modal-header" style="justify-content:center">
+                    Confirm EDIT details
+                </div>
+                <div class="modal-body" style="overflow-y:auto; height:55vh">
+                    <span><b>Event Name: </b><span id="event_name_confirm"></span></span>
+                    <br>
+                    <span><b>Event Type: </b><span id="event_type_confirm"></span></span>
+                    <br>
+                    <span><b>Event Date: </b><span id="event_date_confirm"></span></span>
+                    <br>
+                    <span><b>Event Time: </b><span id="event_time_confirm"></span></span>
+                    <br>
+                    <span><b>Event Location: </b><span id="event_location_confirm"></span></span>
+                    <br>
+                    <span><b>Event Description: </b><span id="event_description_confirm"></span></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="btnCancelEventEdit">Cancel</button>
+                    <button id="btnEditEventSubmit" name="event_id" type="submit" role="button" class="btn btn-outline-dark">Update Event details</button>
+                </div>
             </div>
         </form>
+        
+        <div class="modal-footer updateEventDiv">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button id="updateEventYes" name="event_id" type="button" role="button" class="btn btn-outline-dark">Update Event details</button>
+        </div>
     </div>
 
     <div style="display:flex; align-self:flex-start">
-        <button type="button" class="modal-content modal-exit-btn" data-bs-dismiss="modal">X</button>
+        <button type="button" class="modal-content modal-exit-btn btnCancelEdit" data-bs-dismiss="modal">X</button>
     </div>
   </div>
 </div>
