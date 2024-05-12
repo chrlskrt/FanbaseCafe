@@ -1,12 +1,4 @@
 $(function(){
-    // let hash = window.location.hash;
-    // if (hash){
-    //     post_id = hash.split("#post")[1];
-
-    //     $(window).scrollTop($(hash).offset().top);
-    //     viewPostModal(post_id);
-    // }
-
     $("#createEventDiv").hide();
     $("#createPostDiv").hide();
     $(".replyDiv").hide();
@@ -39,10 +31,6 @@ $(function(){
         let event_id = $(e.target).val();
         $("#btnDeleteEventConfirm").val(event_id);
         $("#deleteEventModal").modal("show");
-    })
-
-    $("#btnDeleteReply").on("click", function(){
-        $("#deleteReplyModal").modal("show");
     })
 
     if ($("#btnLeaveFanbase").length){
@@ -111,24 +99,13 @@ $(function(){
                 postzz = `#post${postID}`
                 $("#postBody").append($(postzz).children(":first-child").children(":first-child").html());
                 $("#modalDeletePost").val(post.post_id);
+                $("#postReplies").html($(postzz).children(":last-child").html());
                 $("#createReply_fanbaseID").val(post.fanbase_id);
                 $("#createReply_postID").val(post.post_id);
                 $("#viewPostExitBtn").val(post.post_id + "-" + post.fanbase_id );
                 $("#viewPostModal").modal("show");
             }
-        }).done( function (data){
-            post = data;
-            $.ajax({
-                url: "php/getReplies.php",
-                method: "POST",
-                data: {
-                    post_id: postID, fanbase_id: post.fanbase_id
-                },
-                success: function(data){
-                    // TODO: replies
-                }
-            })
-    })
+        })
     }
 
     $("#viewPostExitBtn").on("click", function(){
@@ -172,8 +149,8 @@ $(function(){
                 console.log(data);
                 reply = JSON.parse(data);
 
-                replyDiv = `<div style="display: flex; flex-direction: column;">
-                                <div style="display: flex; width: 100%; justify-content: space-between;">
+                replyDiv = `<div class="d-flex">
+                                <div style="display: flex; width: 100%; flex-direction:column">
                                     <div style="display:flex; gap:10px">
                                         <div style="display: flex; align-items: center">
                                             <img src="https://ui-avatars.com/api/?rounded=true&name=${reply.username}" alt="" style="height: 35; width:35">
@@ -183,15 +160,16 @@ $(function(){
                                             <p style="font-size: 10; color: gray; margin:0">${reply.reply_created}</p>
                                         </div>
                                     </div>
-                                    
-                                   <button type="button" name="reply_id" value="${reply.reply_id}" class="btnDeleteReply btn btn-outline-light">🗑️</button>
-                                       
+                                    <div style="margin-left: 45px">${reply.reply_text}</div>
                                 </div>
-
-                                <div style="margin-left: 45px">${reply.reply_text}</div>
+                                <form method="POST" action="php/deleteReply.php">
+                                    <input type="hidden" name="fanbase_id" value="${reply.fanbase_id}">
+                                    <input type="hidden" name="post_id" value="${reply.post_id}">
+                                    <button type="submit" name="reply_id" value="${reply.reply_id}" class="btnDeleteReply btn btn-outline-light">🗑️</button>
+                                </form>
                             </div>`;
                 
-                $("#postReplies").children(":first-child").append(replyDiv);
+                $("#postReplies").append(replyDiv);
             },
 
             error: function(data){
@@ -201,8 +179,7 @@ $(function(){
     });  
 
 
-    $(".btnDeleteReply").on("click", function(e){
+    $(".btnDeleteReply").click(function(){
         console.log("delete reply")
-
     })
 });

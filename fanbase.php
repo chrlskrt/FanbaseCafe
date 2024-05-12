@@ -275,20 +275,12 @@
 <div class="modal fade" tabindex="-1" data-bs-backdrop="static" role="dialog" id="viewPostModal" style="z-index: 1062 !important">
   <div class="modal-dialog modal-dialog-centered modal-lg" style="gap:10px;" role="document">
     <div class="modal-content" style="height:92vh;">
-        <div class="modal-header" style="margin-left:15px; padding:25px">
+        <div class="modal-header" style="margin-left:15px; padding:25px; padding-right:15px; align-items:flex-start">
             <div id="postBody" style="display:flex; flex:1"></div>
             <button type="button" name="post_id" id="modalDeletePost" value="" class="btn btn-outline-light btnDeletePost">🗑️</button>
         </div>
         <div class="modal-body" id="postReplies" style="flex:1; overflow-y:auto;">
-            <div>
-                <div>
-                    <div>
-                        <button class="btnDeleteReply">delete reply</button>
-                    </div>
-                </div>
-            </div>
         </div>
-        <!-- <form action="createReply.php" method="post" style="margin:0"> -->
             <form id="createReplyForm" style="margin:0">
             <div class="modal-footer" id="postCreateReply">
                     <div class="formsch" style="width:100%">
@@ -400,27 +392,6 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary btnDeleteCancel" data-bs-dismiss="modal"> Cancel </button>
-        <form method="POST" action="php/deletePost.php">
-            <input type="hidden" name="fanbase_id" value="<?php echo $fanbaseID ?>">
-            <button id="btnDeletePostConfirm" type="submit" name="post_id" value="" class="btn btn-danger"> Delete </button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- DELETE Reply MODAL  -->
-<div class="modal fade" tabindex="-2"  role="dialog" id="deleteReplyModal">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Delete Post</h5>
-      </div>
-      <div class="modal-body">
-        <p> Are you sure you want to delete this post?</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Cancel </button>
         <form method="POST" action="php/deletePost.php">
             <input type="hidden" name="fanbase_id" value="<?php echo $fanbaseID ?>">
             <button id="btnDeletePostConfirm" type="submit" name="post_id" value="" class="btn btn-danger"> Delete </button>

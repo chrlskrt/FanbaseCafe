@@ -2,13 +2,10 @@
     include("utilities/getFanbases.php");
     include("utilities/getEvents.php");    
     include("utilities/getPosts.php");
-    // include("utilities/getReplies.php");
+    include("utilities/getReplies.php");
     include("utilities/getFanbaseMembersTable.php");
     include("utilities/manageAppTables.php");
-    /* using cookie */ 
-    // $current_user = (isset($_COOKIE['user'])) ? unserialize(base64_decode(urldecode($_COOKIE['user']))) : null;
-
-    /* using session */
+    
     session_start();
     $current_user = null;
 
@@ -18,13 +15,4 @@
     }
 
     date_default_timezone_set("Asia/Manila");
-
-    // function handleLogIn($user){
-    //     // /* using cookie */
-	// 	// $logInCookie = urlencode(base64_encode(serialize($user)));
-    //     // setcookie('user', $logInCookie, time() + (86400 * 30), "/");
-
-    //     /* using session */
-    //     $_SESSION["user"] = json_encode($user, true);
-    // }
 ?>
