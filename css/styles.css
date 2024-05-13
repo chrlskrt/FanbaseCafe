@@ -235,6 +235,6 @@ form {
     font-weight: 500;
 }
 /* for modals */
-#deletePostModal {
+.importantModal {
     z-index: 1080! important;
 }

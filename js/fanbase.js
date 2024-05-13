@@ -19,12 +19,17 @@ $(function(){
         console.log("Delete");
         let post_id = $(e.target).val();
         $("#btnDeletePostConfirm").val(post_id);
-        $("#viewPostModal").css("z-index", '1050');
+        // $("#viewPostModal").css("z-index","1050")
+        changeViewPostZIndex("1050");
         $("#deletePostModal").modal("show");
     })
 
+    function changeViewPostZIndex(new_index){
+        $("#viewPostModal").css("z-index", new_index);
+    }
+
     $(".btnDeleteCancel").on("click", function(){
-        $("#viewPostModal").css("z-index", '1070');
+        changeViewPostZIndex("1070");
     })
 
     $(".btnDeleteEvent").on("click", function(e){
@@ -128,6 +133,10 @@ $(function(){
                 $("#createReply_postID").val(post.post_id);
                 $("#viewPostExitBtn").val(post.post_id + "-" + post.fanbase_id );
                 $("#viewPostModal").modal("show");
+
+                $(".btnDeleteReply").click(function(event){
+                    btnDeleteReplyClick(event);
+                })
             }
         })
     }
@@ -185,15 +194,14 @@ $(function(){
                                         </div>
                                     </div>
                                     <div style="margin-left: 45px">${reply.reply_text}</div>
-                                </div>
-                                <form method="POST" action="php/deleteReply.php">
-                                    <input type="hidden" name="fanbase_id" value="${reply.fanbase_id}">
-                                    <input type="hidden" name="post_id" value="${reply.post_id}">
-                                    <button type="submit" name="reply_id" value="${reply.reply_id}" class="btnDeleteReply btn btn-outline-light">🗑️</button>
-                                </form>
+                                </div><button type="submit" name="reply_id" value="${reply.reply_id}" class="btnDeleteReply btn btn-outline-light">🗑️</button>
                             </div>`;
                 
-                $("#postReplies").append(replyDiv);
+                $("#postReplies").children(":first-child").append(replyDiv);
+
+                $(".btnDeleteReply").click(function(){
+                    btnDeleteReplyClick();
+                })
             },
 
             error: function(data){
@@ -202,8 +210,10 @@ $(function(){
         })
     });  
 
-
-    $(".btnDeleteReply").click(function(){
+    function btnDeleteReplyClick (event){
         console.log("delete reply")
-    })
+        changeViewPostZIndex("1050")
+        $("#btnDeleteReplyConfirm").val(event.target.value);
+        $("#deleteReplyModal").modal("show");
+    }
 });
