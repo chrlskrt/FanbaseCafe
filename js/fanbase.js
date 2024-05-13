@@ -1,7 +1,9 @@
 $(function(){
+    let currentuser_id = $("#currentuser_id").val();
+    let repliesDiv;
+
     $("#createEventDiv").hide();
     $("#createPostDiv").hide();
-    $(".replyDiv").hide();
 
     $("#btnLeaveFanbase").on("click", function(){
         $("#leaveFanbaseModal").modal("show");
@@ -19,7 +21,6 @@ $(function(){
         console.log("Delete");
         let post_id = $(e.target).val();
         $("#btnDeletePostConfirm").val(post_id);
-        // $("#viewPostModal").css("z-index","1050")
         changeViewPostZIndex("1050");
         $("#deletePostModal").modal("show");
     })
@@ -124,19 +125,17 @@ $(function(){
             success: function(data){
                 // console.log(data);
                 post = data;
-                
+                repliesDiv = "";
+                getReplies(postID);
                 postzz = `#post${postID}`
                 $("#postBody").append($(postzz).children(":first-child").children(":first-child").html());
                 $("#modalDeletePost").val(post.post_id);
-                $("#postReplies").html($(postzz).children(":last-child").html());
+                // $("#postReplies").html($(postzz).children(":last-child").html());
                 $("#createReply_fanbaseID").val(post.fanbase_id);
                 $("#createReply_postID").val(post.post_id);
                 $("#viewPostExitBtn").val(post.post_id + "-" + post.fanbase_id );
+                
                 $("#viewPostModal").modal("show");
-
-                $(".btnDeleteReply").click(function(event){
-                    btnDeleteReplyClick(event);
-                })
             }
         })
     }
@@ -181,27 +180,14 @@ $(function(){
             success: function(data){
                 console.log(data);
                 reply = JSON.parse(data);
-
-                replyDiv = `<div class="d-flex">
-                                <div style="display: flex; width: 100%; flex-direction:column">
-                                    <div style="display:flex; gap:10px">
-                                        <div style="display: flex; align-items: center">
-                                            <img src="https://ui-avatars.com/api/?rounded=true&name=${reply.username}" alt="" style="height: 35; width:35">
-                                        </div>
-                                        <div style="display:flex; flex-direction:column; justify-content:center">
-                                            <h5 style="margin-bottom:3px;">${reply.username}</h5>
-                                            <p style="font-size: 10; color: gray; margin:0">${reply.reply_created}</p>
-                                        </div>
-                                    </div>
-                                    <div style="margin-left: 45px">${reply.reply_text}</div>
-                                </div><button type="submit" name="reply_id" value="${reply.reply_id}" class="btnDeleteReply btn btn-outline-light">🗑️</button>
-                            </div>`;
+                repliesDiv = "";
+                createReplyDiv(reply);
                 
-                $("#postReplies").children(":first-child").append(replyDiv);
-
-                $(".btnDeleteReply").click(function(){
-                    btnDeleteReplyClick();
+                $("#postReplies").append(repliesDiv);
+                $(".btnDeleteReply").click(function(e){
+                    btnDeleteReplyClick(e);
                 })
+                
             },
 
             error: function(data){
@@ -210,10 +196,53 @@ $(function(){
         })
     });  
 
-    function btnDeleteReplyClick (event){
+    function btnDeleteReplyClick (e){
         console.log("delete reply")
         changeViewPostZIndex("1050")
-        $("#btnDeleteReplyConfirm").val(event.target.value);
+        $("#btnDeleteReplyConfirm").val($(e.target).val());
         $("#deleteReplyModal").modal("show");
+    }
+
+    function getReplies(post_id){
+        $.ajax({
+            url: "php/getReplies.php",
+            method: "POST",
+            data: {
+                post_id: post_id
+            },
+            dataType: 'JSON',
+            success: function(data){
+                replies = data;
+                replies.forEach(reply => {
+                    createReplyDiv(reply)
+                })
+                $("#postReplies").html(repliesDiv)
+                $(".btnDeleteReply").click(function(e){
+                    btnDeleteReplyClick(e);
+                })
+            }
+        })
+    }
+
+    async function createReplyDiv(reply){
+        repliesDiv += `<div class="d-flex">
+                        <div style="display: flex; width: 100%; flex-direction:column">
+                            <div style="display:flex; gap:10px">
+                                <div style="display: flex; align-items: center">
+                                    <img src="https://ui-avatars.com/api/?rounded=true&name=${reply.username}" alt="" style="height: 35; width:35">
+                                </div>
+                                <div style="display:flex; flex-direction:column; justify-content:center">
+                                    <h5 style="margin-bottom:3px;">${reply.username}</h5>
+                                    <p style="font-size: 10; color: gray; margin:0">${reply.reply_created}</p>
+                                </div>
+                            </div>
+                            <div style="margin-left: 45px">${reply.reply_text}</div>
+                        </div>`
+                
+                    if (currentuser_id === reply.account_id) {
+                        repliesDiv += `<button type="submit" name="reply_id" value="${reply.reply_id}" class="btnDeleteReply btn btn-outline-light">🗑️</button>`
+                    }
+                        
+        repliesDiv += `</div>`;
     }
 });

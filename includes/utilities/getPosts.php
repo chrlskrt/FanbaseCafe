@@ -76,12 +76,6 @@
                             : ''
                         )
                     .'</div>
-
-                    <section class="ReplyDiv" style="width:100%;">
-                        <div style="display:flex; width:100%; flex-direction:column-reverse;gap:10px">'.
-                            getReplies($post['post_id'], $post['fanbase_id'])
-                        .'</div>
-                    </section>
                 </div>
             ';
         }

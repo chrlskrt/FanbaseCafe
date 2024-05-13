@@ -61,7 +61,8 @@
             </form> 
             
         
-            <div class="postevent-container mainFanbaseContent" id="displayPosts">     
+            <div class="postevent-container mainFanbaseContent" id="displayPosts">
+                <input type="hidden" id="currentuser_id" value="<?php echo $current_user['account_id'] ?>">     
                 <?php
                     echo getPosts($fanbaseID);
                 ?>
