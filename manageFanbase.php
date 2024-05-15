@@ -85,7 +85,7 @@
             <h5 class="modal-title"> Edit Fanbase Details </h5>
         </div>
         <form action="php/updateFanbaseDetails.php" method="post" enctype="multipart/form-data">
-            <div class="modal-body">
+            <div class="modal-body editFanbaseDiv">
                 <div class="flex-container" style="flex-direction:column; align-items: center; ">
                     <div class="formsch">
                         <div class="form-group" > 
@@ -98,26 +98,48 @@
                         </div>
                         <div>
                             <label for="fanbase_photo" class="form-label">Fanbase Photo</label>
-                            <input type="hidden" name="old_photo" value="<?php echo ($fanbase['fanbase_photo']) ?>">
+                            <input type="hidden" name="old_photo" id="old_photo" value="<?php echo ($fanbase['fanbase_photo']) ?>">
                             <input class="form-control" type="file" name="fanbase_photo" id="fanbase_photo" accept="image/jpg, image/jpeg, image/png">
                         </div>
                         <div >
                             <label for="fanbase_logo" class="form-label">Fanbase Logo</label>
-                            <input type="hidden" name="old_logo" value="<?php echo ($fanbase['fanbase_logo']) ?>">
+                            <input type="hidden" name="old_logo" id="old_logo" value="<?php echo ($fanbase['fanbase_logo']) ?>">
                             <input class="form-control" type="file" name="fanbase_logo" id="fanbase_logo" accept="image/jpg, image/jpeg, image/png">
                         </div>
                     </div>
                 </div>    
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Cancel Edit</button>
-                <button id="btnUpdateFanbaseDetails" value="<?php echo $fanbase_id ?>" name="fanbase_id" type="submit" role="button" class="btn btn-success">Update Details</button>
+            <div id="editFanbaseConfirm">
+                <div class="modal-header justify-content-center"> Confirm Fanbase Details </div>
+                <div class="modal-body">
+                    <span><b>Date created: </b><span id="fanbase_date_confirm"></span></span>
+                    <br>
+                    <span><b>Description: </b></span><br><span id="fanbase_description_confirm" style="margin-left: 15px"></span>
+                    <div class="d-flex" style="justify-content:space-between; ">
+                        <div >
+                            <span><b>Fanbase Photo: </b></span><br>
+                            <img id="fanbase_photo_confirm" src="images/grpPhoto/<?php echo $fanbase['fanbase_photo'] ?>" style="border-radius: 10px;height: 150px; width:150px; margin-left: 20px">
+                        </div>
+                        <div >
+                            <span><b>Fanbase Logo: </b></span><br>
+                            <img id="fanbase_logo_confirm" src="images/grpLogo/<?php echo $fanbase['fanbase_logo'] ?>" style="border-radius: 10px;height: 150px; width:150px; margin-left: 20px">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning btnCancelFanbaseEdit">Cancel Edit</button>
+                    <button value="<?php echo $fanbase_id ?>" name="fanbase_id" type="submit" role="button" class="btn btn-success">Update Details</button>
+                </div>
             </div>
         </form>
+        <div class="modal-footer editFanbaseDiv">
+            <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" id="btnUpdateFanbaseDetails" class="btn btn-success">Update Details</button>
+        </div>
     </div>
 
     <div style="display:flex; align-self:flex-start">
-        <button type="button" class="modal-content modal-exit-btn" data-bs-dismiss="modal">X</button>
+        <button type="button" class="modal-content modal-exit-btn btnCancelFanbaseEdit">X</button>
     </div>
   </div>
 </div>
